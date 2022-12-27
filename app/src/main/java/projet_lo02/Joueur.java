@@ -70,6 +70,17 @@ public class Joueur {
         }
     }
 
+    public void afficherReservisteEquipe(){
+        System.out.print(Etudiant.etudiantColumnHeaders());
+        Iterator<Map.Entry<Integer, Etudiant>> iteratorEtudiants = equipe.entrySet().iterator();
+        while(iteratorEtudiants.hasNext()){
+            Map.Entry<Integer, Etudiant> etudiantActuel = iteratorEtudiants.next();
+            if(etudiantActuel.getValue().isReserviste()){
+                System.out.print(etudiantActuel.getValue().etudiantOneLiner());
+            }
+        }
+    }
+
     public void parametrerEtudiant(Etudiant etudiant, int idEtudiant){
         boolean escape = false;
         while(escape == false){

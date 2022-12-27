@@ -527,7 +527,7 @@ public class Etudiant {
     public void setReserviste(boolean nouveauStatut) {
         if(nouveauStatut == true && this.reserviste == false){
             this.reserviste = true;
-        }else if(nouveauStatut == true && this.reserviste == true){
+        }else if(nouveauStatut == false && this.reserviste == true){
             this.reserviste = false;
         }
     }

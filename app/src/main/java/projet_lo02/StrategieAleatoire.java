@@ -8,6 +8,7 @@ public class StrategieAleatoire implements Strategie{
         
         Random rnd = new Random();
         int valeurAleatoire = rnd.nextInt(2);
+        
         if(valeurAleatoire == 0){
             Attaque atk = new Attaque();
             atk.executerStrategie(actionneur);

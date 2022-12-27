@@ -10,11 +10,20 @@ public class Zone {
     private ArrayList<Etudiant> listEquipe1 = new ArrayList<Etudiant>();
     private ArrayList<Etudiant> listEquipe2 = new ArrayList<Etudiant>();
 
+    private int nbMortsEquipe1 = 0;
+    private int nbMortsEquipe2 = 0;
+
+    private int lengthEquipe1;
+    private int lengthEquipe2;
+
+    private boolean zoneControlee;
+
 
     public Zone(NomZone zone, Partie partieEnCours){
         this.nomZone = zone;
         this.propriete = Statut.UNDEFINED;
         this.partie = partieEnCours;
+        this.zoneControlee = false;
     }
 
     public String getNomZone(){
@@ -87,91 +96,95 @@ public class Zone {
 
 
     public void combattreZone(){
-        int nbMortsEquipe1 = 0;
-        int nbMortsEquipe2 = 0;
-        int lengthEquipe1 = listEquipe1.size();
-        int lengthEquipe2 = listEquipe2.size();
 
+        //1er étudiant joue
+        Utility.jumpLines(1);
+        Etudiant premierListe = listEtudiantZone.get(0);
+        System.out.println("L'etudiant  " + premierListe.getIdEtudiant() + " du joueur "+ listEtudiantZone.get(0).getJoueur().getPseudo() + " execute sa stratégie");
+        premierListe.getStrategie().executerStrategie(listEtudiantZone.get(0));
+        // on le déplace en dernière position du tableau
+        listEtudiantZone.remove(0);
+        listEtudiantZone.add(premierListe);
 
-        this.trierEtudiantsInitiative();
-        this.trierEtudiantsCredits(listEquipe1);
-        this.trierEtudiantsCredits(listEquipe2);
-        while(nbMortsEquipe1 != lengthEquipe1 && nbMortsEquipe2 != lengthEquipe2){ //tant que les etudiants d'une equipe ne sont pas tous morts
-            //tri listes étudiants
+        enleverMort();
 
-            //1er étudiant joue
-            Utility.jumpLines(1);
-            Etudiant premierListe = listEtudiantZone.get(0);
-            System.out.println("L'etudiant  " + premierListe.getIdEtudiant() + " du joueur "+ listEtudiantZone.get(0).getJoueur().getPseudo() + " execute sa stratégie");
-            premierListe.getStrategie().executerStrategie(listEtudiantZone.get(0));
-            // on le déplace en dernière position du tableau
-            listEtudiantZone.remove(0);
-            listEtudiantZone.add(premierListe);
+        annoncerGagnant();
 
-            // Iterator<Etudiant> iteEtudiant2 = listEtudiantZone.iterator();
-            // while(iteEtudiant2.hasNext()){
-            //     Etudiant etudiant = iteEtudiant2.next();
-            //     System.out.println(etudiant.getJoueur().getPseudo() + " : " + etudiant.getIdEtudiant() + " - " + etudiant.getCredits());
-            // }
+        //Affichage
+//        System.out.println("nombre de morts équipe 1 : " + nbMortsEquipe1);
+//        System.out.println("nombre de morts équipe 2 : " + nbMortsEquipe2);
+//
+//        Iterator<Etudiant> iteEtudiant3 = listEtudiantZone.iterator();
+//        while(iteEtudiant3.hasNext()){
+//            Etudiant etudiant = iteEtudiant3.next();
+//            System.out.println(etudiant.getJoueur().getPseudo() + " : n°" + etudiant.getIdEtudiant() + " - " + etudiant.getCredits() + "credits");
+//        }
+    }
 
-
-            Iterator<Etudiant> iteEtudiant = listEtudiantZone.iterator();
-            boolean mort = false;
-            while(mort == false){
-                Etudiant etudiant = iteEtudiant.next();
-                if(etudiant.getCredits() <= 0){
-                    if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
-                        nbMortsEquipe1 += 1;
-                        System.out.println("L'etudiant " + etudiant.getIdEtudiant() + " du joueur " + etudiant.getJoueur().getPseudo() + " est mort");
-                        //enlever l'etudiant mort
-                        listEtudiantZone.remove(etudiant);
-                        listEquipe1.remove(etudiant);
-                        etudiant.getJoueur().getEquipe().remove(etudiant.getIdEtudiant());
-                        
-                    }else {
-                        nbMortsEquipe2 += 1;
-                        System.out.println("L'etudiant " + etudiant.getIdEtudiant() + " du joueur " + etudiant.getJoueur().getPseudo() + " est mort");
-                        //enlever l'etudiant mort
-                        listEtudiantZone.remove(etudiant);
-                        listEquipe2.remove(etudiant);
-                        etudiant.getJoueur().getEquipe().remove(etudiant.getIdEtudiant());
-
+    public void enleverMort(){
+        Iterator<Etudiant> iteEtudiant = listEtudiantZone.iterator();
+        while(iteEtudiant.hasNext()){
+            Etudiant etudiant = iteEtudiant.next();
+            if(etudiant.getCredits() <= 0){
+                if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
+                    nbMortsEquipe1 += 1;
+                    System.out.println("L'etudiant " + etudiant.getIdEtudiant() + " du joueur " + etudiant.getJoueur().getPseudo() + " est mort");
+                    //enlever l'etudiant mort
+                    listEtudiantZone.remove(etudiant);
+                    listEquipe1.remove(etudiant);
+                    etudiant.getJoueur().getEquipe().remove(etudiant.getIdEtudiant());
                     break;
-
-                    }
+                }else {
+                    nbMortsEquipe2 += 1;
+                    System.out.println("L'etudiant " + etudiant.getIdEtudiant() + " du joueur " + etudiant.getJoueur().getPseudo() + " est mort");
+                    //enlever l'etudiant mort
+                    listEtudiantZone.remove(etudiant);
+                    listEquipe2.remove(etudiant);
+                    etudiant.getJoueur().getEquipe().remove(etudiant.getIdEtudiant());
+                    break;
                 }
-                // if(etudiant.getCredits() <= 0){
-                //     listEtudiantZone.remove(etudiant);
-                //     if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
-                //         listEquipe1.remove(etudiant);
-                //     } else {
-                //         listEquipe2.remove(etudiant);
-                //     }
-                // }
-                
-                mort = true;
-            }
-
-            //Affichage
-            System.out.println("nombre de morts équipe 1 : " + nbMortsEquipe1);
-            System.out.println("nombre de morts équipe 2 : " + nbMortsEquipe2);
-
-            Iterator<Etudiant> iteEtudiant3 = listEtudiantZone.iterator();
-            while(iteEtudiant3.hasNext()){
-                Etudiant etudiant = iteEtudiant3.next();
-                System.out.println(etudiant.getJoueur().getPseudo() + " : " + etudiant.getIdEtudiant() + " - " + etudiant.getCredits());
             }
         }
+    }
+
+    public void annoncerGagnant(){
         //annonce gagnant
-        if(nbMortsEquipe1 == lengthEquipe1){
-            System.out.println("Le joueur 2 a gagné la zone");
+        if(this.nbMortsEquipe1 == this.lengthEquipe1){
+            System.out.println("Le joueur 2 a gagné la zone " + this.nomZone);
             this.propriete = Statut.JOUEUR2;
             partie.getJoueur2().setNombreZonesControlees(partie.getJoueur2().getNombreZonesControlees()+1);
-        } else {
-            System.out.println("Le joueur 1 a gagné la zone");
+            this.zoneControlee = true;
+
+        } else if(this.nbMortsEquipe2 == this.lengthEquipe2){
+            System.out.println("Le joueur 1 a gagné la zone " + this.nomZone);
             this.propriete = Statut.JOUEUR1;
             partie.getJoueur1().setNombreZonesControlees(partie.getJoueur1().getNombreZonesControlees()+1);
+            this.zoneControlee = true;
+
+
         }
+    }
+    //GETTERS ET SETTERS
+    public int getLengthEquipe1() {
+        return lengthEquipe1;
+    }
+
+    public int getLengthEquipe2() {
+        return lengthEquipe2;
+    }
+
+    public void setLengthEquipe1(int lengthEquipe1) {
+        this.lengthEquipe1 = lengthEquipe1;
+    }
+
+    public void setLengthEquipe2(int lengthEquipe2) {
+        this.lengthEquipe2 = lengthEquipe2;
+    }
+    public boolean getZoneControlee() {
+        return zoneControlee;
+    }
+    public void setZoneControlee(boolean status) {
+        this.zoneControlee = status;
     }
 
     public static void main(String[] args) {

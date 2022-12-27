@@ -80,6 +80,13 @@ public final class Utility {
     }
 
     public static void main(String[] args){
-        promptString();
+        String a = "bonjour";
+        String b = "2";
+        String c = "0324234";
+        String d = "0.4343";
+        System.out.println(isStringInt(a));
+        System.out.println(isStringInt(b));
+        System.out.println(isStringInt(c));
+        System.out.println(isStringInt(d));
     }
 }
