@@ -268,11 +268,20 @@ public class Partie {
 
     }
 
+    public void sommeECTSZones(){
+        Iterator<Zone> iteZones = this.listZones.iterator();
+        while (iteZones.hasNext()){
+            Zone zone = iteZones.next();
+            System.out.println(" Zone : " + zone.getNomZone() + " - credits : " + zone.sommeCreditsZone());
+        }
+    }
     public void treve(){
         joueur1.afficherReservisteEquipe();
         placerReservistes(joueur1);
         joueur2.afficherReservisteEquipe();
         placerReservistes(joueur2);
+
+        sommeECTSZones();
     }
 
     public void trierZones(){

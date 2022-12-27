@@ -147,6 +147,16 @@ public class Zone {
         }
     }
 
+    public int sommeCreditsZone(){
+        Iterator<Etudiant> iteEtudiant = listEtudiantZone.iterator();
+        int sommeCredits = 0;
+        while(iteEtudiant.hasNext()){
+            sommeCredits += iteEtudiant.next().getCredits();
+        }
+        return sommeCredits;
+    }
+
+
     public void annoncerGagnant(){
         //annonce gagnant
         if(this.nbMortsEquipe1 == this.lengthEquipe1){
