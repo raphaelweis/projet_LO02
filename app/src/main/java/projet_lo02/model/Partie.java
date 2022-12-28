@@ -38,7 +38,7 @@ public class Partie {
                     break;
                 case "N" :
                 case "n" :
-                    System.out.println("Fin de l'éxecution du Programme");
+                    System.out.println("Fin de l'exécution du Programme");
                     Utility.userInput.close();
                     System.exit(0);
                     break;
