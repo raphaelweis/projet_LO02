@@ -6,6 +6,9 @@ public class Zone {
     private Statut propriete;
     private NomZone nomZone;
     private Partie partie;
+
+
+
     private ArrayList<Etudiant> listEtudiantZone = new ArrayList<Etudiant>();
     private ArrayList<Etudiant> listEquipe1 = new ArrayList<Etudiant>();
     private ArrayList<Etudiant> listEquipe2 = new ArrayList<Etudiant>();
@@ -109,16 +112,6 @@ public class Zone {
         enleverMort();
 
         annoncerGagnant();
-
-        //Affichage
-//        System.out.println("nombre de morts équipe 1 : " + nbMortsEquipe1);
-//        System.out.println("nombre de morts équipe 2 : " + nbMortsEquipe2);
-//
-//        Iterator<Etudiant> iteEtudiant3 = listEtudiantZone.iterator();
-//        while(iteEtudiant3.hasNext()){
-//            Etudiant etudiant = iteEtudiant3.next();
-//            System.out.println(etudiant.getJoueur().getPseudo() + " : n°" + etudiant.getIdEtudiant() + " - " + etudiant.getCredits() + "credits");
-//        }
     }
 
     public void enleverMort(){
@@ -147,8 +140,8 @@ public class Zone {
         }
     }
 
-    public int sommeCreditsZone(){
-        Iterator<Etudiant> iteEtudiant = listEtudiantZone.iterator();
+    public int sommeCreditsEquipe1(){
+        Iterator<Etudiant> iteEtudiant = listEquipe1.iterator();
         int sommeCredits = 0;
         while(iteEtudiant.hasNext()){
             sommeCredits += iteEtudiant.next().getCredits();
@@ -156,7 +149,14 @@ public class Zone {
         return sommeCredits;
     }
 
-
+    public int sommeCreditsEquipe2(){
+        Iterator<Etudiant> iteEtudiant = listEquipe2.iterator();
+        int sommeCredits = 0;
+        while(iteEtudiant.hasNext()){
+            sommeCredits += iteEtudiant.next().getCredits();
+        }
+        return sommeCredits;
+    }
     public void annoncerGagnant(){
         //annonce gagnant
         if(this.nbMortsEquipe1 == this.lengthEquipe1){
@@ -174,6 +174,10 @@ public class Zone {
 
         }
     }
+
+
+
+
     //GETTERS ET SETTERS
     public int getLengthEquipe1() {
         return lengthEquipe1;
@@ -195,6 +199,14 @@ public class Zone {
     }
     public void setZoneControlee(boolean status) {
         this.zoneControlee = status;
+    }
+
+    public ArrayList<Etudiant> getListEtudiantZone() {
+        return listEtudiantZone;
+    }
+
+    public void setListEtudiantZone(ArrayList<Etudiant> listEtudiantZone) {
+        this.listEtudiantZone = listEtudiantZone;
     }
 
     public static void main(String[] args) {

@@ -202,62 +202,6 @@ public class Partie {
 
     }
 
-
-    public boolean placerReservistes(Etudiant etudiantActuel) {
-
-
-        if (etudiantActuel.getReserviste() == true) {
-            etudiantActuel.setReserviste(false);
-            Utility.clearTerminal();
-            System.out.println("Attribuez une zone à votre étudiant : ");
-            Utility.jumpLines(1);
-            System.out.println("(1) : Administration || (2) : BDE || (3) : Bibliothèque || (4) : Halles industrielles || (5) : Halle sportive");
-            Utility.jumpLines(1);
-
-
-            System.out.println("Etudiant à placer : " + etudiantActuel.getType() + etudiantActuel.getIdEtudiant());
-            Utility.jumpLines(1);
-            System.out.println(etudiantActuel);
-            String input = Utility.promptString();
-            if (Utility.isStringInt(input)) {
-                int numericInput = Integer.parseInt(input);
-                if (this.listZones.get(numericInput).getZoneControlee() == false) {
-                    if (numericInput >= 1 && numericInput <= this.listZones.size()) {
-                        etudiantActuel.setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
-                        this.listZones.get(numericInput - 1).attribuerEtudiant(etudiantActuel); //attribuer etudiant à la zone
-                    } else {
-                        System.out.println("Erreur : valeur entrée non valide");
-                        Utility.sleep(2500);
-                    }
-                }
-
-            } else {
-                System.out.println("Erreur : type de donnée non valide");
-                Utility.sleep(2500);
-            }
-        }
-
-
-        while (true) {
-            Utility.clearTerminal();
-            System.out.println("Récapitulation des affectations : équipe de " + etudiantActuel.getJoueur().getPseudo());
-            Utility.jumpLines(1);
-            etudiantActuel.getJoueur().afficherEquipe();
-            Utility.jumpLines(1);
-            System.out.println("Continuer : (C) || Recommencer la configuration : (R)");
-            String input = Utility.promptString();
-            if (input.equals("c") || input.equals("C")) {
-                return true;
-            } else if (input.equals("r") || input.equals("R")) {
-                return false;
-            } else {
-                System.out.println("Erreur : valeur entrée non valide");
-                Utility.sleep(2500);
-            }
-
-        }
-    }
-
     public void initialiserCombats(){
 
         Utility.clearTerminal();
@@ -294,23 +238,27 @@ public class Partie {
             while (iteZones.hasNext()){
                 Zone zone = iteZones.next();
                 if(!zone.getZoneControlee()){
-                    System.out.println("\n---------- ZONE " + zone.getNomZone()+ "-----------");
+                    System.out.println("\n---------- ZONE " + zone.getNomZone()+ " -----------");
                     zone.combattreZone();
                     if(zone.getZoneControlee()){
                         System.out.println("TREVE");
 
                         // TREVE
-
-                        //1 : placer réservistes
-                        // - afficher réservistes chaque joueur
-                        // - placer les étudiants
                         treve();
 
-                        //2 : pour chaque zone afficher sommes ECTS
-                        // + si controlée, possiblité de redépolyer troupe en laissant 1 étudiant
-
-
-                        //break;
+                        if(zone.getStatus().equals(Statut.JOUEUR1)){
+                            if(zone.getEquipe1().size() > 1 ){
+                                redeploiement(joueur1, zone);
+                            } else {
+                                System.out.println("Il n'y a qu'un joueur, il ne peut pas être redéployé ! ");
+                            }
+                        } else {
+                            if(zone.getEquipe2().size() > 1 ){
+                                redeploiement(joueur2, zone);
+                            } else {
+                                System.out.println("Il n'y a qu'un joueur, il ne peut pas être redéployé ! ");
+                            }
+                        }
                     }
                 }
             }
@@ -324,21 +272,139 @@ public class Partie {
 
     }
 
-    public void sommeECTSZones(){
+    public void treve(){
+
+        if(ReservistesPresents(joueur1)){
+            joueur1.afficherReservisteEquipe();
+            afficherRecapZones(joueur1);
+            placerReservistes(joueur1);
+        }
+
+        if(ReservistesPresents(joueur2)) {
+            joueur2.afficherReservisteEquipe();
+            afficherRecapZones(joueur2);
+            placerReservistes(joueur2);
+        }
+
+
+    }
+    public void redeploiement(Joueur joueur, Zone zone){
+
+        if(joueur.equals(joueur.getPartie().getJoueur1())){
+            //afficher etudiants zone + demander lequel reste
+            System.out.println(zone.getEquipe1());
+            System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");
+            String input = Utility.promptString();
+
+            // placer tous les etudiants sauf celui qui reste
+            Iterator<Etudiant> iteEtudiant = zone.getEquipe1().iterator();
+            while(iteEtudiant.hasNext()){
+                Etudiant etudiantActuel = iteEtudiant.next();
+                int numericInput = Integer.parseInt(input);
+                if(etudiantActuel.getIdEtudiant() != numericInput){
+                    //placer l'etudiant
+                    deployerEtudiant(etudiantActuel, zone);
+                }
+            }
+        } else {
+            //afficher etudiants zone + demander lequel reste
+            System.out.println(zone.getEquipe2());
+            System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");
+            String input = Utility.promptString();
+
+            // placer tous les etudiants sauf celui qui reste
+            Iterator<Etudiant> iteEtudiant = zone.getEquipe2().iterator();
+            while(iteEtudiant.hasNext()){
+                int numericInput = Integer.parseInt(input);
+                if(iteEtudiant.next().getIdEtudiant() != numericInput){
+                    //placer l'etudiant
+                    deployerEtudiant(iteEtudiant.next(), zone);
+                }
+            }
+        }
+    }
+
+    public void deployerEtudiant(Etudiant etudiant, Zone zoneActuelle){
+
+        Utility.clearTerminal();
+        System.out.println("Attribuez une zone à votre étudiant : ");
+        Utility.jumpLines(1);
+        System.out.println("Zones possibles : ");
+        Utility.jumpLines(1);
+
+        for(int i = 0 ; i < this.listZones.size() ; i++) {
+            if (!this.listZones.get(i).getZoneControlee()) {
+                System.out.println("(" + (i+1) + ") " + this.listZones.get(i).getNomZone());
+            }
+        }
+
+        System.out.println("Etudiant à placer : " + etudiant.getType() + etudiant.getIdEtudiant());
+        Utility.jumpLines(1);
+        System.out.println(etudiant);
+        String input = Utility.promptString();
+        if(Utility.isStringInt(input)){
+            int numericInput = Integer.parseInt(input);
+            if(numericInput >= 1 && numericInput <= this.listZones.size()){
+                etudiant.setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
+                this.listZones.get(numericInput - 1).attribuerEtudiant(etudiant); //attribuer etudiant à la zone
+                // retirer etudiant à la zone
+                this.listZones.get(numericInput - 1).getListEtudiantZone().remove(etudiant);
+                if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
+                    this.listZones.get(numericInput - 1).getEquipe1().remove(etudiant);
+                } else {
+                    this.listZones.get(numericInput - 1).getEquipe2().remove(etudiant);
+                }
+
+            } else {
+                System.out.println("Erreur : valeur entrée non valide");
+                Utility.sleep(2500);
+            }
+        } else{
+            System.out.println("Erreur : type de donnée non valide");
+            Utility.sleep(2500);
+        }
+    }
+
+
+    public void afficherRecapZones(Joueur joueur){
+        System.out.println("Souhaite-vous voir le nombre de crédits par zone (O/N)?");
+        String input = Utility.promptString();
+        if(input.equals("O") || input.equals("o")){
+            Utility.jumpLines(1);
+            System.out.println("------------------------- Recap des zones -------------------------");
+            Utility.jumpLines(1);
+            sommeECTSZones(joueur);
+            Utility.jumpLines(1);
+            System.out.println("-------------------------------------------------------------------");
+            Utility.jumpLines(1);
+
+        }
+    }
+
+    public void sommeECTSZones(Joueur joueur){
         Iterator<Zone> iteZones = this.listZones.iterator();
         while (iteZones.hasNext()){
             Zone zone = iteZones.next();
-            System.out.println(" Zone : " + zone.getNomZone() + " - credits : " + zone.sommeCreditsZone());
+            if(joueur.equals(joueur.getPartie().getJoueur1())){
+                System.out.println(" Zone : " + zone.getNomZone() + " - " + zone.sommeCreditsEquipe1() + " crédits");
+            } else {
+                System.out.println(" Zone : " + zone.getNomZone() + " - credits : " + zone.sommeCreditsEquipe2());
+            }
         }
     }
-    public void treve(){
-        joueur1.afficherReservisteEquipe();
-        placerReservistes(joueur1);
-        joueur2.afficherReservisteEquipe();
-        placerReservistes(joueur2);
 
-        sommeECTSZones();
+    public boolean ReservistesPresents(Joueur joueur){
+        Iterator<Map.Entry<Integer, Etudiant>> iteEquipe = joueur.equipe.entrySet().iterator();
+        int reserviste = 0;
+        while(iteEquipe.hasNext()){
+            if(iteEquipe.next().getValue().getReserviste()){
+                reserviste += 1;
+            }
+        }
+        return reserviste > 0;
     }
+
+
 
     public void trierZones(){
         Iterator<Zone> iteZones = this.listZones.iterator();
