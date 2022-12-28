@@ -1,7 +1,7 @@
 package projet_lo02;
 
 public class Defense implements Strategie {
-    
+
     public void executerStrategie(Etudiant actionneur){
 
         //System.out.println("La stratégie Défense vient d'être utilisée !");
@@ -14,7 +14,7 @@ public class Defense implements Strategie {
         int gainCreditsMax = 30 + cible.getConstitution();
 
         if(gainCreditsNet >= gainCreditsMax){gainCreditsNet = gainCreditsMax;}
-        
+
         if(x <= 20 + 6 * actionneur.getDexterite() && gainCreditsNet != 0){ //soin réussi
             cible.setCredits(cible.getCredits() + gainCreditsNet);
             System.out.println("Le soin est réussi, "  + cible.getIdEtudiant()+ "de" + cible.getJoueur().getPseudo()+ " a été soigné de " + gainCreditsNet + " crédits");

@@ -29,7 +29,7 @@ public class Zone {
     public String getNomZone(){
         return this.nomZone.name();
     }
-    
+
     public Statut getStatus(){
         return this.propriete;
     }
@@ -41,7 +41,7 @@ public class Zone {
     public ArrayList<Etudiant> getEquipe2(){
         return this.listEquipe2;
     }
-    
+
     public void attribuerEtudiant(Etudiant etudiant){
         listEtudiantZone.add(etudiant);
         if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
@@ -68,7 +68,7 @@ public class Zone {
             }
         });
     }
-    
+
     public Etudiant etudiantLePlusFaibleAdverse(Etudiant etudiant){
         //chercher dans la zone de l'etu, le joueur le + faible de l'equipe adverse
         //si etudiant est du joueur 1, on prend le dernier etudiant du joueur 2 de la zone
@@ -147,6 +147,16 @@ public class Zone {
         }
     }
 
+    public int sommeCreditsZone(){
+        Iterator<Etudiant> iteEtudiant = listEtudiantZone.iterator();
+        int sommeCredits = 0;
+        while(iteEtudiant.hasNext()){
+            sommeCredits += iteEtudiant.next().getCredits();
+        }
+        return sommeCredits;
+    }
+
+
     public void annoncerGagnant(){
         //annonce gagnant
         if(this.nbMortsEquipe1 == this.lengthEquipe1){
@@ -224,6 +234,6 @@ public class Zone {
             System.out.println(etudiant.toString());
         }
         zone.combattreZone();
-        
+
     }
 }
