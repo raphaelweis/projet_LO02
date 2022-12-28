@@ -11,11 +11,6 @@ plugins {
     id 'application'
 }
 
-apply plugin : "java"
-ext{
-    javaMainClass = "projet_lo02.Partie"
-}
-
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -31,7 +26,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = javaMainClass
+    mainClass.set("projet_lo02.model.Partie")
 }
 
 run {

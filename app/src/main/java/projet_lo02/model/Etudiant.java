@@ -1,4 +1,4 @@
-package projet_lo02;
+package projet_lo02.model;
 
 public class Etudiant {
     protected int idEtudiant;

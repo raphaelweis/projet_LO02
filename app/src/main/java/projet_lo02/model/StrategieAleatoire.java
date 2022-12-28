@@ -1,4 +1,4 @@
-package projet_lo02;
+package projet_lo02.model;
 
 import java.util.Random;
 
