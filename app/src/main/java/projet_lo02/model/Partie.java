@@ -8,16 +8,22 @@ public class Partie {
     private Joueur joueur1;
     private Joueur joueur2;
     private List<Zone> listZones = new ArrayList<Zone>();
-    private  boolean zoneControlee;
+    //private  boolean zoneControlee;
 
     public Partie(){
         Utility.clearTerminal();
         System.out.println("Initialisation : Création des joueurs");
         Utility.jumpLines(1);
         System.out.print("Entrer Pseudo Joueur 1 : ");
-        this.joueur1 = new Joueur(Utility.userInput.next(), this);
+        System.out.print("Entrer Branche Joueur 1 : ");
+        String pseudoJ1 = Utility.userInput.next();
+        String brancheJ1 = Utility.userInput.next();
+        this.joueur1 = new Joueur(pseudoJ1, brancheJ1, this);
         System.out.print("Entrer Pseudo Joueur 2 : ");
-        this.joueur2 = new Joueur(Utility.userInput.next(), this);
+        System.out.print("Entrer Branche Joueur 2 : ");
+        String pseudoJ2 = Utility.userInput.next();
+        String brancheJ2 = Utility.userInput.next();
+        this.joueur2 = new Joueur(pseudoJ2, brancheJ2, this);
         this.initialiserZones();
     }
 

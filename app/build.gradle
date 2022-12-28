@@ -20,11 +20,6 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
-
-    // Window manager for the gui
-    implementation 'com.miglayout:miglayout-core:11.0' // https://mvnrepository.com/artifact/com.miglayout/miglayout-core
-    implementation 'com.miglayout:miglayout-swing:11.0' // https://mvnrepository.com/artifact/com.miglayout/miglayout-swing
-                         
 }
 
 application {

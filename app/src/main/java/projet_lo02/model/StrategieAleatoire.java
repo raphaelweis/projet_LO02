@@ -4,6 +4,10 @@ import java.util.Random;
 
 public class StrategieAleatoire implements Strategie{
 
+    public String getNomStrategie(){
+            return "Aléatoire";
+    }
+
     public void executerStrategie(Etudiant actionneur){
 
         Random rnd = new Random();

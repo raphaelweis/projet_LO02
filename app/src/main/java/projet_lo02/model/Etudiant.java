@@ -31,6 +31,20 @@ public class Etudiant {
         this.zoneEtudiant = null;
     }
 
+    public Etudiant(){
+        this.type = "Etudiant";
+        this.dexterite = getMinimumDexterite();
+        this.force = getMinimumForce();
+        this.resistance = getMinimumResistance();
+        this.constitution = getMinimumConstitution();
+        this.initiative = getMinimumInitiative();
+        this.strategie = new StrategieAleatoire();
+        this.reserviste = false;
+        this.zoneEtudiant = null;
+        this.credits = 30 + this.constitution;
+        this.zoneEtudiant = null;
+    }
+
     public void editerAttribut(){
         while(true){
             Utility.clearTerminal();
@@ -491,6 +505,10 @@ public class Etudiant {
         return this.strategie;
     }
 
+    public String getNomStrategie(){
+        return this.strategie.getNomStrategie();
+    }
+
     public boolean setStrategie(int nouvelleStrategie) {
         switch(nouvelleStrategie){
             case 1 :
@@ -536,10 +554,14 @@ public class Etudiant {
         return this.zoneEtudiant;
     }
 
+    public String getNomZone(){
+        return this.zoneEtudiant.getNomZone();
+    }
+
     public void setZone(Zone zone) {
         this.zoneEtudiant = zone;
     }
-
+    
     public String getType(){
         return this.type;
     }

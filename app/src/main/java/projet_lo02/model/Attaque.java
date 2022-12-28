@@ -3,6 +3,10 @@ package projet_lo02.model;
 public class Attaque implements Strategie {
 
     private final int degatDeReference = 10;
+    
+    public String getNomStrategie(){
+        return "Attaque";
+    }
 
     public void executerStrategie(Etudiant actionneur){
 

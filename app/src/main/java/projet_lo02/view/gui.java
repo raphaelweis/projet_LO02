@@ -1,49 +1,29 @@
 package projet_lo02.view;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
+import java.awt.Choice;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionListener;
-import java.util.Map;
-import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-
-import net.miginfocom.swing.MigLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTable;
-import java.awt.Color;
-import java.awt.Canvas;
-import javax.swing.JLabel;
-import java.awt.Label;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.CompoundBorder;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
 import java.awt.TextField;
-import javax.swing.JTextField;
-import java.awt.Choice;
-import java.awt.List;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.HashMap;
 
-import projet_lo02.model.Joueur;;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+
+import projet_lo02.model.Etudiant;
+import projet_lo02.model.Joueur;
+import projet_lo02.model.Partie;
 
 public class gui extends JFrame {
 	// les composants de la vue
@@ -57,15 +37,17 @@ public class gui extends JFrame {
 	private Choice choice;
 	private Choice strategy;
 	private JCheckBox reserviste;
-	private TextField pointsDistribuer;
-	private TextField nom;
+	private TextField soldePoints;
+	private TextField pseudoJoueur;
 	private Choice programme;
 
 	// le joueur
 	private Joueur joueur;
+	//private Partie partie;
 	
-	public gui(final Joueur joueur) {
+	public gui(final Joueur joueur, Partie partie) {
 		this.joueur = joueur;
+		//this.partie = partie;
 		this.initFenetre();
 	}
 
@@ -101,7 +83,7 @@ public class gui extends JFrame {
 		Image img1 = new ImageIcon("ressources\\maitre.png").getImage();
 		//Image img1 = new ImageIcon("C:\\Users\\langeron\\Documents\\workspace\\InterfaceCduBrutal\\ressources\\maitre.png").getImage();
 		jb1.setIcon(new ImageIcon(img1)); // habillage du JButon
-		jb1.addActionListener(new MonEcouteurEvenements(joueur.getListeCombattants(), new String("Capitaine Gobi")));
+		jb1.addActionListener(new MonEcouteurEvenements(joueur.getEquipe(), 20));
 		contentPane.add(panelMaitre);
 		// Etiquette Capitaine Gobi
 		JLabel lblNewLabel = new JLabel("Capitaine Gobi");
@@ -121,7 +103,7 @@ public class gui extends JFrame {
 			jb[i] = new JButton();
 			jb[i].setIcon(new ImageIcon(img2));
 			panelElite.add(jb[i]);
-			jb[i].addActionListener(new MonEcouteurEvenements(joueur.getListeCombattants(), new String("Elite " + i)));
+			jb[i].addActionListener(new MonEcouteurEvenements(joueur.getEquipe(), 16 + i));
 		}
 		contentPane.add(panelElite);
 		// Etiquette Les Elites
@@ -144,27 +126,27 @@ public class gui extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		Image img3 = new ImageIcon("ressources\\etudiant.png").getImage();
 		JButton[] jb2 = new JButton[15];
-		for (int k = 0; k < 15; k++) {
-			jb2[k] = new JButton();
-			jb2[k].setIcon(new ImageIcon(img3));
-			panelEtu.add(jb2[k]);
-			jb2[k].addActionListener(	new MonEcouteurEvenements(joueur.getListeCombattants(), new String("Etudiant " + k)));
+		for (int i = 0; i < 15; i++) {
+			jb2[i] = new JButton();
+			jb2[i].setIcon(new ImageIcon(img3));
+			panelEtu.add(jb2[i]);
+			jb2[i].addActionListener(new MonEcouteurEvenements(joueur.getEquipe(), i));
 		}
 		// +++++++++++++++++++++++++++++++++++++++++ Joueur +++++++++++++++++++++++++++++++++++++++++++++++++++
 		JLabel lblNewLabel_3 = new JLabel("Joueur");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblNewLabel_3.setBounds(254, 24, 76, 37);
 		contentPane.add(lblNewLabel_3);
-		nom = new TextField();
-		nom.addActionListener(new ActionListener() {
+		pseudoJoueur = new TextField();
+		pseudoJoueur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(nom.getText());
-				joueur.setNom(nom.getText());
+				System.out.println(pseudoJoueur.getText());
+				joueur.setPseudo(pseudoJoueur.getText());
 			}
 		});
-		nom.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		nom.setBounds(336, 24, 152, 37);
-		contentPane.add(nom);
+		pseudoJoueur.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		pseudoJoueur.setBounds(336, 24, 152, 37);
+		contentPane.add(pseudoJoueur);
 		// +++++++++++++++++++++++++++++++++++++++++ Programme  ++++++++++++++++++++++++++++++++++++++++++++++++
 		JLabel lblNewLabel_13 = new JLabel("Programme");
 		lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -175,7 +157,7 @@ public class gui extends JFrame {
 			public void itemStateChanged(ItemEvent e) {
 				String str = programme.getItem(programme.getSelectedIndex());
 				System.out.println(str);
-				joueur.setProgramme(str);
+				joueur.setBranche(str);
 			}
 		});
 		programme.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -190,15 +172,15 @@ public class gui extends JFrame {
 		contentPane.add(programme);
 		// ++++++++++++++++++++++++++++++++++++++++++ Configuration des personnages ++++++++++++++++++++++++++++++++
 		// Compteur des points à distribuer
-		JLabel lblNewLabel_4 = new JLabel("Points � distribuer");
+		JLabel lblNewLabel_4 = new JLabel("Points à distribuer");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblNewLabel_4.setBounds(72, 309, 192, 26);
 		contentPane.add(lblNewLabel_4);
-		pointsDistribuer = new TextField();
-		pointsDistribuer.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		pointsDistribuer.setText(Integer.toString(joueur.getPointsDistribuer()));
-		pointsDistribuer.setBounds(297, 304, 61, 37);
-		contentPane.add(pointsDistribuer);
+		soldePoints = new TextField();
+		soldePoints.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		soldePoints.setText(Integer.toString(joueur.getSoldePoints()));
+		soldePoints.setBounds(297, 304, 61, 37);
+		contentPane.add(soldePoints);
 
 		// Force
 		JLabel lblNewLabel_5 = new JLabel("Force");
@@ -264,7 +246,7 @@ public class gui extends JFrame {
 		choice.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		choice.setBounds(562, 392, 224, 31);
 		choice.add("BDE");
-		choice.add("Biblioth�que");
+		choice.add("Bibliothèque");
 		choice.add("Quartier administratif");
 		choice.add("Halle industrielle");
 		choice.add("Halle sportive");
@@ -279,8 +261,8 @@ public class gui extends JFrame {
 		strategy.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		strategy.setBounds(562, 455, 224, 31);
 		strategy.add("Offensive");
-		strategy.add("D�fensive");
-		strategy.add("Al�atoire");
+		strategy.add("Défensive");
+		strategy.add("Aléatoire");
 		contentPane.add(strategy);
 
 		// Réserviste ?
@@ -290,21 +272,21 @@ public class gui extends JFrame {
 		reserviste.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		reserviste.setBounds(579, 513, 187, 26);
 		contentPane.add(reserviste);
-
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener() {
+			//TODO : SOLVE PROBLEMS -- INSIDE OF ACTIONLISTENER CLASS
 			public void actionPerformed(ActionEvent e) {
-				String key = configPersonnage.getText();
-				Combattant comb = new Combattant();
-				comb.setForce(Integer.parseInt(force.getText()));
-				comb.setConstitution(Integer.parseInt(constitution.getText()));
-				comb.setDexterite(Integer.parseInt(dexterite.getText()));
-				comb.setInitiative(Integer.parseInt(initiative.getText()));
-				comb.setReserviste(reserviste.isSelected());
-				comb.setResistance(Integer.parseInt(resistance.getText()));
-				comb.setAffectation(choice.getSelectedIndex());
-				comb.setStrategie(strategy.getSelectedIndex());
-				joueur.getListeCombattants().put(key, comb);
+				int key = Integer.parseInt(configPersonnage.getText());
+				Etudiant etu = new Etudiant();
+				etu.setForce(Integer.parseInt(force.getText()));
+				etu.setConstitution(Integer.parseInt(constitution.getText()));
+				etu.setDexterite(Integer.parseInt(dexterite.getText()));
+				etu.setInitiative(Integer.parseInt(initiative.getText()));
+				etu.setReserviste(reserviste.isSelected());
+				etu.setResistance(Integer.parseInt(resistance.getText()));
+				//TODO : etu.setZone();
+				etu.setStrategie(strategy.getSelectedIndex());
+				joueur.getEquipe().put(key, etu);
 				System.out.println(joueur);
 			}
 		});
@@ -337,24 +319,23 @@ public class gui extends JFrame {
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	// classe locale pour écouter les composants associés aux combattants
 	final class MonEcouteurEvenements implements ActionListener {
-		private Map<String, Combattant> liste;
-		private String key;
-
-		public MonEcouteurEvenements(Map<String, Combattant> liste, String key) {
-			this.liste = liste;
+		private HashMap<Integer, Etudiant> equipe;
+		private int key;
+		public MonEcouteurEvenements(HashMap<Integer, Etudiant> equipe, int key) {
+			this.equipe = equipe;
 			this.key = key;
 		}
 		public void actionPerformed(ActionEvent e) {
-			Combattant comb = liste.get(key);
-			configPersonnage.setText(key);
-			force.setText(Integer.toString(comb.getForce()));
-			dexterite.setText(Integer.toString(comb.getDexterite()));
-			resistance.setText(Integer.toString(comb.getResistance()));
-			constitution.setText(Integer.toString(comb.getConstitution()));
-			initiative.setText(Integer.toString(comb.getInitiative()));
-			choice.select(comb.getAffectation());
-			strategy.select(comb.getStrategie());
-			reserviste.setSelected(comb.isReserviste());
+			Etudiant etu = equipe.get(key);
+			configPersonnage.setText(Integer.toString(key));
+			force.setText(Integer.toString(etu.getForce()));
+			dexterite.setText(Integer.toString(etu.getDexterite()));
+			resistance.setText(Integer.toString(etu.getResistance()));
+			constitution.setText(Integer.toString(etu.getConstitution()));
+			initiative.setText(Integer.toString(etu.getInitiative()));
+			choice.select(etu.getNomZone());
+			strategy.select(etu.getNomStrategie());
+			reserviste.setSelected(etu.isReserviste());
 		}
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
