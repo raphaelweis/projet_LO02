@@ -43,8 +43,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+import projet_lo02.model.Joueur;;
+
 public class gui extends JFrame {
-/*
 	// les composants de la vue
 	private JPanel contentPane;
 	private TextField configPersonnage = new TextField();
@@ -357,5 +358,4 @@ public class gui extends JFrame {
 		}
 	}
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    */
 }
