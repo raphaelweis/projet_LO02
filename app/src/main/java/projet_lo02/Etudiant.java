@@ -88,7 +88,7 @@ public class Etudiant {
         }
     }
 
-    public void editerAttributs(){     
+    public void editerAttributs(){
         Utility.clearTerminal();
         System.out.println("Vous avez choisi de paramétrer tous les attributs de " + this.type + this.idEtudiant);
         Utility.jumpLines(1);
@@ -207,7 +207,7 @@ public class Etudiant {
             }
         }
     }
-    
+
     public void editerInitiative(){
         while(true){
             Utility.clearTerminal();
@@ -250,14 +250,14 @@ public class Etudiant {
                     break;
                 }
             } else{
-                Utility.sleep(2500);               
+                Utility.sleep(2500);
             }
         }
     }
 
     public void editerReserviste(){
         boolean editSuccessful = false;
-         while(editSuccessful == false){
+        while(editSuccessful == false){
             Utility.clearTerminal();
             System.out.println("Mode Paramétrage d'Etudiant (édition d'un attribut : statut de réserviste) : " + this.type + this.idEtudiant);
             Utility.jumpLines(4);
@@ -272,21 +272,21 @@ public class Etudiant {
                 case "Y" :
                 case "y" :
                     this.setReserviste(true);
-                    editSuccessful = true; 
+                    editSuccessful = true;
                     break;
                 case "N" :
                 case "n" :
                     this.setReserviste(false);
                     editSuccessful = true;
                     break;
-                default : 
+                default :
                     System.out.println("Erreur : valeur entrée non valide");
                     Utility.sleep(2500);
                     break;
             }
-        }       
+        }
     }
-    
+
     public void attribuerZone(){
 
     }
@@ -321,7 +321,7 @@ public class Etudiant {
         sb.append(String.format("%20s", "Zone"));
         sb.append("\n");
         for(int i = 0; i < 139; i++){
-           sb.append("-");
+            sb.append("-");
         }
         sb.append("\n");
         return sb.toString();
@@ -369,7 +369,7 @@ public class Etudiant {
     }
 
     //getters and setters
-    
+
     public int getCredits() {
         return this.credits;
     }
@@ -412,7 +412,7 @@ public class Etudiant {
         if(nouvelleForce >= getMinimumForce() && nouvelleForce <= getMaximumForce()){
             if(this.joueur.getSoldePoints() > nouvelleForce){
                 this.force = nouvelleForce;
-                this.joueur.setSoldePoints(this.joueur.getSoldePoints() + (ancienneForce - nouvelleForce));               
+                this.joueur.setSoldePoints(this.joueur.getSoldePoints() + (ancienneForce - nouvelleForce));
                 return true;
             } else {
                 System.out.println("Erreur : votre solde de points est insuffisant");
@@ -421,7 +421,7 @@ public class Etudiant {
         } else {
             System.out.println("Erreur : rentrez une valeur entre " + getMinimumForce() + " et " + getMaximumForce());
             return false;
-        }   
+        }
     }
 
     public int getResistance() {
@@ -493,13 +493,13 @@ public class Etudiant {
 
     public boolean setStrategie(int nouvelleStrategie) {
         switch(nouvelleStrategie){
-            case 1 : 
+            case 1 :
                 this.strategie = new Attaque();
                 return true;
-            case 2 : 
+            case 2 :
                 this.strategie = new Defense();
                 return true;
-            case 3 : 
+            case 3 :
                 this.strategie = new StrategieAleatoire();
                 return true;
             default :
@@ -653,7 +653,7 @@ public class Etudiant {
         }
         return maximumInitiative;
     }
-    
+
     public static void main(String[] args) {
         Etudiant etuTest = new Etudiant(1, null);
         etuTest.constitution = 10;

@@ -1,5 +1,6 @@
 package projet_lo02;
 
+
 public class Attaque implements Strategie {
 
     private final int degatDeReference = 10;

@@ -102,18 +102,18 @@ public class Joueur {
             if(Utility.isStringInt(input)){
                 int numericInput = Integer.parseInt(input);
                 switch(numericInput){
-                    case 1 : 
+                    case 1 :
                         etudiant.editerAttributs();
                         escape = true;
                         break;
-                    case 2 :  
+                    case 2 :
                         etudiant.editerAttribut();
-                        break; 
+                        break;
                     default :
                         System.out.println("Erreur : valeur entrée non valide");
                         Utility.sleep(2500);
                         break;
-                }              
+                }
             } else{
                 System.out.println("Erreur : type de donnée non valide");
                 Utility.sleep(2500);
@@ -165,17 +165,17 @@ public class Joueur {
         this.equipe = listeEtu;
     }
 
-     public Partie getPartie(){
+    public Partie getPartie(){
         return this.partieEnCours;
-     }
+    }
 
     /*public int getTotalPoints() {
         return this.totalPoints;
     }*/
-    
-     public static void main(String[] args) {
+
+    public static void main(String[] args) {
         // Joueur joueurTest = new Joueur("test");
         // joueurTest.afficherEquipe();
-       System.out.println(Integer.parseInt("23") + Integer.parseInt("2")); 
-     }
+        System.out.println(Integer.parseInt("23") + Integer.parseInt("2"));
+    }
 }
