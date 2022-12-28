@@ -316,9 +316,10 @@ public class Partie {
             Iterator<Etudiant> iteEtudiant = zone.getEquipe2().iterator();
             while(iteEtudiant.hasNext()){
                 int numericInput = Integer.parseInt(input);
-                if(iteEtudiant.next().getIdEtudiant() != numericInput){
+                Etudiant etudiant = iteEtudiant.next();
+                if(etudiant.getIdEtudiant() != numericInput){
                     //placer l'etudiant
-                    deployerEtudiant(iteEtudiant.next(), zone);
+                    deployerEtudiant(etudiant, zone);
                 }
             }
         }
