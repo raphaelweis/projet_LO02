@@ -8,6 +8,7 @@ public class Partie {
     private Joueur joueur1;
     private Joueur joueur2;
     private List<Zone> listZones = new ArrayList<Zone>();
+    private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
     private  boolean zoneControlee;
 
     public Partie(){
@@ -175,8 +176,14 @@ public class Partie {
                 Utility.clearTerminal();
                 System.out.println("Attribuez une zone à votre étudiant : ");
                 Utility.jumpLines(1);
-                System.out.println("(1) : Administration || (2) : BDE || (3) : Bibliothèque || (4) : Halles industrielles || (5) : Halle sportive");
+                System.out.println("Zones possibles : ");
                 Utility.jumpLines(1);
+
+                for(int i = 0 ; i < this.listZones.size() ; i++) {
+                    if (!this.listZones.get(i).getZoneControlee()) {
+                        System.out.println("(" + (i+1) + ") " + this.listZones.get(i).getNomZone());
+                    }
+                }
 
 
                 System.out.println("Etudiant à placer : " + etudiantActuel.getValue().getType() + etudiantActuel.getValue().getIdEtudiant());
@@ -185,11 +192,13 @@ public class Partie {
                 String input = Utility.promptString();
                 if(Utility.isStringInt(input)){
                     int numericInput = Integer.parseInt(input);
-                    if(numericInput >= 1 && numericInput <= this.listZones.size()){
+                    //prednre la zone correspondant à cet indice
+                    //prednre zone dans liste zone
+                    if(numericInput >= 1 && numericInput <= this.listZones.size() && !this.listZones.get(numericInput - 1).getZoneControlee()){
                         etudiantActuel.getValue().setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
                         this.listZones.get(numericInput - 1).attribuerEtudiant(etudiantActuel.getValue()); //attribuer etudiant à la zone
                     } else {
-                        System.out.println("Erreur : valeur entrée non valide");
+                        System.out.println("Erreur : vous ne pouvez mettre l'étudiant que dans la liste de zones indiquées !");
                         Utility.sleep(2500);
                     }
                 } else{
@@ -241,18 +250,21 @@ public class Partie {
                     System.out.println("\n---------- ZONE " + zone.getNomZone()+ " -----------");
                     zone.combattreZone();
                     if(zone.getZoneControlee()){
-                        System.out.println("TREVE");
-
+                        this.listZonesNonControlees.remove(zone);
                         // TREVE
+                        Utility.jumpLines(1);
+                        System.out.println("--------------------------- TREVE ---------------------------");
+                        Utility.jumpLines(1);
                         treve();
 
-                        if(zone.getStatus().equals(Statut.JOUEUR1)){
+                        //redéploiement des troupes
+                        if(zone.getStatus().equals(Statut.JOUEUR1) && joueur1.getNombreZonesControlees() < 3){
                             if(zone.getEquipe1().size() > 1 ){
                                 redeploiement(joueur1, zone);
                             } else {
                                 System.out.println("Il n'y a qu'un joueur, il ne peut pas être redéployé ! ");
                             }
-                        } else {
+                        } else if(zone.getStatus().equals(Statut.JOUEUR2) && joueur2.getNombreZonesControlees() < 3){
                             if(zone.getEquipe2().size() > 1 ){
                                 redeploiement(joueur2, zone);
                             } else {
@@ -274,26 +286,32 @@ public class Partie {
 
     public void treve(){
 
-        if(ReservistesPresents(joueur1)){
-            joueur1.afficherReservisteEquipe();
-            afficherRecapZones(joueur1);
-            placerReservistes(joueur1);
+        treveJoueur(joueur1);
+        treveJoueur(joueur2);
+
+    }
+
+    public void treveJoueur(Joueur joueur){
+        if(ReservistesPresents(joueur)) {
+            System.out.println("Réservistes du joueur " + joueur.getPseudo()+ " :");
+            joueur.afficherReservisteEquipe();
+            afficherRecapZones(joueur);
+            System.out.println("Souhaitez-vous déployer vos réservistes (O/N)?");
+            String input = Utility.promptString();
+            if(input.equals("O") || input.equals("o")){
+                placerReservistes(joueur);
+            }
         }
-
-        if(ReservistesPresents(joueur2)) {
-            joueur2.afficherReservisteEquipe();
-            afficherRecapZones(joueur2);
-            placerReservistes(joueur2);
-        }
-
-
     }
     public void redeploiement(Joueur joueur, Zone zone){
 
         if(joueur.equals(joueur.getPartie().getJoueur1())){
             //afficher etudiants zone + demander lequel reste
+
+            System.out.println("--------- Redéploiement du joueur " + joueur.getPseudo() + " ---------");
             System.out.println(zone.getEquipe1());
             System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");
+
             String input = Utility.promptString();
 
             // placer tous les etudiants sauf celui qui reste
@@ -345,7 +363,7 @@ public class Partie {
         String input = Utility.promptString();
         if(Utility.isStringInt(input)){
             int numericInput = Integer.parseInt(input);
-            if(numericInput >= 1 && numericInput <= this.listZones.size()){
+            if(numericInput >= 1 && numericInput <= this.listZones.size() && !this.listZones.get(numericInput - 1).getZoneControlee()){
                 etudiant.setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
                 this.listZones.get(numericInput - 1).attribuerEtudiant(etudiant); //attribuer etudiant à la zone
                 // retirer etudiant à la zone
@@ -357,7 +375,7 @@ public class Partie {
                 }
 
             } else {
-                System.out.println("Erreur : valeur entrée non valide");
+                System.out.println("Erreur : vous ne pouvez mettre l'étudiant que dans la liste de zones indiquées !");
                 Utility.sleep(2500);
             }
         } else{
@@ -405,8 +423,6 @@ public class Partie {
         return reserviste > 0;
     }
 
-
-
     public void trierZones(){
         Iterator<Zone> iteZones = this.listZones.iterator();
         while (iteZones.hasNext()){
@@ -425,6 +441,13 @@ public class Partie {
         this.listZones.add(new Zone(NomZone.BIBLIOTHEQUE, this));
         this.listZones.add(new Zone(NomZone.HALLE_INDUSTRIELLE, this));
         this.listZones.add(new Zone(NomZone.HALLE_SPORTIVE, this));
+
+        this.listZonesNonControlees = new ArrayList<Zone>();
+        this.listZonesNonControlees.add(new Zone(NomZone.ADMINISTRATION, this));
+        this.listZonesNonControlees.add(new Zone(NomZone.BDE, this));
+        this.listZonesNonControlees.add(new Zone(NomZone.BIBLIOTHEQUE, this));
+        this.listZonesNonControlees.add(new Zone(NomZone.HALLE_INDUSTRIELLE, this));
+        this.listZonesNonControlees.add(new Zone(NomZone.HALLE_SPORTIVE, this));
     }
 
     public Joueur getJoueur1(){

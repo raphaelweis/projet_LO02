@@ -287,25 +287,6 @@ public class Etudiant {
         }
     }
 
-    public void attribuerZone(){
-
-    }
-
-    public void positionnerReserviste(){
-
-    }
-
-    public void redeployerTroupe(){
-
-    }
-
-    //a revoir
-    // public void executerStrategie(Etudiant actionneur){
-    //     this.strategie.executerStrategie(actionneur);
-    // }
-
-    //affichage toString
-
     public static String etudiantColumnHeaders(){
         StringBuffer sb = new StringBuffer();
         sb.append(String.format("%2s", "id"));
@@ -525,8 +506,13 @@ public class Etudiant {
     }
 
     public void setReserviste(boolean nouveauStatut) {
+
         if(nouveauStatut == true && this.reserviste == false){
-            this.reserviste = true;
+            if(this.getJoueur().getNbReserviste() < 5){
+                this.reserviste = true;
+            } else {
+                System.out.println(" Vous avez atteint le nombre maximal de réservistes autorisés !");
+            }
         }else if(nouveauStatut == false && this.reserviste == true){
             this.reserviste = false;
         }

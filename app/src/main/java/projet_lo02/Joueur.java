@@ -121,7 +121,17 @@ public class Joueur {
         }
     }
 
+    public int getNbReserviste(){
+        int nbreserviste = 0;
 
+        Iterator<Map.Entry<Integer, Etudiant>> iteratorEtudiants = equipe.entrySet().iterator();
+        while(iteratorEtudiants.hasNext()){
+            if(iteratorEtudiants.next().getValue().getReserviste()){
+                nbreserviste += 1;
+            }
+        }
+        return nbreserviste;
+    }
 
     public String toString(){
         StringBuffer sb = new StringBuffer();
