@@ -174,6 +174,7 @@ public class Partie {
             if(etudiantActuel.getValue().getReserviste()){
                 etudiantActuel.getValue().setReserviste(false);
                 Utility.clearTerminal();
+                System.out.println("------------- PLacement des réservistes du joueur " + joueur.getPseudo() + " -------------");
                 System.out.println("Attribuez une zone à votre étudiant : ");
                 Utility.jumpLines(1);
                 System.out.println("Zones possibles : ");
@@ -247,7 +248,7 @@ public class Partie {
             while (iteZones.hasNext()){
                 Zone zone = iteZones.next();
                 if(!zone.getZoneControlee()){
-                    System.out.println("\n---------- ZONE " + zone.getNomZone()+ " -----------");
+                    System.out.println("\n------------- ZONE " + zone.getNomZone()+ " --------------");
                     zone.combattreZone();
                     if(zone.getZoneControlee()){
                         this.listZonesNonControlees.remove(zone);
