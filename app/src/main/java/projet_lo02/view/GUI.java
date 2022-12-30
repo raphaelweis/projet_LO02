@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -58,7 +59,7 @@ public class GUI extends JFrame {
 		this.contentPane.setBackground(Color.CYAN);
 		this.setContentPane(contentPane);
 		this.contentPane.setLayout(null); // politique de placement des composants dans la fenêtre
-		this.setBounds(100, 100, 1640, 810);
+		this.setBounds(100, 100, 1240, 810);
 		// +++++++++++++++++++++++++++++++++++++ config personnage  ++++++++++++++++++++++++++++++++++++++++++++
 		this.configPersonnage.setBackground(Color.YELLOW);
 		this.configPersonnage.setForeground(Color.BLACK);
@@ -72,12 +73,11 @@ public class GUI extends JFrame {
 		panelMaitre.setBackground(Color.CYAN);
 		panelMaitre.setBounds(79, 102, 61, 122);
 		panelMaitre.setLayout(new GridLayout(1, 1, 0, 0)); // politique de placement des composants dans ce panel
+		ImageIcon img1 = new ImageIcon("maitreGobi.png");
 		JButton jb1 = new JButton(); // pour représenter un personnage, utilisation d'un JButton
+        jb1.setIcon(img1);
 		panelMaitre.add(jb1);
 		jb1.setForeground(Color.CYAN);
-		Image img1 = new ImageIcon("ressources\\maitre.png").getImage();
-		//Image img1 = new ImageIcon("C:\\Users\\langeron\\Documents\\workspace\\InterfaceCduBrutal\\ressources\\maitre.png").getImage();
-		jb1.setIcon(new ImageIcon(img1)); // habillage du JButon
 		contentPane.add(panelMaitre);
 		// Etiquette Capitaine Gobi
 		JLabel lblNewLabel = new JLabel("Capitaine Gobi");
