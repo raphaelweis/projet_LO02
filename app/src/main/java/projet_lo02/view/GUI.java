@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,11 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
-import projet_lo02.model.Etudiant;
 import projet_lo02.model.Joueur;
-import projet_lo02.model.Partie;
 
-public class gui extends JFrame {
+public class GUI extends JFrame {
 	// les composants de la vue
 	private JPanel contentPane;
 	private TextField configPersonnage = new TextField();
@@ -43,11 +40,9 @@ public class gui extends JFrame {
 
 	// le joueur
 	private Joueur joueur;
-	//private Partie partie;
 	
-	public gui(final Joueur joueur, Partie partie) {
+	public GUI(final Joueur joueur) {
 		this.joueur = joueur;
-		//this.partie = partie;
 		this.initFenetre();
 	}
 
@@ -83,7 +78,6 @@ public class gui extends JFrame {
 		Image img1 = new ImageIcon("ressources\\maitre.png").getImage();
 		//Image img1 = new ImageIcon("C:\\Users\\langeron\\Documents\\workspace\\InterfaceCduBrutal\\ressources\\maitre.png").getImage();
 		jb1.setIcon(new ImageIcon(img1)); // habillage du JButon
-		jb1.addActionListener(new MonEcouteurEvenements(joueur.getEquipe(), 20));
 		contentPane.add(panelMaitre);
 		// Etiquette Capitaine Gobi
 		JLabel lblNewLabel = new JLabel("Capitaine Gobi");
@@ -103,7 +97,6 @@ public class gui extends JFrame {
 			jb[i] = new JButton();
 			jb[i].setIcon(new ImageIcon(img2));
 			panelElite.add(jb[i]);
-			jb[i].addActionListener(new MonEcouteurEvenements(joueur.getEquipe(), 16 + i));
 		}
 		contentPane.add(panelElite);
 		// Etiquette Les Elites
@@ -130,7 +123,6 @@ public class gui extends JFrame {
 			jb2[i] = new JButton();
 			jb2[i].setIcon(new ImageIcon(img3));
 			panelEtu.add(jb2[i]);
-			jb2[i].addActionListener(new MonEcouteurEvenements(joueur.getEquipe(), i));
 		}
 		// +++++++++++++++++++++++++++++++++++++++++ Joueur +++++++++++++++++++++++++++++++++++++++++++++++++++
 		JLabel lblNewLabel_3 = new JLabel("Joueur");
@@ -272,41 +264,17 @@ public class gui extends JFrame {
 		reserviste.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		reserviste.setBounds(579, 513, 187, 26);
 		contentPane.add(reserviste);
+
 		JButton ok = new JButton("OK");
-		ok.addActionListener(new ActionListener() {
-			//TODO : SOLVE PROBLEMS -- INSIDE OF ACTIONLISTENER CLASS
-			public void actionPerformed(ActionEvent e) {
-				int key = Integer.parseInt(configPersonnage.getText());
-				Etudiant etu = new Etudiant();
-				etu.setForce(Integer.parseInt(force.getText()));
-				etu.setConstitution(Integer.parseInt(constitution.getText()));
-				etu.setDexterite(Integer.parseInt(dexterite.getText()));
-				etu.setInitiative(Integer.parseInt(initiative.getText()));
-				etu.setReserviste(reserviste.isSelected());
-				etu.setResistance(Integer.parseInt(resistance.getText()));
-				//TODO : etu.setZone();
-				etu.setStrategie(strategy.getSelectedIndex());
-				joueur.getEquipe().put(key, etu);
-				System.out.println(joueur);
-			}
-		});
 		ok.setBounds(711, 545, 59, 45);
 		contentPane.add(ok);
 		ok.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		// ++++++++++++++++++++++++++++++++++++++++++ Valider configuration équipe ++++++++++++++++++++++++++++++
 		JButton validation = new JButton("VALIDER");
-		validation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Affichage des caractéristiques du joueur.
-				//System.out.println(joueur);
-				// fermer la fenetre graphique
-				dispose();
-			}
-		});
 		validation.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		validation.setBounds(830, 523, 270, 83);
 		contentPane.add(validation);
+
 		// ++++++++++++++++++++++++++++++++++++++++++ Habillage ++++++++++++++++++++++++++++++++++++++++++++
 		// panneau configuration
 		JPanel panel = new JPanel();
@@ -316,27 +284,4 @@ public class gui extends JFrame {
 		contentPane.add(panel);
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	}
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// classe locale pour écouter les composants associés aux combattants
-	final class MonEcouteurEvenements implements ActionListener {
-		private HashMap<Integer, Etudiant> equipe;
-		private int key;
-		public MonEcouteurEvenements(HashMap<Integer, Etudiant> equipe, int key) {
-			this.equipe = equipe;
-			this.key = key;
-		}
-		public void actionPerformed(ActionEvent e) {
-			Etudiant etu = equipe.get(key);
-			configPersonnage.setText(Integer.toString(key));
-			force.setText(Integer.toString(etu.getForce()));
-			dexterite.setText(Integer.toString(etu.getDexterite()));
-			resistance.setText(Integer.toString(etu.getResistance()));
-			constitution.setText(Integer.toString(etu.getConstitution()));
-			initiative.setText(Integer.toString(etu.getInitiative()));
-			choice.select(etu.getNomZone());
-			strategy.select(etu.getNomStrategie());
-			reserviste.setSelected(etu.isReserviste());
-		}
-	}
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }

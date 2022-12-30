@@ -12,11 +12,30 @@ public class Joueur {
     HashMap<Integer, Etudiant> equipe;
     public final int TOTAL_SOLDE_POINTS = 400;
 
-    //Constructeur
+    //Constructeurs
     public Joueur(String nouveauPseudo, String branche, Partie partieDeCeJoueur){
         int compteur = 1;
         this.setPseudo(nouveauPseudo);
         this.setBranche(branche);
+        this.partieEnCours = partieDeCeJoueur;
+        this.soldePoints = TOTAL_SOLDE_POINTS;
+        this.nombreZonesControlees = 0;
+        equipe = new HashMap<Integer, Etudiant>(20);
+        for(int i = 0; i < 15; i++){
+            equipe.put(compteur, new Etudiant(compteur, this));
+            compteur += 1;
+        }
+        for(int i = 0; i < 4; i++){
+            equipe.put(compteur, new Elite(compteur, this));
+            compteur += 1;
+        }
+        equipe.put(compteur, new MaitreGobi(compteur, this));
+    }
+
+    public Joueur(Partie partieDeCeJoueur){
+        int compteur = 1;
+        this.setPseudo(null);
+        this.setBranche(null);
         this.partieEnCours = partieDeCeJoueur;
         this.soldePoints = TOTAL_SOLDE_POINTS;
         this.nombreZonesControlees = 0;
