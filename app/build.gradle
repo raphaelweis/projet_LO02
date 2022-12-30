@@ -9,11 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
-}
-
-apply plugin : "java"
-ext{
-    javaMainClass = "projet_lo02.Partie"
+    id 'java'
 }
 
 repositories {
@@ -24,14 +20,11 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
-
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:31.1-jre'
 }
 
 application {
     // Define the main class for the application.
-    mainClassName = javaMainClass
+    mainClass.set("projet_lo02.model.Partie")
 }
 
 run {

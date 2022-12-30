@@ -1,8 +1,12 @@
-package projet_lo02;
+package projet_lo02.model;
 
 import java.util.Random;
 
 public class StrategieAleatoire implements Strategie{
+
+    public String getNomStrategie(){
+            return "Aléatoire";
+    }
 
     public void executerStrategie(Etudiant actionneur){
 

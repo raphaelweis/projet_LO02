@@ -1,10 +1,12 @@
-package projet_lo02;
+package projet_lo02.model;
 
 public class Defense implements Strategie {
 
-    public void executerStrategie(Etudiant actionneur){
+    public String getNomStrategie(){
+            return "Défense";
+    }
 
-        //System.out.println("La stratégie Défense vient d'être utilisée !");
+    public void executerStrategie(Etudiant actionneur){
 
         double x = Utility.getRandomDouble(0, 100, true, true);
         double y = Utility.getRandomDouble(0, 0.6, false, true);

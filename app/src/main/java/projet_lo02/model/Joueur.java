@@ -1,10 +1,11 @@
-package projet_lo02;
+package projet_lo02.model;
 
 import java.util.*;
 
 public class Joueur {
 
     private String pseudo;
+    private String branche;
     private Partie partieEnCours;
     private int soldePoints;
     private int nombreZonesControlees;
@@ -12,15 +13,16 @@ public class Joueur {
     public final int TOTAL_SOLDE_POINTS = 400;
 
     //Constructeur
-    public Joueur(String nouveauPseudo, Partie partieDeCeJoueur){
+    public Joueur(String nouveauPseudo, String branche, Partie partieDeCeJoueur){
         int compteur = 1;
-        this.pseudo = nouveauPseudo;
+        this.setPseudo(nouveauPseudo);
+        this.setBranche(branche);
         this.partieEnCours = partieDeCeJoueur;
         this.soldePoints = TOTAL_SOLDE_POINTS;
         this.nombreZonesControlees = 0;
         equipe = new HashMap<Integer, Etudiant>(20);
         for(int i = 0; i < 15; i++){
-            equipe.put(compteur,new Etudiant(compteur, this));
+            equipe.put(compteur, new Etudiant(compteur, this));
             compteur += 1;
         }
         for(int i = 0; i < 4; i++){
@@ -149,6 +151,14 @@ public class Joueur {
 
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
+    }
+
+    public String getBranche() {
+        return this.branche;
+    }
+
+    public void setBranche(String branche) {
+        this.branche = branche;
     }
 
     public int getSoldePoints() {

@@ -1,4 +1,4 @@
-package projet_lo02;
+package projet_lo02.model;
 
 import java.util.*;
 
@@ -8,17 +8,25 @@ public class Partie {
     private Joueur joueur1;
     private Joueur joueur2;
     private List<Zone> listZones = new ArrayList<Zone>();
+<<<<<<< HEAD:app/src/main/java/projet_lo02/Partie.java
     private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
     private  boolean zoneControlee;
+    //private  boolean zoneControlee;
 
     public Partie(){
         Utility.clearTerminal();
         System.out.println("Initialisation : Création des joueurs");
         Utility.jumpLines(1);
         System.out.print("Entrer Pseudo Joueur 1 : ");
-        this.joueur1 = new Joueur(Utility.userInput.next(), this);
+        System.out.print("Entrer Branche Joueur 1 : ");
+        String pseudoJ1 = Utility.userInput.next();
+        String brancheJ1 = Utility.userInput.next();
+        this.joueur1 = new Joueur(pseudoJ1, brancheJ1, this);
         System.out.print("Entrer Pseudo Joueur 2 : ");
-        this.joueur2 = new Joueur(Utility.userInput.next(), this);
+        System.out.print("Entrer Branche Joueur 2 : ");
+        String pseudoJ2 = Utility.userInput.next();
+        String brancheJ2 = Utility.userInput.next();
+        this.joueur2 = new Joueur(pseudoJ2, brancheJ2, this);
         this.initialiserZones();
     }
 
@@ -39,7 +47,7 @@ public class Partie {
                     break;
                 case "N" :
                 case "n" :
-                    System.out.println("Fin de l'éxecution du Programme");
+                    System.out.println("Fin de l'exécution du Programme");
                     Utility.userInput.close();
                     System.exit(0);
                     break;
