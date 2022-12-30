@@ -53,17 +53,17 @@ public class GUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.pack();
-		contentPane = new JPanel();
-		contentPane.setBorder(new CompoundBorder());
-		contentPane.setBackground(Color.CYAN);
-		setContentPane(contentPane);
-		contentPane.setLayout(null); // politique de placement des composants dans la fenêtre
-		setBounds(100, 100, 1130, 650);
+		this.contentPane = new JPanel();
+		this.contentPane.setBorder(new CompoundBorder());
+		this.contentPane.setBackground(Color.CYAN);
+		this.setContentPane(contentPane);
+		this.contentPane.setLayout(null); // politique de placement des composants dans la fenêtre
+		this.setBounds(100, 100, 1640, 810);
 		// +++++++++++++++++++++++++++++++++++++ config personnage  ++++++++++++++++++++++++++++++++++++++++++++
-		configPersonnage.setBackground(Color.YELLOW);
-		configPersonnage.setForeground(Color.BLACK);
-		configPersonnage.setFont(new Font("Tahoma", Font.ITALIC, 20));
-		configPersonnage.setBounds(426, 331, 360, 34);
+		this.configPersonnage.setBackground(Color.YELLOW);
+		this.configPersonnage.setForeground(Color.BLACK);
+		this.configPersonnage.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		this.configPersonnage.setBounds(426, 331, 360, 34);
 		contentPane.add(configPersonnage);
 		// +++++++++++++++++++++++++++++++++++++ Maitre Gobi  +++++++++++++++++++++++++++++++++++++++++++++++++
 		// Panel du maitre Gobi
