@@ -9,23 +9,29 @@ public class Partie {
     private Joueur joueur2;
     private List<Zone> listZones = new ArrayList<Zone>();
     private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
-    private  boolean zoneControlee;
     //private  boolean zoneControlee;
 
     public Partie(){
+
         Utility.clearTerminal();
         System.out.println("Initialisation : Création des joueurs");
         Utility.jumpLines(1);
+
         System.out.print("Entrer Pseudo Joueur 1 : ");
-        System.out.print("Entrer Branche Joueur 1 : ");
         String pseudoJ1 = Utility.userInput.next();
+        Utility.jumpLines(0);
+        System.out.print("Entrer Branche Joueur 1 : ");
         String brancheJ1 = Utility.userInput.next();
         this.joueur1 = new Joueur(pseudoJ1, brancheJ1, this);
+
+        Utility.jumpLines(1);
+
         System.out.print("Entrer Pseudo Joueur 2 : ");
-        System.out.print("Entrer Branche Joueur 2 : ");
         String pseudoJ2 = Utility.userInput.next();
+        System.out.print("Entrer Branche Joueur 2 : ");
         String brancheJ2 = Utility.userInput.next();
         this.joueur2 = new Joueur(pseudoJ2, brancheJ2, this);
+
         this.initialiserZones();
     }
 
@@ -220,22 +226,19 @@ public class Partie {
     }
 
     public void initialiserCombats(){
-
-        Utility.clearTerminal();
-        System.out.println("Configuration initiale terminée !");
-        Utility.jumpLines(1);
-        System.out.println("Entrez (go) pour lancer les combats !");
-        String input = Utility.promptString();
-
-        if(input.equals("go")){
-            this.combattre();
-            System.out.println("Fin des combats : repasser en mode paramétrage ?");
+        while(true){
+            Utility.clearTerminal();
+            System.out.println("Configuration initiale terminée !");
             Utility.jumpLines(1);
-            System.out.println("(C) : Continuer");
-            Utility.jumpLines(1);
-            input = Utility.promptString();
-            if(input.equals("c") || input.equals("C")){
+            System.out.println("Entrez (go) pour lancer les combats !");
+            String input = Utility.promptString();
 
+            if(input.equals("go")){
+                this.combattre();
+                break;
+            } else {
+                System.out.println("Erreur : Entrez exactement go pour confirmer le début des combats");
+                Utility.sleep(2500);
             }
         }
     }
