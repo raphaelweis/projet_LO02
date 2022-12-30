@@ -8,7 +8,6 @@ public class Partie {
     private Joueur joueur1;
     private Joueur joueur2;
     private List<Zone> listZones = new ArrayList<Zone>();
-<<<<<<< HEAD:app/src/main/java/projet_lo02/Partie.java
     private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
     private  boolean zoneControlee;
     //private  boolean zoneControlee;
