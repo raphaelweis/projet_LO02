@@ -71,11 +71,12 @@ public class GUI extends JFrame {
 		JPanel panelMaitre = new JPanel();
 		panelMaitre.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		panelMaitre.setBackground(Color.CYAN);
-		panelMaitre.setBounds(79, 102, 61, 122);
+		panelMaitre.setBounds(79, 102, 90, 122);
 		panelMaitre.setLayout(new GridLayout(1, 1, 0, 0)); // politique de placement des composants dans ce panel
-		ImageIcon img1 = new ImageIcon("maitreGobi.png");
+		Image img1 = new ImageIcon(this.getClass().getResource("/images/maitreGobi.png")).getImage();
 		JButton jb1 = new JButton(); // pour représenter un personnage, utilisation d'un JButton
-        jb1.setIcon(img1);
+        img1 = img1.getScaledInstance(panelMaitre.getWidth(), panelMaitre.getHeight(), Image.SCALE_SMOOTH);
+        jb1.setIcon(new ImageIcon(img1));
 		panelMaitre.add(jb1);
 		jb1.setForeground(Color.CYAN);
 		contentPane.add(panelMaitre);
