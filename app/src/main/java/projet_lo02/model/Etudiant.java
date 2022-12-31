@@ -1,20 +1,77 @@
 package projet_lo02.model;
 
+/**
+ * Classe pour l'étudiant de type Elite
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class Etudiant {
+
+    /**
+     * ID étudiant
+     */
     protected int idEtudiant;
+
+    /**
+     * Type étudiant
+     */
     protected String type;
+
+    /**
+     * Nb de crédits
+     */
     protected int credits;
+
+    /**
+     * Points de dextérité
+     */
     protected int dexterite;
+
+    /**
+     * Points de force
+     */
     protected int force;
+
+    /**
+     * Points de resistance
+     */
     protected int resistance;
+
+    /**
+     * Points de constitution
+     */
     protected int constitution;
+
+    /**
+     * Points de initiative
+     */
     protected int initiative;
+
+    /**
+     * Stratégie de l'étudiant
+     */
     private Strategie strategie;
+
+    /**
+     * Joueur de l'étudiant
+     */
     private Joueur joueur;
+
+    /**
+     * Statut (réserviste ou non)
+     */
     private boolean reserviste;
+
+    /**
+     * Zone où il est situé
+     */
     private Zone zoneEtudiant;
 
-    //constructeur
+    /**
+     * Constructeur Etudiant
+     * @param idEtudiant ID de l'étudiant
+     * @param joueur joueur de l'étudiant
+     */
     public Etudiant(int idEtudiant, Joueur joueur){
         this.idEtudiant = idEtudiant;
         this.type = "Etudiant";
@@ -25,12 +82,14 @@ public class Etudiant {
         this.initiative = getMinimumInitiative();
         this.strategie = new StrategieAleatoire();
         this.reserviste = false;
-        this.zoneEtudiant = null;
         this.credits = 30 + this.constitution;
         this.joueur = joueur;
         this.zoneEtudiant = null;
     }
 
+    /**
+     * Constructeur Etudiant
+     */
     public Etudiant(){
         this.type = "Etudiant";
         this.dexterite = getMinimumDexterite();
@@ -40,13 +99,16 @@ public class Etudiant {
         this.initiative = getMinimumInitiative();
         this.strategie = new StrategieAleatoire();
         this.reserviste = false;
-        this.zoneEtudiant = null;
         this.credits = 30 + this.constitution;
         this.zoneEtudiant = null;
     }
 
+    /**
+     * Méthode pour éditer un attribut
+     */
     public void editerAttribut(){
         while(true){
+            //Affichage
             Utility.clearTerminal();
             System.out.println("Mode Paramétrage d'Etudiant (édition d'un attribut) : " + this.type + this.idEtudiant);
             Utility.jumpLines(1);
@@ -66,6 +128,7 @@ public class Etudiant {
             if(input.equals("q") || input.equals("Q")){
                 break;
             }
+            //choisir l'attribut en fonction du choix
             if(Utility.isStringInt(input)){
                 int numericInput = Integer.parseInt(input);
                 switch(numericInput){
@@ -102,6 +165,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer tous les attributs
+     */
     public void editerAttributs(){
         Utility.clearTerminal();
         System.out.println("Vous avez choisi de paramétrer tous les attributs de " + this.type + this.idEtudiant);
@@ -122,8 +188,12 @@ public class Etudiant {
         Utility.sleep(2500);
     }
 
+    /**
+     * Méthode pour éditer la dextérité
+     */
     public void editerDexterite(){
         while(true){
+            //affichage
             Utility.clearTerminal();
             System.out.println("Mode Paramétrage d'Etudiant (édition d'un attribut : Dextérité) : " + this.type + this.idEtudiant);
             Utility.jumpLines(1);
@@ -135,7 +205,7 @@ public class Etudiant {
             String input = Utility.promptString();
             if(Utility.isStringInt(input)){
                 int numbericInput = Integer.parseInt(input);
-                if(this.setDexterite(numbericInput) == true){
+                if(this.setDexterite(numbericInput)){
                     break;
                 }else{
                     Utility.sleep(2500);
@@ -147,6 +217,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer la force
+     */
     public void editerForce(){
         while(true){
             Utility.clearTerminal();
@@ -172,6 +245,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer la resistance
+     */
     public void editerResistance(){
         while(true){
             Utility.clearTerminal();
@@ -197,6 +273,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer la constitution
+     */
     public void editerConstitution(){
         while(true){
             Utility.clearTerminal();
@@ -222,6 +301,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer la l'initiative
+     */
     public void editerInitiative(){
         while(true){
             Utility.clearTerminal();
@@ -247,6 +329,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer la stratégie
+     */
     public void editerStrategie(){
         while(true){
             Utility.clearTerminal();
@@ -269,6 +354,9 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour éditer le statut de réserviste
+     */
     public void editerReserviste(){
         boolean editSuccessful = false;
         while(editSuccessful == false){
@@ -301,6 +389,10 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Méthode pour afficher le nom des caractéristiques
+     * @return affichage des caractéristiques
+     */
     public static String etudiantColumnHeaders(){
         StringBuffer sb = new StringBuffer();
         sb.append(String.format("%2s", "id"));
@@ -322,6 +414,10 @@ public class Etudiant {
         return sb.toString();
     }
 
+    /**
+     * Méthode pour afficher les caractéristiques d'un étudiant
+     * @return affichage des caractéristiques de l'étudiant
+     */
     public String etudiantOneLiner(){
         StringBuffer sb = new StringBuffer();
         sb.append(String.format("%2s", this.idEtudiant));
@@ -355,7 +451,10 @@ public class Etudiant {
         return sb.toString();
     }
 
-    //TODO : TOSTRING POUR LES STRATEGIES
+    /**
+     * Méthode pour afficher un étudiant et ses caractéristiques
+     * @return affichage de l'étudiant
+     */
     public String toString(){
         StringBuffer sb = new StringBuffer();
         sb.append(etudiantColumnHeaders());
@@ -365,22 +464,42 @@ public class Etudiant {
 
     //getters and setters
 
+    /**
+     * Getter crédits
+     * @return nb crédits de l'étudiant
+     */
     public int getCredits() {
         return this.credits;
     }
 
+    /**
+     * Setter crédits
+     * @param credits nb credits de l'étudiant
+     */
     public void setCredits(int credits) {
         this.credits = credits;
     }
 
+    /**
+     * Getter ID étudiant
+     * @return ID de l'étudiant
+     */
     public int getIdEtudiant(){
         return this.idEtudiant;
     }
 
+    /**
+     * Getter dextérité
+     * @return nb pts de dextérité de l'étudiant
+     */
     public int getDexterite() {
         return this.dexterite;
     }
 
+    /**
+     * Setter dexterite
+     * @param nouvelleDexterite nb dexterite de l'étudiant
+     */
     public boolean setDexterite(int nouvelleDexterite) {
         int ancienneDexterite = this.dexterite;
         if(nouvelleDexterite >= getMinimumDexterite() && nouvelleDexterite <= getMaximumDexterite()){
@@ -398,10 +517,18 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter force
+     * @return nb pts de force de l'étudiant
+     */
     public int getForce() {
         return this.force;
     }
 
+    /**
+     * Setter force
+     * @param nouvelleForce nb force de l'étudiant
+     */
     public boolean setForce(int nouvelleForce) {
         int ancienneForce = this.force;
         if(nouvelleForce >= getMinimumForce() && nouvelleForce <= getMaximumForce()){
@@ -419,10 +546,18 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter resistance
+     * @return nb pts de resistance de l'étudiant
+     */
     public int getResistance() {
         return this.resistance;
     }
 
+    /**
+     * Setter resistance
+     * @param nouvelleResistance nb resistance de l'étudiant
+     */
     public boolean setResistance(int nouvelleResistance) {
         int ancienneResistance = this.resistance;
         if(nouvelleResistance >= getMinimumResistance() && nouvelleResistance <= getMaximumResistance()){
@@ -440,10 +575,18 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter constitution
+     * @return nb pts de constitution de l'étudiant
+     */
     public int getConstitution() {
         return this.constitution;
     }
 
+    /**
+     * Setter constitution
+     * @param nouvelleConstitution nb constitution de l'étudiant
+     */
     public boolean setConstitution(int nouvelleConstitution) {
         int ancienneConstitution = this.constitution;
         if(nouvelleConstitution >= getMinimumConstitution() && nouvelleConstitution <= getMaximumConstitution()){
@@ -461,10 +604,18 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter intitiative
+     * @return nb pts de intitiative de l'étudiant
+     */
     public int getInitiative() {
         return this.initiative;
     }
 
+    /**
+     * Setter Initiative
+     * @param nouvelleInitiative nb Initiative de l'étudiant
+     */
     public boolean setInitiative(int nouvelleInitiative) {
         int ancienneInitiative = this.initiative;
         if(nouvelleInitiative >= getMinimumInitiative() && nouvelleInitiative <= getMaximumInitiative()){
@@ -482,14 +633,26 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter stratégie
+     * @return statut stratégie de l'étudiant
+     */
     public Strategie getStrategie() {
         return this.strategie;
     }
 
+    /**
+     * Getter nom stratégie
+     * @return nom stratégie de l'étudiant
+     */
     public String getNomStrategie(){
         return this.strategie.getNomStrategie();
     }
 
+    /**
+     * Setter Strategie
+     * @param nouvelleStrategie Strategie de l'étudiant
+     */
     public boolean setStrategie(int nouvelleStrategie) {
         switch(nouvelleStrategie){
             case 1 :
@@ -507,22 +670,42 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter joueur
+     * @return joueur de l'étudiant
+     */
     public Joueur getJoueur() {
         return this.joueur;
     }
 
+    /**
+     * Setter joueur
+     * @param joueur joueur de l'étudiant
+     */
     public void setJoueur(Joueur joueur) {
         this.joueur = joueur;
     }
 
+    /**
+     * Méthode pour connaitre statut reserviste
+     * @return vrai si reserviste, faux sinon
+     */
     public boolean isReserviste() {
         return this.reserviste;
     }
 
+    /**
+     * Getter statut reserviste
+     * @return statut reserviste de l'étudiant
+     */
     public boolean getReserviste() {
         return this.reserviste;
     }
 
+    /**
+     * Setter statut de réserviste
+     * @param nouveauStatut statut de réserviste de l'étudiant
+     */
     public void setReserviste(boolean nouveauStatut) {
 
         if(nouveauStatut == true && this.reserviste == false){
@@ -536,22 +719,42 @@ public class Etudiant {
         }
     }
 
+    /**
+     * Getter zone étudiant
+     * @return zone
+     */
     public Zone getZone() {
         return this.zoneEtudiant;
     }
 
+    /**
+     * Getter nom zone de l'étudiant
+     * @return nom de la zone
+     */
     public String getNomZone(){
         return this.zoneEtudiant.getNomZone();
     }
 
+    /**
+     * Setter zone de l'étudiant
+     * @param zone zone de l'étudiant
+     */
     public void setZone(Zone zone) {
         this.zoneEtudiant = zone;
     }
-    
+
+    /**
+     * Getter type de l'étudiant
+     * @return ntype de l'étudiant
+     */
     public String getType(){
         return this.type;
     }
 
+    /**
+     * Getter minimum de dextérité
+     * @return entier minimum de dextérité
+     */
     public int getMinimumDexterite(){
         int minimumDexterite = 0;
         if(this instanceof Elite){
@@ -563,6 +766,10 @@ public class Etudiant {
         return minimumDexterite;
     }
 
+    /**
+     * Getter minimum de force
+     * @return entier minimum de force
+     */
     public int getMinimumForce(){
         int minimumForce = 0;
         if(this instanceof Elite){
@@ -574,6 +781,10 @@ public class Etudiant {
         return minimumForce;
     }
 
+    /**
+     * Getter minimum de resistance
+     * @return entier minimum de resistance
+     */
     public int getMinimumResistance(){
         int minimumResistance = 0;
         if(this instanceof Elite){
@@ -585,6 +796,10 @@ public class Etudiant {
         return minimumResistance;
     }
 
+    /**
+     * Getter minimum de constitution
+     * @return entier minimum de constitution
+     */
     public int getMinimumConstitution(){
         int minimumConstitution = 0;
         if(this instanceof Elite){
@@ -596,6 +811,10 @@ public class Etudiant {
         return minimumConstitution;
     }
 
+    /**
+     * Getter minimum de intitiative
+     * @return entier minimum de intitiative
+     */
     public int getMinimumInitiative(){
         int minimumInitiative = 0;
         if(this instanceof Elite){
@@ -607,6 +826,10 @@ public class Etudiant {
         return minimumInitiative;
     }
 
+    /**
+     * Getter max de dexterite
+     * @return entier max de dexterite
+     */
     public int getMaximumDexterite(){
         int maximumDexterite = 10;
         if(this instanceof Elite){
@@ -618,6 +841,10 @@ public class Etudiant {
         return maximumDexterite;
     }
 
+    /**
+     * Getter max de force
+     * @return entier max de force
+     */
     public int getMaximumForce(){
         int maximumForce = 10;
         if(this instanceof Elite){
@@ -629,6 +856,10 @@ public class Etudiant {
         return maximumForce;
     }
 
+    /**
+     * Getter max de resistance
+     * @return entier max de resistance
+     */
     public int getMaximumResistance(){
         int maximumResistance = 10;
         if(this instanceof Elite){
@@ -640,6 +871,10 @@ public class Etudiant {
         return maximumResistance;
     }
 
+    /**
+     * Getter max de constitution
+     * @return entier max de constitution
+     */
     public int getMaximumConstitution(){
         int maximumConstitution = 30;
         if(this instanceof Elite){
@@ -651,6 +886,10 @@ public class Etudiant {
         return maximumConstitution;
     }
 
+    /**
+     * Getter max de initiative
+     * @return entier max de initiative
+     */
     public int getMaximumInitiative(){
         int maximumInitiative = 10;
         if(this instanceof Elite){
@@ -660,11 +899,5 @@ public class Etudiant {
             maximumInitiative += 2;
         }
         return maximumInitiative;
-    }
-
-    public static void main(String[] args) {
-        Etudiant etuTest = new Etudiant(1, null);
-        etuTest.constitution = 10;
-        System.out.println(etuTest);
     }
 }

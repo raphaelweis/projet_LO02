@@ -1,19 +1,19 @@
 package projet_lo02.model;
 
+/**
+ * Classe pour l'étudiant de type Maitre du Gobi
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class MaitreGobi extends Etudiant{
 
+    /**
+     * Constructeur de la classe Maitre du Gobi
+     * @param idEtudiant ID de l'étudiant
+     * @param  joueur joueur de l'étudiant
+     */
     public MaitreGobi(int idEtudiant, Joueur joueur) {
         super(idEtudiant, joueur);
         this.type = "MaîtreGobi";
-    }
-
-    public static void main(String[] args) {
-        MaitreGobi maitreGobiTest = new MaitreGobi(1, null);
-        Elite eliteTest = new Elite(1, null);
-        //System.out.println(maitreGobiTest);
-        System.out.println(maitreGobiTest.getMinimumConstitution());
-        System.out.println(eliteTest.getMinimumConstitution());
-        System.out.println(maitreGobiTest);
-        System.out.println(eliteTest);
     }
 }

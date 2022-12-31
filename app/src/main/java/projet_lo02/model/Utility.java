@@ -3,14 +3,33 @@ package projet_lo02.model;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Classe Utility
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public final class Utility {
 
+    /**
+     * Attribut pour le scanner (entrée sur le terminal)
+     */
     public static Scanner userInput = new Scanner(System.in);
 
+    /**
+     * Constructeur Utility
+     */
     private Utility(){
         throw new java.lang.UnsupportedOperationException("Cette classe est une classe d'utilité est ne peut pas être instanciée.");
     }
 
+    /**
+     * Méthode pour obtenir un réel aléatoire dans un intervalle donné
+     * @param  min minimum de l'intervalle
+     * @param  max maximum de l'intervalle
+     * @param  inclusiviteInf savoir si on prend la borne inf
+     * @param  inclusiviteSup savoir si on prend la borne sup
+     * @return un réel inclus dans l'intervalle
+     */
     public static double getRandomDouble(double min, double max, Boolean inclusiviteInf, Boolean inclusiviteSup){
         double randomNumber;
         Random rnd = new Random();
@@ -35,11 +54,19 @@ public final class Utility {
         }
     }
 
+    /**
+     * Obtenir la partie entière d'un réel
+     * @param n un réel
+     * @return un entier
+     */
     public static int getPartieEntiere(double n){
         double partieDecimale = n % 1;
         return (int)(n - partieDecimale);
     }
 
+    /**
+     * Méthode pour clear le terminal
+     */
     public static void clearTerminal(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -53,40 +80,45 @@ public final class Utility {
         jumpLines(2);
     }
 
+    /**
+     * Méthode pour sauter des lignes
+     * @param  nombreLignes nb de lignes à sauter
+     */
     public static void jumpLines(int nombreLignes){
         for(int i = 0; i < nombreLignes; i++){
             System.out.println();
         }
     }
 
+    /**
+     * Méthode pour temporiser une action
+     */
     public static void sleep(int time){
         try{
             Thread.sleep(time);
         }catch(Exception e){}
     }
 
+    /**
+     * Méthode pour afficher une flèche sur le prompt
+     * @return "->"
+     */
     public static String promptString(){
         jumpLines(1);
         System.out.print("-> ");
         return userInput.next();
     }
 
+    /**
+     * Méthode pour checker un string
+     * @param stringToCheck string à vérifier
+     * @return vrai si vérifié, faux sinon
+     */
     public static boolean isStringInt(String stringToCheck){
         if(stringToCheck.matches("-?\\d+")){
             return true;
         } else{
             return false;
         }
-    }
-
-    public static void main(String[] args){
-        String a = "bonjour";
-        String b = "2";
-        String c = "0324234";
-        String d = "0.4343";
-        System.out.println(isStringInt(a));
-        System.out.println(isStringInt(b));
-        System.out.println(isStringInt(c));
-        System.out.println(isStringInt(d));
     }
 }

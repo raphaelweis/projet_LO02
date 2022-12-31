@@ -2,17 +2,54 @@ package projet_lo02.model;
 
 import java.util.*;
 
+/**
+ * Classe du joueur
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class Joueur {
 
+    /**
+     * Pseudo du joueur
+     */
     private String pseudo;
+
+    /**
+     * Branche du joueur
+     */
     private String branche;
+
+    /**
+     * partie du joueur
+     */
     private Partie partieEnCours;
+
+    /**
+     * Solde de points du joueur
+     */
     private int soldePoints;
+
+    /**
+     * Nb de zones contrôlées par le joueur
+     */
     private int nombreZonesControlees;
+
+    /**
+     * Liste des troupes
+     */
     HashMap<Integer, Etudiant> equipe;
+
+    /**
+     * Solde de points au départ
+     */
     public final int TOTAL_SOLDE_POINTS = 400;
 
-    //Constructeur
+    /**
+     * Constructeur du joueur
+     * @param nouveauPseudo pseudo du joueur
+     * @param branche branche du joueur
+     * @param partieDeCeJoueur partie du joueur
+     */
     public Joueur(String nouveauPseudo, String branche, Partie partieDeCeJoueur){
         int compteur = 1;
         this.setPseudo(nouveauPseudo);
@@ -32,6 +69,9 @@ public class Joueur {
         equipe.put(compteur, new MaitreGobi(compteur, this));
     }
 
+    /**
+     * Méthode pour paramétrer l'équipe du joueur
+     */
     public void parametrerEquipe(){
         while(true){
             Utility.clearTerminal();
@@ -63,6 +103,9 @@ public class Joueur {
         }
     }
 
+    /**
+     * Méthode pour afficher l'équipe du joueur
+     */
     public void afficherEquipe(){
         System.out.print(Etudiant.etudiantColumnHeaders());
         Iterator<Map.Entry<Integer, Etudiant>> iteratorEtudiants = equipe.entrySet().iterator();
@@ -72,6 +115,9 @@ public class Joueur {
         }
     }
 
+    /**
+     * Méthode pour afficher les réservistes de l'équipe du joueur
+     */
     public void afficherReservisteEquipe(){
         System.out.print(Etudiant.etudiantColumnHeaders());
         Iterator<Map.Entry<Integer, Etudiant>> iteratorEtudiants = equipe.entrySet().iterator();
@@ -83,6 +129,11 @@ public class Joueur {
         }
     }
 
+    /**
+     * Méthode pour paramétrer un étudiant du joueur
+     * @param  etudiant étudiant à paramétrer
+     * @param idEtudiant ID de l'étudiant
+     */
     public void parametrerEtudiant(Etudiant etudiant, int idEtudiant){
         boolean escape = false;
         while(escape == false){
@@ -123,6 +174,10 @@ public class Joueur {
         }
     }
 
+    /**
+     * Méthode pour calculer le nb de réservistes de l'équipe du joueur
+     * @return nb de réservistes
+     */
     public int getNbReserviste(){
         int nbreserviste = 0;
 
@@ -135,6 +190,10 @@ public class Joueur {
         return nbreserviste;
     }
 
+    /**
+     * Méthode pour afficher le joueur
+     * @return la liste des étudiants
+     */
     public String toString(){
         StringBuffer sb = new StringBuffer();
         sb.append("-------- " + this.pseudo + " --------\n");
@@ -145,6 +204,10 @@ public class Joueur {
 
     //getters et setters
 
+    /**
+     * Getter pseudo
+     * @return le pseudo du joueur
+     */
     public String getPseudo() {
         return this.pseudo;
     }
@@ -153,6 +216,10 @@ public class Joueur {
         this.pseudo = pseudo;
     }
 
+    /**
+     * Getter branche
+     * @return la branche du joueur
+     */
     public String getBranche() {
         return this.branche;
     }
@@ -161,6 +228,10 @@ public class Joueur {
         this.branche = branche;
     }
 
+    /**
+     * Getter solde points
+     * @return entier solde points du joueur
+     */
     public int getSoldePoints() {
         return this.soldePoints;
     }
@@ -169,6 +240,10 @@ public class Joueur {
         this.soldePoints = nouveauSoldePoints;
     }
 
+    /**
+     * Getter nb zones controlées
+     * @return entier nb zones controlées
+     */
     public int getNombreZonesControlees() {
         return this.nombreZonesControlees;
     }
@@ -177,6 +252,10 @@ public class Joueur {
         this.nombreZonesControlees = nbZonesControlees;
     }
 
+    /**
+     * Getter equipe du joueur
+     * @return liste d'étudiants
+     */
     public HashMap<Integer, Etudiant> getEquipe() {
         return this.equipe;
     }
@@ -185,17 +264,11 @@ public class Joueur {
         this.equipe = listeEtu;
     }
 
+    /**
+     * Getter partie du joueur
+     * @return partie
+     */
     public Partie getPartie(){
         return this.partieEnCours;
-    }
-
-    /*public int getTotalPoints() {
-        return this.totalPoints;
-    }*/
-
-    public static void main(String[] args) {
-        // Joueur joueurTest = new Joueur("test");
-        // joueurTest.afficherEquipe();
-        System.out.println(Integer.parseInt("23") + Integer.parseInt("2"));
     }
 }

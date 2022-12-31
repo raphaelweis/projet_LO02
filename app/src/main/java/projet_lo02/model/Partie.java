@@ -2,15 +2,36 @@ package projet_lo02.model;
 
 import java.util.*;
 
-
+/**
+ * Classe Partie
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class Partie {
 
+    /**
+     * Joueur 1
+     */
     private Joueur joueur1;
-    private Joueur joueur2;
-    private List<Zone> listZones = new ArrayList<Zone>();
-    private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
-    //private  boolean zoneControlee;
 
+    /**
+     * Joueur 2
+     */
+    private Joueur joueur2;
+
+    /**
+     * Liste des zones
+     */
+    private List<Zone> listZones = new ArrayList<Zone>();
+
+    /**
+     * Liste des zones non controlées
+     */
+    private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
+
+    /**
+     * Constructeur de la partie
+     */
     public Partie(){
 
         Utility.clearTerminal();
@@ -35,6 +56,9 @@ public class Partie {
         this.initialiserZones();
     }
 
+    /**
+     * Méthode pour lancer le jeu
+     */
     public static void lancerJeu(){
         while(true){
             Utility.clearTerminal();
@@ -42,6 +66,7 @@ public class Partie {
             System.out.println("Voulez-vous commencer une nouvelle Partie ?");
             System.out.println("(O) : OUI || (N) : NON");
             String input = Utility.promptString();
+            //Lancement de la partie si oui
             switch(input){
                 case "Y" :
                 case "y" :
@@ -64,8 +89,12 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour paramétrer les équipes
+     */
     public void parametrageDesEquipes(){
         while(true){
+            //Affichage
             Utility.clearTerminal();
             System.out.println("Paramétrage des équipes");
             Utility.jumpLines(1);
@@ -79,6 +108,7 @@ public class Partie {
             Utility.jumpLines(2);
             System.out.println("(3) : Passer en phase assignation des zones (Action irréversible !)");
             String input = Utility.promptString();
+            //paramétrage d'une des équipes ou zone en fonction de la réponse
             if(Utility.isStringInt(input)){
                 int numericInput = Integer.parseInt(input);
                 switch(numericInput){
@@ -103,7 +133,11 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour configurer les zones
+     */
     public void configurationZones(){
+        //paramétrage équipe 1
         boolean exit = false;
         Utility.clearTerminal();
         System.out.println("Assignation des zones");
@@ -114,6 +148,8 @@ public class Partie {
         while(exit == false){
             exit = this.placerEtudiants(this.joueur1);
         }
+
+        //paramétrage équipe 2
         exit = false;
         Utility.clearTerminal();
         System.out.println("Assignation des zones");
@@ -127,23 +163,29 @@ public class Partie {
         this.initialiserCombats();
     }
 
-
+    /**
+     * Méthode pour placer les étudiants dans les zones
+     * @param  joueur joueur pour lequel on veut placer les étudiants
+     */
     public boolean placerEtudiants(Joueur joueur){
         Iterator<Map.Entry<Integer, Etudiant>> iteratorEquipe = joueur.equipe.entrySet().iterator();
         while (iteratorEquipe.hasNext()) {
+            //Afffichage
             Utility.clearTerminal();
             System.out.println("Attribuez une zone à votre étudiant : ");
             Utility.jumpLines(1);
             System.out.println("(1) : Administration || (2) : BDE || (3) : Bibliothèque || (4) : Halles industrielles || (5) : Halle sportive");
             Utility.jumpLines(1);
+
             Map.Entry<Integer, Etudiant> etudiantActuel;
             do{
                 etudiantActuel = iteratorEquipe.next();
-            }while(etudiantActuel.getValue().getReserviste() == true);
+            }while(etudiantActuel.getValue().getReserviste());
             System.out.println("Etudiant à placer : " + etudiantActuel.getValue().getType() + etudiantActuel.getValue().getIdEtudiant());
             Utility.jumpLines(1);
             System.out.println(etudiantActuel.getValue());
             String input = Utility.promptString();
+            //si id et zone corrects, on peut le placer
             if(Utility.isStringInt(input)){
                 int numericInput = Integer.parseInt(input);
                 if(numericInput >= 1 && numericInput <= this.listZones.size()){
@@ -159,6 +201,7 @@ public class Partie {
             }
         }
         while(true){
+            //affichage récapitulatif
             Utility.clearTerminal();
             System.out.println("Récapitulation des affectations : équipe de " + joueur.getPseudo());
             Utility.jumpLines(1);
@@ -177,14 +220,18 @@ public class Partie {
         }
     }
 
-
+    /**
+     * Méthode pour placer les réservistes dans les zones
+     * @param  joueur joueur pour lequel on veut placer les réservistes
+     */
     public void placerReservistes(Joueur joueur) {
 
         Iterator<Map.Entry<Integer, Etudiant>> iteratorEquipe = joueur.equipe.entrySet().iterator();
         while (iteratorEquipe.hasNext()) {
             Map.Entry<Integer, Etudiant> etudiantActuel = iteratorEquipe.next();
-
+            //si l'étudiant est réserviste, on le place
             if(etudiantActuel.getValue().getReserviste()){
+                //affichage
                 etudiantActuel.getValue().setReserviste(false);
                 Utility.clearTerminal();
                 System.out.println("------------- PLacement des réservistes du joueur " + joueur.getPseudo() + " -------------");
@@ -199,15 +246,14 @@ public class Partie {
                     }
                 }
 
-
                 System.out.println("Etudiant à placer : " + etudiantActuel.getValue().getType() + etudiantActuel.getValue().getIdEtudiant());
                 Utility.jumpLines(1);
                 System.out.println(etudiantActuel.getValue());
                 String input = Utility.promptString();
                 if(Utility.isStringInt(input)){
+                    //si id et zone corrects, on peut le placer
                     int numericInput = Integer.parseInt(input);
-                    //prednre la zone correspondant à cet indice
-                    //prednre zone dans liste zone
+
                     if(numericInput >= 1 && numericInput <= this.listZones.size() && !this.listZones.get(numericInput - 1).getZoneControlee()){
                         etudiantActuel.getValue().setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
                         this.listZones.get(numericInput - 1).attribuerEtudiant(etudiantActuel.getValue()); //attribuer etudiant à la zone
@@ -220,11 +266,12 @@ public class Partie {
                     Utility.sleep(2500);
                 }
             }
-
         }
-
     }
 
+    /**
+     * Méthode pour initialiser les combats
+     */
     public void initialiserCombats(){
         while(true){
             Utility.clearTerminal();
@@ -243,7 +290,12 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour les combats
+     */
     public void combattre(){
+
+        //tri des zones
         this.trierZones();
         Iterator<Zone> iteZones2 = this.listZones.iterator();
         while (iteZones2.hasNext()){
@@ -253,6 +305,7 @@ public class Partie {
 
         }
 
+        //tant que partie pas gagnée
         while(joueur1.getNombreZonesControlees() < 3 && joueur2.getNombreZonesControlees() < 3){
             Iterator<Zone> iteZones = this.listZones.iterator();
             while (iteZones.hasNext()){
@@ -268,7 +321,7 @@ public class Partie {
                         Utility.jumpLines(1);
                         treve();
 
-                        //redéploiement des troupes
+                        //redéploiement des troupes du joueur ayant controlé la zone
                         if(zone.getStatus().equals(Statut.JOUEUR1) && joueur1.getNombreZonesControlees() < 3){
                             if(zone.getEquipe1().size() > 1 ){
                                 redeploiement(joueur1, zone);
@@ -287,6 +340,7 @@ public class Partie {
             }
         }
 
+        //annonce gagnant zone
         if(joueur1.getNombreZonesControlees() >= 3){
             System.out.println("Joueur 1 a gagné la partie");
         } else {
@@ -295,6 +349,9 @@ public class Partie {
 
     }
 
+    /**
+     * Méthode pour la trêve
+     */
     public void treve(){
 
         treveJoueur(joueur1);
@@ -302,7 +359,12 @@ public class Partie {
 
     }
 
+    /**
+     * Méthode pour la trêve d'un joueur
+     * @param  joueur joueur pour lequel on fait la trêve
+     */
     public void treveJoueur(Joueur joueur){
+        //si il y a des réservistes
         if(ReservistesPresents(joueur)) {
             System.out.println("Réservistes du joueur " + joueur.getPseudo()+ " :");
             joueur.afficherReservisteEquipe();
@@ -314,6 +376,12 @@ public class Partie {
             }
         }
     }
+
+    /**
+     * Méthode pour la trêve d'un joueur
+     * @param  joueur joueur pour lequel on redéploie les étudiants
+     * @param zone zone qui vient d'être controlée
+     */
     public void redeploiement(Joueur joueur, Zone zone){
 
         if(joueur.equals(joueur.getPartie().getJoueur1())){
@@ -354,6 +422,11 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour redéployer un étudiant
+     * @param  etudiant étudiant à redéployer
+     * @param zoneActuelle zone où était l'étudiant
+     */
     public void deployerEtudiant(Etudiant etudiant, Zone zoneActuelle){
 
         Utility.clearTerminal();
@@ -395,7 +468,10 @@ public class Partie {
         }
     }
 
-
+    /**
+     * Méthode pour afficher le récapitulatif des zones
+     * @param  joueur joueur pour lequel on fait le récap
+     */
     public void afficherRecapZones(Joueur joueur){
         System.out.println("Souhaite-vous voir le nombre de crédits par zone (O/N)?");
         String input = Utility.promptString();
@@ -411,6 +487,10 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour afficher la somme des crédits des zones
+     * @param  joueur joueur pour lequel on fait le récap
+     */
     public void sommeECTSZones(Joueur joueur){
         Iterator<Zone> iteZones = this.listZones.iterator();
         while (iteZones.hasNext()){
@@ -423,6 +503,10 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour savoir si il reste des réservistes dans l'équipe
+     * @param  joueur joueur pour lequel on checke
+     */
     public boolean ReservistesPresents(Joueur joueur){
         Iterator<Map.Entry<Integer, Etudiant>> iteEquipe = joueur.equipe.entrySet().iterator();
         int reserviste = 0;
@@ -434,6 +518,9 @@ public class Partie {
         return reserviste > 0;
     }
 
+    /**
+     * Méthode pour trier les zones
+     */
     public void trierZones(){
         Iterator<Zone> iteZones = this.listZones.iterator();
         while (iteZones.hasNext()){
@@ -441,10 +528,12 @@ public class Partie {
             zone.trierEtudiantsInitiative();
             zone.trierEtudiantsCredits(zone.getEquipe1());
             zone.trierEtudiantsCredits(zone.getEquipe2());
-
         }
     }
 
+    /**
+     * Méthode pour initialiser les zones
+     */
     public void initialiserZones(){
         this.listZones = new ArrayList<Zone>();
         this.listZones.add(new Zone(NomZone.ADMINISTRATION, this));
@@ -461,16 +550,68 @@ public class Partie {
         this.listZonesNonControlees.add(new Zone(NomZone.HALLE_SPORTIVE, this));
     }
 
+    /**
+     * Getter joueur 1
+     * @return joueur 1
+     */
     public Joueur getJoueur1(){
         return joueur1;
     }
 
+    /**
+     * Getter joueur 2
+     * @return joueur 2
+     */
     public Joueur getJoueur2(){
         return joueur2;
     }
 
+    /**
+     * Getter liste des zones
+     * @return liste de zones
+     */
     public List<Zone> getListZones(){
         return this.listZones;
+    }
+
+    /**
+     * Getter liste des zones non controlées
+     * @return liste de zones non controlées
+     */
+    public List<Zone> getListZonesNonControlees() {
+        return listZonesNonControlees;
+    }
+
+    /**
+     * Setter joueur 1
+     * @param joueur1 joueur1 de la partie
+     */
+    public void setJoueur1(Joueur joueur1) {
+        this.joueur1 = joueur1;
+    }
+
+    /**
+     * Setter joueur 2
+     * @param joueur2 joueur2 de la partie
+     */
+    public void setJoueur2(Joueur joueur2) {
+        this.joueur2 = joueur2;
+    }
+
+    /**
+     * Setter liste de zones
+     * @param listZones liste de zones de la partie
+     */
+    public void setListZones(List<Zone> listZones) {
+        this.listZones = listZones;
+    }
+
+    /**
+     * Setter liste de zones non controlées
+     * @param listZonesNonControlees liste de zones non controlées de la partie
+     */
+    public void setListZonesNonControlees(List<Zone> listZonesNonControlees) {
+        this.listZonesNonControlees = listZonesNonControlees;
     }
 
     public static void main(String[] args) {

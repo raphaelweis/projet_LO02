@@ -1,16 +1,31 @@
 package projet_lo02.model;
 
+/**
+ * Classe pour la stratégie attaque
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class Attaque implements Strategie {
 
+    /**
+     * Nombre de dégats par défaut
+     */
     private final int degatDeReference = 10;
-    
+
+    /**
+     * Méthode pour obtenir nom stratégie
+     * @return string pour le nom
+     */
     public String getNomStrategie(){
         return "Attaque";
     }
 
+    /**
+     * Méthode pour exécuter la stratégie
+     * @param actionneur étudiant exécutant stratégie
+     */
     public void executerStrategie(Etudiant actionneur){
 
-        //System.out.println("La stratégie Attaque vient d'être utilisée !");
 
         double x = Utility.getRandomDouble(0, 100, true, true);
         double y = Utility.getRandomDouble(0, 1, false, true);
@@ -23,11 +38,11 @@ public class Attaque implements Strategie {
             cible = actionneur.getZone().etudiantLePlusFaibleAdverse(actionneur);
         }
 
-        //System.out.println("cible : " + cible.getIdEtudiant() + " - " + cible.getJoueur().getPseudo());
-
+        //calcul des dégats et perte crédits
         int coefficientDegat = Math.max(0, Math.min(100, 10 * actionneur.getForce() - 5 * cible.getResistance()));
         int perteCreditsNette = Utility.getPartieEntiere(y * (1 + coefficientDegat) * degatDeReference);
 
+        //mettre à jour crédits si attaque réussie
         if(x <= 40 + 3 * actionneur.getDexterite() && perteCreditsNette != 0){ //attaque réussie
             if(cible.getCredits() - perteCreditsNette < 0 ){
                 cible.setCredits(0);

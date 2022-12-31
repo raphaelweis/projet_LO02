@@ -2,26 +2,72 @@ package projet_lo02.model;
 
 import java.util.*;
 
+/**
+ * Classe Utility
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class Zone {
+    /**
+     * Propriétaire de la zone
+     */
     private Statut propriete;
+
+    /**
+     * Nom de la zone
+     */
     private NomZone nomZone;
+
+    /**
+     * Partie de la zone
+     */
     private Partie partie;
 
-
-
+    /**
+     * Liste d'étudiants de la zone
+     */
     private ArrayList<Etudiant> listEtudiantZone = new ArrayList<Etudiant>();
+
+    /**
+     * Liste d'étudiants de l'équipe 1 de la zone
+     */
     private ArrayList<Etudiant> listEquipe1 = new ArrayList<Etudiant>();
+
+    /**
+     * Liste d'étudiants de l'équipe 2 de la zone
+     */
     private ArrayList<Etudiant> listEquipe2 = new ArrayList<Etudiant>();
 
+    /**
+     * Liste d'étudiants morts de l'équipe 1
+     */
     private int nbMortsEquipe1 = 0;
+
+    /**
+     * Liste d'étudiants morts de l'équipe 2
+     */
     private int nbMortsEquipe2 = 0;
 
+    /**
+     * Nb d'étudiants de l'équipe 1
+     */
     private int lengthEquipe1;
+
+    /**
+     * Nb d'étudiants de l'équipe 2
+     */
     private int lengthEquipe2;
 
+    /**
+     * Statut de la zone (controlée ou non)
+     */
     private boolean zoneControlee;
 
-
+    /**
+     * Constructeur de la zone
+     * @param zone nom de la zone
+     * @param partieEnCours partie de la zone
+     */
     public Zone(NomZone zone, Partie partieEnCours){
         this.nomZone = zone;
         this.propriete = Statut.UNDEFINED;
@@ -29,22 +75,10 @@ public class Zone {
         this.zoneControlee = false;
     }
 
-    public String getNomZone(){
-        return this.nomZone.name();
-    }
-
-    public Statut getStatus(){
-        return this.propriete;
-    }
-
-    public ArrayList<Etudiant> getEquipe1(){
-        return this.listEquipe1;
-    }
-
-    public ArrayList<Etudiant> getEquipe2(){
-        return this.listEquipe2;
-    }
-
+    /**
+     * Méthode pour attribuer un étudiant à la zone
+     * @param etudiant étudiant à attribuer
+     */
     public void attribuerEtudiant(Etudiant etudiant){
         listEtudiantZone.add(etudiant);
         if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
@@ -54,6 +88,9 @@ public class Zone {
         }
     }
 
+    /**
+     * Méthode pour trier les étudiants par initiative
+     */
     public void trierEtudiantsInitiative(){
         Collections.sort(listEtudiantZone, new Comparator<Etudiant>(){
             @Override
@@ -63,6 +100,10 @@ public class Zone {
         });
     }
 
+    /**
+     * Méthode pour trier les étudiants d'une équipe par crédits
+     * @param equipe équipe à trier
+     */
     public void trierEtudiantsCredits(ArrayList<Etudiant> equipe){
         Collections.sort(equipe, new Comparator<Etudiant>(){
             @Override
@@ -72,6 +113,10 @@ public class Zone {
         });
     }
 
+    /**
+     * Méthode pour rechercher l'étudiant adverse le + faible
+     * @param etudiant équipe attaquant
+     */
     public Etudiant etudiantLePlusFaibleAdverse(Etudiant etudiant){
         //chercher dans la zone de l'etu, le joueur le + faible de l'equipe adverse
         //si etudiant est du joueur 1, on prend le dernier etudiant du joueur 2 de la zone
@@ -84,6 +129,10 @@ public class Zone {
         }
     }
 
+    /**
+     * Méthode pour rechercher l'étudiant allié le + faible
+     * @param etudiant équipe défenseur
+     */
     public Etudiant etudiantLePlusFaibleAllie(Etudiant etudiant){
         //chercher dans la zone de l'etu, le joueur le + faible de l'equipe adverse
         //si etudiant est du joueur 1, on prend le dernier etudiant du joueur 2 de la zone
@@ -96,8 +145,9 @@ public class Zone {
         }
     }
 
-
-
+    /**
+     * Méthode pour effectuer 1 tour de combat = le premier de la liste effectue sa stratégie
+     */
     public void combattreZone(){
 
         //1er étudiant joue
@@ -114,6 +164,9 @@ public class Zone {
         annoncerGagnant();
     }
 
+    /**
+     * Méthode pour enlever les étudiants morts de la zone
+     */
     public void enleverMort(){
         Iterator<Etudiant> iteEtudiant = listEtudiantZone.iterator();
         while(iteEtudiant.hasNext()){
@@ -140,6 +193,10 @@ public class Zone {
         }
     }
 
+    /**
+     * Méthode pour calculer la sommes des crédits de l'équipe 1
+     * @return entier somme des crédits
+     */
     public int sommeCreditsEquipe1(){
         Iterator<Etudiant> iteEtudiant = listEquipe1.iterator();
         int sommeCredits = 0;
@@ -149,6 +206,10 @@ public class Zone {
         return sommeCredits;
     }
 
+    /**
+     * Méthode pour calculer la sommes des crédits de l'équipe 2
+     * @return entier somme des crédits
+     */
     public int sommeCreditsEquipe2(){
         Iterator<Etudiant> iteEtudiant = listEquipe2.iterator();
         int sommeCredits = 0;
@@ -170,8 +231,6 @@ public class Zone {
             this.propriete = Statut.JOUEUR1;
             partie.getJoueur1().setNombreZonesControlees(partie.getJoueur1().getNombreZonesControlees()+1);
             this.zoneControlee = true;
-
-
         }
     }
 
@@ -179,73 +238,101 @@ public class Zone {
 
 
     //GETTERS ET SETTERS
+
+    /**
+     * Getter nom de la zone
+     * @return nom de la zone
+     */
+    public String getNomZone(){
+        return this.nomZone.name();
+    }
+
+    /**
+     * Getter statut de la zone
+     * @return propriétaire de la zone
+     */
+    public Statut getStatus(){
+        return this.propriete;
+    }
+
+    /**
+     * Getter équipe du joueur 1
+     * @return liste d'étudiants du joueur 1
+     */
+    public ArrayList<Etudiant> getEquipe1(){
+        return this.listEquipe1;
+    }
+
+    /**
+     * Getter équipe du joueur 2
+     * @return liste d'étudiants du joueur 2
+     */
+    public ArrayList<Etudiant> getEquipe2(){
+        return this.listEquipe2;
+    }
+
+    /**
+     * Getter nb d'étudiants du joueur 1
+     * @return entier nb d'étudiants du joueur 1
+     */
     public int getLengthEquipe1() {
         return lengthEquipe1;
     }
 
+    /**
+     * Getter nb d'étudiants du joueur 2
+     * @return entier nb d'étudiants du joueur 2
+     */
     public int getLengthEquipe2() {
         return lengthEquipe2;
     }
 
+    /**
+     * Setter nb d'étudiants du joueur 1
+     * @param lengthEquipe1 nb d'étudiants du joueur 1
+     */
     public void setLengthEquipe1(int lengthEquipe1) {
         this.lengthEquipe1 = lengthEquipe1;
     }
 
+    /**
+     * Setter nb d'étudiants du joueur 2
+     * @param lengthEquipe2 nb d'étudiants du joueur 2
+     */
     public void setLengthEquipe2(int lengthEquipe2) {
         this.lengthEquipe2 = lengthEquipe2;
     }
+
+    /**
+     * Getter statut de la zone
+     * @return vrai si zone controlée, faux sinon
+     */
     public boolean getZoneControlee() {
         return zoneControlee;
     }
+
+    /**
+     * Setter  statut de la zone
+     * @param status statut de la zone
+     */
     public void setZoneControlee(boolean status) {
         this.zoneControlee = status;
     }
 
+    /**
+     * Getter liste d'étudiants de la zone
+     * @return liste d'étudiants de la zone
+     */
     public ArrayList<Etudiant> getListEtudiantZone() {
         return listEtudiantZone;
     }
 
+    /**
+     * Setter liste d'étudiants de la zone
+     * @param listEtudiantZone liste d'étudiants de la zone
+     */
     public void setListEtudiantZone(ArrayList<Etudiant> listEtudiantZone) {
         this.listEtudiantZone = listEtudiantZone;
     }
 
-    public static void main(String[] args) {
-        //Scanner userInput = new Scanner(System.in);
-        Utility.userInput = new Scanner(System.in);
-        Partie partie = new Partie();
-        Zone zone = new Zone(NomZone.ADMINISTRATION, partie);
-        zone.attribuerEtudiant(partie.getJoueur1().getEquipe().get(1));
-        zone.listEtudiantZone.get(0).setInitiative(1);
-        zone.listEtudiantZone.get(0).setStrategie(1);
-        zone.listEtudiantZone.get(0).setZone(zone);
-        //System.out.println(zone.listEtudiantZone.get(0));
-
-        zone.attribuerEtudiant(partie.getJoueur1().getEquipe().get(2));
-        zone.listEtudiantZone.get(1).setInitiative(2);
-        zone.listEtudiantZone.get(1).setStrategie(1);
-        zone.listEtudiantZone.get(1).setZone(zone);
-        //System.out.println(zone.listEtudiantZone.get(1));
-
-        zone.attribuerEtudiant(partie.getJoueur2().getEquipe().get(1));
-        zone.listEtudiantZone.get(2).setInitiative(4);
-        zone.listEtudiantZone.get(2).setStrategie(1);
-        zone.listEtudiantZone.get(2).setZone(zone);
-        //System.out.println(zone.listEtudiantZone.get(2));
-
-        zone.attribuerEtudiant(partie.getJoueur2().getEquipe().get(2));
-        zone.listEtudiantZone.get(3).setInitiative(5);
-        zone.listEtudiantZone.get(3).setStrategie(1);
-        zone.listEtudiantZone.get(3).setZone(zone);
-        // //System.out.println(zone.listEtudiantZone.get(3));
-
-        zone.trierEtudiantsInitiative();
-
-        Iterator<Etudiant> iteEtu = zone.listEtudiantZone.iterator();
-        while(iteEtu.hasNext()){
-            Etudiant etudiant = iteEtu.next();
-            System.out.println(etudiant.toString());
-        }
-        zone.combattreZone();
-
-    }
 }
