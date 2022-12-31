@@ -45,7 +45,7 @@ public class Joueur {
     public final int TOTAL_SOLDE_POINTS = 400;
 
     /**
-     * Constructeur du joueur
+     * Constructeurs du joueur
      * @param nouveauPseudo pseudo du joueur
      * @param branche branche du joueur
      * @param partieDeCeJoueur partie du joueur
@@ -69,9 +69,25 @@ public class Joueur {
         equipe.put(compteur, new MaitreGobi(compteur, this));
     }
 
-    /**
-     * Méthode pour paramétrer l'équipe du joueur
-     */
+    public Joueur(Partie partieDeCeJoueur){
+        int compteur = 1;
+        this.setPseudo(null);
+        this.setBranche(null);
+        this.partieEnCours = partieDeCeJoueur;
+        this.soldePoints = TOTAL_SOLDE_POINTS;
+        this.nombreZonesControlees = 0;
+        equipe = new HashMap<Integer, Etudiant>(20);
+        for(int i = 0; i < 15; i++){
+            equipe.put(compteur, new Etudiant(compteur, this));
+            compteur += 1;
+        }
+        for(int i = 0; i < 4; i++){
+            equipe.put(compteur, new Elite(compteur, this));
+            compteur += 1;
+        }
+        equipe.put(compteur, new MaitreGobi(compteur, this));
+    }
+
     public void parametrerEquipe(){
         while(true){
             Utility.clearTerminal();

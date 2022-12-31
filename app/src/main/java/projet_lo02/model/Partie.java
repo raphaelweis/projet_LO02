@@ -33,60 +33,33 @@ public class Partie {
      * Constructeur de la partie
      */
     public Partie(){
-
-        Utility.clearTerminal();
-        System.out.println("Initialisation : Création des joueurs");
-        Utility.jumpLines(1);
-
-        System.out.print("Entrer Pseudo Joueur 1 : ");
-        String pseudoJ1 = Utility.userInput.next();
-        Utility.jumpLines(0);
-        System.out.print("Entrer Branche Joueur 1 : ");
-        String brancheJ1 = Utility.userInput.next();
-        this.joueur1 = new Joueur(pseudoJ1, brancheJ1, this);
-
-        Utility.jumpLines(1);
-
-        System.out.print("Entrer Pseudo Joueur 2 : ");
-        String pseudoJ2 = Utility.userInput.next();
-        System.out.print("Entrer Branche Joueur 2 : ");
-        String brancheJ2 = Utility.userInput.next();
-        this.joueur2 = new Joueur(pseudoJ2, brancheJ2, this);
-
-        this.initialiserZones();
+            this.joueur1 = new Joueur(this);
+            this.joueur2 = new Joueur(this);
+            this.initialiserZones();
     }
 
-    /**
-     * Méthode pour lancer le jeu
-     */
-    public static void lancerJeu(){
-        while(true){
+    public void initialiserJoueurs(){
             Utility.clearTerminal();
-            System.out.println("Bienvenue !\n");
-            System.out.println("Voulez-vous commencer une nouvelle Partie ?");
-            System.out.println("(O) : OUI || (N) : NON");
-            String input = Utility.promptString();
-            //Lancement de la partie si oui
-            switch(input){
-                case "Y" :
-                case "y" :
-                case "O" :
-                case "o" :
-                    Partie partieEnCours = new Partie();
-                    partieEnCours.parametrageDesEquipes();
-                    break;
-                case "N" :
-                case "n" :
-                    System.out.println("Fin de l'exécution du Programme");
-                    Utility.userInput.close();
-                    System.exit(0);
-                    break;
-                default :
-                    System.out.println("Erreur : valeur entrée non valide");
-                    Utility.sleep(2500);
-                    break;
-            }
-        }
+            System.out.println("Initialisation : Création des joueurs");
+            Utility.jumpLines(1);
+
+            System.out.print("Entrer Pseudo Joueur 1 : ");
+            String pseudoJ1 = Utility.userInput.next();
+            Utility.jumpLines(0);
+            System.out.print("Entrer Branche Joueur 1 : ");
+            String brancheJ1 = Utility.userInput.next();
+            this.joueur1.setPseudo(pseudoJ1);
+            this.joueur1.setBranche(brancheJ1);
+
+            Utility.jumpLines(1);
+
+            System.out.print("Entrer Pseudo Joueur 2 : ");
+            String pseudoJ2 = Utility.userInput.next();
+            Utility.jumpLines(0);
+            System.out.print("Entrer Branche Joueur 2 : ");
+            String brancheJ2 = Utility.userInput.next();
+            this.joueur2.setPseudo(pseudoJ2);
+            this.joueur2.setBranche(brancheJ2);
     }
 
     /**
@@ -273,7 +246,7 @@ public class Partie {
      * Méthode pour initialiser les combats
      */
     public void initialiserCombats(){
-        while(true){
+        while(true){ 
             Utility.clearTerminal();
             System.out.println("Configuration initiale terminée !");
             Utility.jumpLines(1);
@@ -613,8 +586,5 @@ public class Partie {
     public void setListZonesNonControlees(List<Zone> listZonesNonControlees) {
         this.listZonesNonControlees = listZonesNonControlees;
     }
-
-    public static void main(String[] args) {
-        lancerJeu();
-    }
+    
 }

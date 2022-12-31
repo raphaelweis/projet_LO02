@@ -24,7 +24,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("projet_lo02.model.Partie")
+    mainClass.set("projet_lo02.App")
 }
 
 run {
