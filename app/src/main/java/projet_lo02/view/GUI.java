@@ -69,18 +69,18 @@ public class GUI extends JFrame {
 
 	public void initFenetre() {
 		// ++++++++++++++++++++++++++++++++++++++ Panneau principal +++++++++++++++++++++++++++++++++++++++++++
-        //mainFrame = new JFrame();
-		setForeground(Color.BLACK);
-		setTitle("Configuration Equipe");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
-		this.pack();
-		this.contentPane = new JPanel();
-		this.contentPane.setBorder(new CompoundBorder());
-		this.contentPane.setBackground(Color.lightGray);
-		this.setContentPane(contentPane);
-		this.contentPane.setLayout(null); // politique de placement des composants dans la fenêtre
-		this.setBounds(100, 100, 750, 500);
+        mainFrame = new JFrame();
+		mainFrame.setForeground(Color.BLACK);
+		mainFrame.setTitle("Configuration Equipe");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setVisible(true);
+		mainFrame.pack();
+		contentPane = new JPanel();
+		contentPane.setBorder(new CompoundBorder());
+		contentPane.setBackground(Color.lightGray);
+		mainFrame.setContentPane(contentPane);
+		contentPane.setLayout(null); // politique de placement des composants dans la fenêtre
+		mainFrame.setBounds(100, 100, 750, 500);
 
 		// +++++++++++++++++++++++++++++++++++++ config personnage  ++++++++++++++++++++++++++++++++++++++++++++
         
@@ -478,5 +478,9 @@ public class GUI extends JFrame {
 	public JButton getBoutonValidation() {
 		return boutonValidation;
 	}
+
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
 
 }

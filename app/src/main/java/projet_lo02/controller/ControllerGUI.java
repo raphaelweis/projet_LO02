@@ -3,6 +3,7 @@ package projet_lo02.controller;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.swing.JButton;
 
@@ -42,6 +43,7 @@ public class ControllerGUI {
         }
 
         this.gui.getBoutonOk().addActionListener(new EcouteurOk(this.gui.getJoueur().getEquipe()));
+        this.gui.getBoutonValidation().addActionListener(new EcouteurValidation());
 
     }
 
@@ -119,6 +121,28 @@ public class ControllerGUI {
                 gui.getChoixStrategie().select(0);
                 gui.getChoixReserviste().select(0);
             }
+        }
+
+    }
+
+    final class EcouteurValidation implements ActionListener {
+        
+        public EcouteurValidation(){}
+
+        public void actionPerformed(ActionEvent e){
+            HashMap<Integer, Etudiant> equipe = gui.getJoueur().getEquipe();
+            if(checkZones(equipe) == true){
+                gui.getMainFrame().dispose();
+            }
+        }
+
+        public boolean checkZones(HashMap<Integer, Etudiant> equipe){
+            for(int key : equipe.keySet()){
+                if(equipe.get(key).getZone() == null){
+                    return false;
+                }
+            }
+            return true;
         }
 
     }

@@ -28,6 +28,12 @@ public class App {
                 case "g" :
                     GUI guiJoueur1 = new GUI(nouvellePartie.getJoueur1());
                     new ControllerGUI(guiJoueur1, nouvellePartie);
+                    //wait for the first gui to be closed before opening the second one
+                    while(guiJoueur1.getMainFrame().isVisible() == true){
+                        Utility.sleep(1000);
+                    }
+                    GUI guiJoueur2 = new GUI(nouvellePartie.getJoueur2());
+                    new ControllerGUI(guiJoueur2, nouvellePartie);
                     break;
                 default :
                     System.out.println("Erreur : valeur entrée non valide");
