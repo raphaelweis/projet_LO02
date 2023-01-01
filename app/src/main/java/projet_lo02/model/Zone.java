@@ -22,8 +22,8 @@ public class Zone {
     private boolean zoneControlee;
 
 
-    public Zone(NomZone zone, Partie partieEnCours){
-        this.nomZone = zone;
+    public Zone(NomZone nomZone, Partie partieEnCours){
+        this.nomZone = nomZone;
         this.propriete = Statut.UNDEFINED;
         this.partie = partieEnCours;
         this.zoneControlee = false;

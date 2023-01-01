@@ -7,9 +7,5 @@ public class Elite extends Etudiant {
         this.type = "Elite";
     }
 
-    public static void main(String[] args) {
-        Elite eliteTest = new Elite(1, null);
-        System.out.println(eliteTest);
-    }
 }
 

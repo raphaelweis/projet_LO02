@@ -355,7 +355,6 @@ public class Etudiant {
         return sb.toString();
     }
 
-    //TODO : TOSTRING POUR LES STRATEGIES
     public String toString(){
         StringBuffer sb = new StringBuffer();
         sb.append(etudiantColumnHeaders());
@@ -523,6 +522,14 @@ public class Etudiant {
         return this.reserviste;
     }
 
+    public String getStringReserviste() {
+        if(this.reserviste == true){
+            return "OUI";
+        } else{
+            return "NON"; 
+        }
+    }
+
     public void setReserviste(boolean nouveauStatut) {
 
         if(nouveauStatut == true && this.reserviste == false){
@@ -534,6 +541,17 @@ public class Etudiant {
         }else if(nouveauStatut == false && this.reserviste == true){
             this.reserviste = false;
         }
+    }
+
+    public void setReserviste(int nouveauStatut){
+        switch(nouveauStatut){
+            case 0 :
+                this.reserviste = true;
+                break;
+            case 1 : 
+                this.reserviste = false;
+                break;
+        }   
     }
 
     public Zone getZone() {

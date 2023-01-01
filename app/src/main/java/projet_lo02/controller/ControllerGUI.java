@@ -1,0 +1,110 @@
+package projet_lo02.controller;
+
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.swing.Action;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import projet_lo02.model.Etudiant;
+import projet_lo02.model.Partie;
+import projet_lo02.view.GUI;
+
+public class ControllerGUI {
+
+    private GUI gui;
+    private Partie partie;
+    private int keyEtudiantSelectionne;
+
+    public ControllerGUI(GUI gui, Partie partie){
+        this.gui = gui;
+        this.partie = partie;
+
+        this.gui.getBoutonMaitreGobi().addActionListener(new EcouteurEtudiants(this.gui.getJoueur().getEquipe(), 20));
+
+        ArrayList<JButton> boutonsElite = this.gui.getBoutonsElite();
+        Iterator<JButton> itBoutonsElite = boutonsElite.iterator();
+        int keyElite = 16;
+        while(itBoutonsElite.hasNext()){
+            itBoutonsElite.next().addActionListener(new EcouteurEtudiants(this.gui.getJoueur().getEquipe(), keyElite));
+            keyElite ++;
+        }
+
+        ArrayList<JButton> boutonsEtudiant = this.gui.getBoutonsEtudiant();
+        Iterator<JButton> itBoutonsEtudiant = boutonsEtudiant.iterator();
+        int keyEtudiant = 1;
+        while(itBoutonsEtudiant.hasNext()){
+            itBoutonsEtudiant.next().addActionListener(new EcouteurEtudiants(this.gui.getJoueur().getEquipe(), keyEtudiant));
+            keyEtudiant ++;
+        }
+
+        this.gui.getBoutonOk().addActionListener(new EcouteurOk(this.gui.getJoueur().getEquipe(), keyEtudiantSelectionne));
+
+    }
+
+	final class EcouteurEtudiants implements ActionListener {
+
+        private HashMap<Integer, Etudiant> equipe;
+        private int key;
+
+        public EcouteurEtudiants(HashMap<Integer, Etudiant> equipe, int key){
+            this.equipe = equipe;
+            this.key = key;
+        }
+
+        public void actionPerformed(ActionEvent e){
+            keyEtudiantSelectionne = this.key;
+            Etudiant etu = this.equipe.get(this.key);
+            gui.getConfigPersonnage().setText(etu.getType() + " " + this.key);
+            gui.getForce().setText(Integer.toString(etu.getForce()));
+            gui.getDexterite().setText(Integer.toString(etu.getDexterite()));
+            gui.getResistance().setText(Integer.toString(etu.getResistance()));
+            gui.getConstitution().setText(Integer.toString(etu.getConstitution()));
+            gui.getInitiative().setText(Integer.toString(etu.getInitiative()));
+            try{
+                gui.getChoixZone().select(etu.getNomZone());
+                gui.getChoixStrategie().select(etu.getNomStrategie());
+                gui.getChoixStrategie().select(etu.getStringReserviste());
+            } catch(NullPointerException exception){}
+        }
+
+    }
+
+    final class EcouteurOk implements ActionListener {
+        
+        private HashMap<Integer, Etudiant> equipe;
+        private int key;
+
+        public EcouteurOk(HashMap<Integer, Etudiant> equipe, int key){
+            this.equipe = equipe;
+            this.key = key;
+        }
+
+        public void actionPerformed(ActionEvent e){
+            Etudiant etu = this.equipe.get(this.key);
+            etu.setForce(Integer.parseInt(gui.getForce().getText()));
+            etu.setDexterite(Integer.parseInt(gui.getDexterite().getText()));
+            etu.setResistance(Integer.parseInt(gui.getResistance().getText()));
+            etu.setConstitution(Integer.parseInt(gui.getConstitution().getText()));
+            etu.setInitiative(Integer.parseInt(gui.getInitiative().getText()));
+            etu.setZone(partie.getListZones().get(gui.getChoixZone().getSelectedIndex() - 1));
+            etu.setStrategie(gui.getChoixStrategie().getSelectedIndex());
+            etu.setReserviste(gui.getChoixReserviste().getSelectedIndex() - 1);
+            gui.getConfigPersonnage().setText("");
+            gui.getForce().setText("");
+            gui.getDexterite().setText("");
+            gui.getResistance().setText("");
+            gui.getConstitution().setText("");
+            gui.getInitiative().setText("");
+            gui.getChoixZone().select(0);;
+            gui.getChoixStrategie().select(0);
+            gui.getChoixReserviste().select(0);
+
+        }
+
+    }
+}

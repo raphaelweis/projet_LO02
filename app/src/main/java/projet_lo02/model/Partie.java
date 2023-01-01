@@ -8,7 +8,6 @@ public class Partie {
     private Joueur joueur2;
     private List<Zone> listZones = new ArrayList<Zone>();
     private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
-    //private  boolean zoneControlee;
 
     public Partie(){
             this.joueur1 = new Joueur(this);

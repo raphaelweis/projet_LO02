@@ -7,13 +7,4 @@ public class MaitreGobi extends Etudiant{
         this.type = "MaîtreGobi";
     }
 
-    public static void main(String[] args) {
-        MaitreGobi maitreGobiTest = new MaitreGobi(1, null);
-        Elite eliteTest = new Elite(1, null);
-        //System.out.println(maitreGobiTest);
-        System.out.println(maitreGobiTest.getMinimumConstitution());
-        System.out.println(eliteTest.getMinimumConstitution());
-        System.out.println(maitreGobiTest);
-        System.out.println(eliteTest);
-    }
 }

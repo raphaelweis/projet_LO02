@@ -17,11 +17,26 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 
+import java.util.ArrayList;
+
 import projet_lo02.model.Joueur;
 
 public class GUI extends JFrame {
 	// les composants de la vue
 	private JPanel contentPane;
+    private JPanel panelMaitreGobi;
+    private JButton boutonMaitreGobi;
+    private JLabel labelMaitreGobi;
+    private JPanel panelElite;
+    private ArrayList<JButton> boutonsElite;
+    private JLabel labelElite;
+    private JPanel panelEtudiant;
+    private ArrayList<JButton> boutonsEtudiant;
+    private JLabel labelEtudiant;
+    private JLabel labelJoueur;
+	private JTextField pseudoJoueur;
+    private JLabel labelProgramme;
+	private Choice programme;
 	private JTextField configPersonnage;
     private JLabel labelForce;
 	private JTextField force;
@@ -33,15 +48,15 @@ public class GUI extends JFrame {
 	private JTextField constitution;
     private JLabel labelInitiative;
 	private JTextField initiative;
-    private JLabel labelAffectation;
-	private Choice choixAffectation;
+    private JLabel labelZone;
+	private Choice choixZone;
     private JLabel labelStrategie;
 	private Choice choixStrategie;
     private JLabel labelReserviste;
 	private Choice choixReserviste;
 	private JLabel soldePoints;
-	private JTextField pseudoJoueur;
-	private Choice programme;
+    private JButton boutonOk;
+    private JButton boutonValidation;
 
 	// le joueur
 	private Joueur joueur;
@@ -64,7 +79,7 @@ public class GUI extends JFrame {
 		this.contentPane.setBackground(Color.lightGray);
 		this.setContentPane(contentPane);
 		this.contentPane.setLayout(null); // politique de placement des composants dans la fenêtre
-		this.setBounds(100, 100, 620, 405);
+		this.setBounds(100, 100, 750, 500);
 
 		// +++++++++++++++++++++++++++++++++++++ config personnage  ++++++++++++++++++++++++++++++++++++++++++++
         
@@ -78,78 +93,86 @@ public class GUI extends JFrame {
 
 		// +++++++++++++++++++++++++++++++++++++ Maitre Gobi  +++++++++++++++++++++++++++++++++++++++++++++++++
 		// Panel du maitre Gobi
-		JPanel panelMaitre = new JPanel();
-		panelMaitre.setBorder(new LineBorder(new Color(0, 0, 0), 5));
-		panelMaitre.setBounds(40, 50, 45, 68);
-		panelMaitre.setLayout(new GridLayout(1, 1, 0, 0)); // politique de placement des composants dans ce panel
+		panelMaitreGobi = new JPanel();
+		panelMaitreGobi.setBorder(new LineBorder(new Color(0, 0, 0), 5));
+		panelMaitreGobi.setBounds(40, 50, 45, 68);
+		panelMaitreGobi.setLayout(new GridLayout(1, 1, 0, 0)); // politique de placement des composants dans ce panel
         
 		Image imgMaitreGobi = new ImageIcon(this.getClass().getResource("/images/maitreGobi.png")).getImage();
-		JButton boutonMaitreGobi = new JButton(); // pour représenter un personnage, utilisation d'un JButton
-        imgMaitreGobi = imgMaitreGobi.getScaledInstance(panelMaitre.getWidth(), panelMaitre.getHeight(), Image.SCALE_SMOOTH);
-        boutonMaitreGobi.setIcon(new ImageIcon(imgMaitreGobi));
+        imgMaitreGobi = imgMaitreGobi.getScaledInstance(panelMaitreGobi.getWidth(), panelMaitreGobi.getHeight(), Image.SCALE_SMOOTH);
 
-		panelMaitre.add(boutonMaitreGobi);
-		contentPane.add(panelMaitre);
+		boutonMaitreGobi = new JButton(); // pour représenter un personnage, utilisation d'un JButton
+        boutonMaitreGobi.setIcon(new ImageIcon(imgMaitreGobi));
+		panelMaitreGobi.add(boutonMaitreGobi);
+
+		contentPane.add(panelMaitreGobi);
 
 		// Etiquette Capitaine Gobi
-		JLabel lblNewLabel = new JLabel("Capitaine Gobi");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 9));
-		lblNewLabel.setBounds(30, 38, 75, 10);
-		contentPane.add(lblNewLabel);
+		labelMaitreGobi = new JLabel("Capitaine Gobi");
+		labelMaitreGobi.setFont(new Font("Arial", Font.PLAIN, 9));
+		labelMaitreGobi.setBounds(30, 38, 75, 10);
+		contentPane.add(labelMaitreGobi);
 
 		// +++++++++++++++++++++++++++++++++++++ Les élites +++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Idem pour les élites
         
-		JPanel panelElite = new JPanel();
+		panelElite = new JPanel();
 		panelElite.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		panelElite.setBounds(150, 50, 180, 68);
 		panelElite.setLayout(new GridLayout(1, 4, 0, 0));
 
         Image imgElite = new ImageIcon(this.getClass().getResource("/images/elite.png")).getImage();
-        imgElite = imgElite.getScaledInstance(panelMaitre.getWidth(), panelMaitre.getHeight(), Image.SCALE_SMOOTH);
+        imgElite = imgElite.getScaledInstance(panelMaitreGobi.getWidth(), panelMaitreGobi.getHeight(), Image.SCALE_SMOOTH);
 
-		JButton[] jb = new JButton[4];
-		for (int i = 0; i < 4; i++) {
-			jb[i] = new JButton();
-			jb[i].setIcon(new ImageIcon(imgElite));
-			panelElite.add(jb[i]);
-		}
+        boutonsElite = new ArrayList<>(4);
+        for(int i = 0; i < 4; i++){
+            JButton boutonElite = new JButton();
+            boutonsElite.add(boutonElite);
+            boutonElite.setIcon(new ImageIcon(imgElite));
+            panelElite.add(boutonElite);
+        }
+
 		contentPane.add(panelElite);
+
 		// Etiquette Les Elites
-		JLabel lblNewLabel_1 = new JLabel("Les Elites");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 9));
-		lblNewLabel_1.setBounds(220, 38, 75, 10);
-		contentPane.add(lblNewLabel_1);
+		labelElite = new JLabel("Les Elites");
+		labelElite.setFont(new Font("Arial", Font.PLAIN, 9));
+		labelElite.setBounds(220, 38, 75, 10);
+		contentPane.add(labelElite);
 
 		// +++++++++++++++++++++++++++++++++++++ Les étudiants +++++++++++++++++++++++++++++++++++++++++++++++++
 		// Idem pour les étudiants de base
         
-		JPanel panelEtu = new JPanel();
-		panelEtu.setBorder(new LineBorder(new Color(0, 0, 0), 5));
-		panelEtu.setBounds(450, 50, 180, 270);
-		panelEtu.setLayout(new GridLayout(4, 4, 0, 0));
-		contentPane.add(panelEtu);
+		panelEtudiant = new JPanel();
+		panelEtudiant.setBorder(new LineBorder(new Color(0, 0, 0), 5));
+		panelEtudiant.setBounds(450, 50, 180, 270);
+		panelEtudiant.setLayout(new GridLayout(4, 4, 0, 0));
+		contentPane.add(panelEtudiant);
 
         Image imgEtudiant = new ImageIcon(this.getClass().getResource("/images/etudiant.png")).getImage();
-        imgEtudiant = imgEtudiant.getScaledInstance(panelMaitre.getWidth(), panelMaitre.getHeight(), Image.SCALE_SMOOTH);
+        imgEtudiant = imgEtudiant.getScaledInstance(panelMaitreGobi.getWidth(), panelMaitreGobi.getHeight(), Image.SCALE_SMOOTH);
+
+        boutonsEtudiant = new ArrayList<>(15);
+        for(int i = 0; i < 15; i++){
+            JButton boutonEtudiant = new JButton();
+            boutonsEtudiant.add(boutonEtudiant);
+            boutonEtudiant.setIcon(new ImageIcon(imgEtudiant));
+            panelEtudiant.add(boutonEtudiant);
+        }
+
+        contentPane.add(panelEtudiant);
 
 		// Etiquette Les étudiants de base
-		JLabel lblNewLabel_2 = new JLabel("Les Etudiants de base");
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 9));
-		lblNewLabel_2.setBounds(493, 38, 150, 10);
-		contentPane.add(lblNewLabel_2);
-		JButton[] jb2 = new JButton[15];
-		for (int i = 0; i < 15; i++) {
-			jb2[i] = new JButton();
-			jb2[i].setIcon(new ImageIcon(imgEtudiant));
-			panelEtu.add(jb2[i]);
-		}
+		labelEtudiant = new JLabel("Les Etudiants de base");
+		labelEtudiant.setFont(new Font("Arial", Font.PLAIN, 9));
+		labelEtudiant.setBounds(493, 38, 150, 10);
+		contentPane.add(labelEtudiant);
 
 		// +++++++++++++++++++++++++++++++++++++++++ Joueur +++++++++++++++++++++++++++++++++++++++++++++++++++
-		JLabel lblNewLabel_3 = new JLabel("Joueur : ");
-		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(40, 13, 65, 15);
-		contentPane.add(lblNewLabel_3);
+		labelJoueur = new JLabel("Joueur : ");
+		labelJoueur.setFont(new Font("Arial", Font.PLAIN, 15));
+		labelJoueur.setBounds(40, 13, 65, 15);
+		contentPane.add(labelJoueur);
 		pseudoJoueur = new JTextField();
 		pseudoJoueur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,10 +185,10 @@ public class GUI extends JFrame {
 		contentPane.add(pseudoJoueur);
 
 		// +++++++++++++++++++++++++++++++++++++++++ Programme  ++++++++++++++++++++++++++++++++++++++++++++++++
-		JLabel lblNewLabel_13 = new JLabel("Programme : ");
-		lblNewLabel_13.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblNewLabel_13.setBounds(200, 13, 105, 15);
-		contentPane.add(lblNewLabel_13);
+		labelProgramme = new JLabel("Programme : ");
+		labelProgramme.setFont(new Font("Arial", Font.PLAIN, 15));
+		labelProgramme.setBounds(200, 13, 105, 15);
+		contentPane.add(labelProgramme);
 		programme = new Choice();
         programme.setBackground(Color.WHITE);
 		programme.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -246,22 +269,23 @@ public class GUI extends JFrame {
 		initiative.setBounds(175, 300, 20, 15);
 		contentPane.add(initiative);
 
-		// Affectation
-		labelAffectation = new JLabel("Affectation : ");
-		labelAffectation.setFont(new Font("Arial", Font.PLAIN, 12));
-		labelAffectation.setBounds(225, 200, 80, 15);
-		contentPane.add(labelAffectation);
+		// Affectation Zone
+		labelZone = new JLabel("Affectation : ");
+		labelZone.setFont(new Font("Arial", Font.PLAIN, 12));
+		labelZone.setBounds(225, 200, 80, 15);
+		contentPane.add(labelZone);
 
-		choixAffectation = new Choice();
-		choixAffectation.setFont(new Font("Arial", Font.PLAIN, 12));
-		choixAffectation.setBounds(305, 200, 125, 15);
-        choixAffectation.setBackground(Color.WHITE);
-		choixAffectation.add("BDE");
-		choixAffectation.add("Bibliothèque");
-		choixAffectation.add("Quartier administratif");
-		choixAffectation.add("Halle industrielle");
-		choixAffectation.add("Halle sportive");
-		contentPane.add(choixAffectation);
+		choixZone = new Choice();
+		choixZone.setFont(new Font("Arial", Font.PLAIN, 12));
+		choixZone.setBounds(305, 200, 125, 15);
+        choixZone.setBackground(Color.WHITE);
+        choixZone.add("");
+		choixZone.add("Administration");
+		choixZone.add("BDE");
+		choixZone.add("Bibliothèque");
+		choixZone.add("Halle industrielle");
+		choixZone.add("Halle sportive");
+		contentPane.add(choixZone);
 
 		// type de stratégie
 		labelStrategie = new JLabel("Stratégie : ");
@@ -272,6 +296,7 @@ public class GUI extends JFrame {
 		choixStrategie.setFont(new Font("Arial", Font.PLAIN, 12));
 		choixStrategie.setBounds(305, 225, 125, 15);
         choixStrategie.setBackground(Color.WHITE);
+        choixStrategie.add("");
 		choixStrategie.add("Offensive");
 		choixStrategie.add("Défensive");
 		choixStrategie.add("Aléatoire");
@@ -286,21 +311,22 @@ public class GUI extends JFrame {
         choixReserviste.setFont(new Font("Arial", Font.PLAIN, 12));
         choixReserviste.setBounds(305, 250, 125, 15);
         choixReserviste.setBackground(Color.WHITE);
+        choixReserviste.add("");
         choixReserviste.add("OUI");
         choixReserviste.add("NON");
         contentPane.add(choixReserviste);
 
-		JButton ok = new JButton("OK");
-		ok.setFont(new Font("Arial", Font.PLAIN, 15));
-        ok.setFocusable(false);
-		ok.setBounds(225, 275, 205, 40);
-		contentPane.add(ok);
+		boutonOk = new JButton("OK");
+		boutonOk.setFont(new Font("Arial", Font.PLAIN, 15));
+        boutonOk.setFocusable(false);
+		boutonOk.setBounds(225, 275, 205, 40);
+		contentPane.add(boutonOk);
 
-		JButton validation = new JButton("VALIDER");
-		validation.setFont(new Font("Arial", Font.PLAIN, 15));
-        validation.setFocusable(false);
-		validation.setBounds(450, 325, 180, 40);
-		contentPane.add(validation);
+		boutonValidation = new JButton("VALIDER");
+		boutonValidation.setFont(new Font("Arial", Font.PLAIN, 15));
+        boutonValidation.setFocusable(false);
+		boutonValidation.setBounds(450, 325, 180, 40);
+		contentPane.add(boutonValidation);
 
 		// ++++++++++++++++++++++++++++++++++++++++++ Habillage ++++++++++++++++++++++++++++++++++++++++++++
 		// panneau configuration
@@ -309,5 +335,147 @@ public class GUI extends JFrame {
 		panel.setBounds(40, 150, 405, 215);
 		contentPane.add(panel);
 
+    }
+
+    //getters
+	public JPanel getContentPane() {
+		return contentPane;
 	}
+
+	public JTextField getConfigPersonnage() {
+		return configPersonnage;
+	}
+
+	public JLabel getLabelForce() {
+		return labelForce;
+	}
+
+	public JTextField getForce() {
+		return force;
+	}
+
+	public JLabel getLabelDexterite() {
+		return labelDexterite;
+	}
+
+	public JTextField getDexterite() {
+		return dexterite;
+	}
+
+	public JLabel getLabelResistance() {
+		return labelResistance;
+	}
+
+	public JTextField getResistance() {
+		return resistance;
+	}
+
+	public JLabel getLabelConstitution() {
+		return labelConstitution;
+	}
+
+	public JTextField getConstitution() {
+		return constitution;
+	}
+
+	public JLabel getLabelInitiative() {
+		return labelInitiative;
+	}
+
+	public JTextField getInitiative() {
+		return initiative;
+	}
+
+	public JLabel getLabelZone() {
+		return labelZone;
+	}
+
+	public Choice getChoixZone() {
+		return choixZone;
+	}
+
+	public JLabel getLabelStrategie() {
+		return labelStrategie;
+	}
+
+	public Choice getChoixStrategie() {
+		return choixStrategie;
+	}
+
+	public JLabel getLabelReserviste() {
+		return labelReserviste;
+	}
+
+	public Choice getChoixReserviste() {
+		return choixReserviste;
+	}
+
+	public JLabel getSoldePoints() {
+		return soldePoints;
+	}
+
+	public JTextField getPseudoJoueur() {
+		return pseudoJoueur;
+	}
+
+	public Choice getProgramme() {
+		return programme;
+	}
+
+	public Joueur getJoueur() {
+		return joueur;
+	}
+
+	public JButton getBoutonMaitreGobi() {
+		return boutonMaitreGobi;
+	}
+
+	public JPanel getPanelMaitreGobi() {
+		return panelMaitreGobi;
+	}
+
+	public JLabel getLabelMaitreGobi() {
+		return labelMaitreGobi;
+	}
+
+	public JPanel getPanelElite() {
+		return panelElite;
+	}
+
+	public ArrayList<JButton> getBoutonsElite() {
+		return boutonsElite;
+	}
+
+	public JLabel getLabelElite() {
+		return labelElite;
+	}
+
+	public JPanel getPanelEtudiant() {
+		return panelEtudiant;
+	}
+
+	public ArrayList<JButton> getBoutonsEtudiant() {
+		return boutonsEtudiant;
+	}
+
+	public JLabel getLabelEtudiant() {
+		return labelEtudiant;
+	}
+
+	public JLabel getLabelJoueur() {
+		return labelJoueur;
+	}
+
+	public JLabel getLabelProgramme() {
+		return labelProgramme;
+	}
+
+	public JButton getBoutonOk() {
+		return boutonOk;
+	}
+
+	public JButton getBoutonValidation() {
+		return boutonValidation;
+	}
+
 }

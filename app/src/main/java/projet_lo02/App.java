@@ -3,6 +3,7 @@ package projet_lo02;
 import projet_lo02.model.Utility;
 import projet_lo02.model.Partie;
 import projet_lo02.view.GUI;
+import projet_lo02.controller.ControllerGUI;
 
 public class App {
 
@@ -25,7 +26,8 @@ public class App {
                     break;
                 case "G" :
                 case "g" :
-                    new GUI(nouvellePartie.getJoueur1());
+                    GUI guiJoueur1 = new GUI(nouvellePartie.getJoueur1());
+                    new ControllerGUI(guiJoueur1, nouvellePartie);
                     break;
                 default :
                     System.out.println("Erreur : valeur entrée non valide");
