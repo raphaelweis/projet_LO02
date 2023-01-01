@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
@@ -42,7 +41,7 @@ public class ControllerGUI {
             keyEtudiant ++;
         }
 
-        this.gui.getBoutonOk().addActionListener(new EcouteurOk(this.gui.getJoueur().getEquipe(), keyEtudiantSelectionne));
+        this.gui.getBoutonOk().addActionListener(new EcouteurOk(this.gui.getJoueur().getEquipe()));
 
     }
 
@@ -66,9 +65,13 @@ public class ControllerGUI {
             gui.getConstitution().setText(Integer.toString(etu.getConstitution()));
             gui.getInitiative().setText(Integer.toString(etu.getInitiative()));
             try{
-                gui.getChoixZone().select(etu.getNomZone());
+                gui.getChoixZone().select(etu.getZone().toString());
+            } catch(NullPointerException exception){}
+            try{
                 gui.getChoixStrategie().select(etu.getNomStrategie());
-                gui.getChoixStrategie().select(etu.getStringReserviste());
+            } catch(NullPointerException exception){}
+            try{
+                gui.getChoixReserviste().select(etu.getStringReserviste());
             } catch(NullPointerException exception){}
         }
 
@@ -77,34 +80,47 @@ public class ControllerGUI {
     final class EcouteurOk implements ActionListener {
         
         private HashMap<Integer, Etudiant> equipe;
-        private int key;
 
-        public EcouteurOk(HashMap<Integer, Etudiant> equipe, int key){
+        public EcouteurOk(HashMap<Integer, Etudiant> equipe){
             this.equipe = equipe;
-            this.key = key;
         }
 
         public void actionPerformed(ActionEvent e){
-            Etudiant etu = this.equipe.get(this.key);
-            etu.setForce(Integer.parseInt(gui.getForce().getText()));
-            etu.setDexterite(Integer.parseInt(gui.getDexterite().getText()));
-            etu.setResistance(Integer.parseInt(gui.getResistance().getText()));
-            etu.setConstitution(Integer.parseInt(gui.getConstitution().getText()));
-            etu.setInitiative(Integer.parseInt(gui.getInitiative().getText()));
-            etu.setZone(partie.getListZones().get(gui.getChoixZone().getSelectedIndex() - 1));
-            etu.setStrategie(gui.getChoixStrategie().getSelectedIndex());
-            etu.setReserviste(gui.getChoixReserviste().getSelectedIndex() - 1);
-            gui.getConfigPersonnage().setText("");
-            gui.getForce().setText("");
-            gui.getDexterite().setText("");
-            gui.getResistance().setText("");
-            gui.getConstitution().setText("");
-            gui.getInitiative().setText("");
-            gui.getChoixZone().select(0);;
-            gui.getChoixStrategie().select(0);
-            gui.getChoixReserviste().select(0);
-
+            Etudiant etu = this.equipe.get(keyEtudiantSelectionne);
+            if(Integer.parseInt(gui.getForce().getText()) <= etu.getMaximumForce()
+            && Integer.parseInt(gui.getForce().getText()) >= etu.getMinimumForce()
+            && Integer.parseInt(gui.getDexterite().getText()) <= etu.getMaximumDexterite()
+            && Integer.parseInt(gui.getDexterite().getText()) >= etu.getMinimumDexterite()
+            && Integer.parseInt(gui.getResistance().getText()) <= etu.getMaximumResistance()
+            && Integer.parseInt(gui.getResistance().getText()) >= etu.getMinimumResistance()
+            && Integer.parseInt(gui.getConstitution().getText()) <= etu.getMaximumConstitution()
+            && Integer.parseInt(gui.getConstitution().getText()) >= etu.getMinimumConstitution()
+            && Integer.parseInt(gui.getInitiative().getText()) <= etu.getMaximumInitiative()
+            && Integer.parseInt(gui.getInitiative().getText()) >= etu.getMinimumInitiative()
+            && gui.getChoixZone().getSelectedIndex() != 0
+            && gui.getChoixStrategie().getSelectedIndex() != 0
+            && gui.getChoixReserviste().getSelectedIndex() != 0
+            ){
+                etu.setForce(Integer.parseInt(gui.getForce().getText()));
+                etu.setDexterite(Integer.parseInt(gui.getDexterite().getText()));
+                etu.setResistance(Integer.parseInt(gui.getResistance().getText()));
+                etu.setConstitution(Integer.parseInt(gui.getConstitution().getText()));
+                etu.setInitiative(Integer.parseInt(gui.getInitiative().getText()));
+                etu.setZone(partie.getListZones().get(gui.getChoixZone().getSelectedIndex() - 1));
+                etu.setStrategie(gui.getChoixStrategie().getSelectedIndex());
+                etu.setReserviste(gui.getChoixReserviste().getSelectedIndex() - 1);
+                gui.getConfigPersonnage().setText("");
+                gui.getForce().setText("");
+                gui.getDexterite().setText("");
+                gui.getResistance().setText("");
+                gui.getConstitution().setText("");
+                gui.getInitiative().setText("");
+                gui.getChoixZone().select(0);
+                gui.getChoixStrategie().select(0);
+                gui.getChoixReserviste().select(0);
+            }
         }
 
     }
+
 }

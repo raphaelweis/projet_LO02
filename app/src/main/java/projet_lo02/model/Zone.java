@@ -175,7 +175,27 @@ public class Zone {
         }
     }
 
-
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        switch(this.getNomZone()){
+            case "ADMINISTRATION" :
+                sb.append("Administration");
+                break;
+            case "BDE" :
+                sb.append("BDE");
+                break;
+            case "BIBLIOTHEQUE" :
+                sb.append("Bibliothèque");
+                break;
+            case "HALLE_INDUSTRIELLE" :
+                sb.append("Halle industrielle");
+                break;
+            case "HALLE_SPORTIVE" :
+                sb.append("Halle sportive");
+                break;
+        }
+        return sb.toString();
+    }
 
 
     //GETTERS ET SETTERS
@@ -209,43 +229,4 @@ public class Zone {
         this.listEtudiantZone = listEtudiantZone;
     }
 
-    public static void main(String[] args) {
-        //Scanner userInput = new Scanner(System.in);
-        Utility.userInput = new Scanner(System.in);
-        Partie partie = new Partie();
-        Zone zone = new Zone(NomZone.ADMINISTRATION, partie);
-        zone.attribuerEtudiant(partie.getJoueur1().getEquipe().get(1));
-        zone.listEtudiantZone.get(0).setInitiative(1);
-        zone.listEtudiantZone.get(0).setStrategie(1);
-        zone.listEtudiantZone.get(0).setZone(zone);
-        //System.out.println(zone.listEtudiantZone.get(0));
-
-        zone.attribuerEtudiant(partie.getJoueur1().getEquipe().get(2));
-        zone.listEtudiantZone.get(1).setInitiative(2);
-        zone.listEtudiantZone.get(1).setStrategie(1);
-        zone.listEtudiantZone.get(1).setZone(zone);
-        //System.out.println(zone.listEtudiantZone.get(1));
-
-        zone.attribuerEtudiant(partie.getJoueur2().getEquipe().get(1));
-        zone.listEtudiantZone.get(2).setInitiative(4);
-        zone.listEtudiantZone.get(2).setStrategie(1);
-        zone.listEtudiantZone.get(2).setZone(zone);
-        //System.out.println(zone.listEtudiantZone.get(2));
-
-        zone.attribuerEtudiant(partie.getJoueur2().getEquipe().get(2));
-        zone.listEtudiantZone.get(3).setInitiative(5);
-        zone.listEtudiantZone.get(3).setStrategie(1);
-        zone.listEtudiantZone.get(3).setZone(zone);
-        // //System.out.println(zone.listEtudiantZone.get(3));
-
-        zone.trierEtudiantsInitiative();
-
-        Iterator<Etudiant> iteEtu = zone.listEtudiantZone.iterator();
-        while(iteEtu.hasNext()){
-            Etudiant etudiant = iteEtu.next();
-            System.out.println(etudiant.toString());
-        }
-        zone.combattreZone();
-
-    }
 }
