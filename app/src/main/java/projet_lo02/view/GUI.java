@@ -23,6 +23,7 @@ import projet_lo02.model.Joueur;
 
 public class GUI extends JFrame {
 	// les composants de la vue
+    private JFrame mainFrame;
 	private JPanel contentPane;
     private JPanel panelMaitreGobi;
     private JButton boutonMaitreGobi;
@@ -68,7 +69,7 @@ public class GUI extends JFrame {
 
 	public void initFenetre() {
 		// ++++++++++++++++++++++++++++++++++++++ Panneau principal +++++++++++++++++++++++++++++++++++++++++++
-        
+        //mainFrame = new JFrame();
 		setForeground(Color.BLACK);
 		setTitle("Configuration Equipe");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
