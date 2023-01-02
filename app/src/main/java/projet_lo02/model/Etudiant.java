@@ -380,7 +380,7 @@ public class Etudiant {
         return this.dexterite;
     }
 
-    public boolean setDexterite(int nouvelleDexterite) {
+    public boolean setDexterite (int nouvelleDexterite) {
         int ancienneDexterite = this.dexterite;
         if(nouvelleDexterite >= getMinimumDexterite() && nouvelleDexterite <= getMaximumDexterite()){
             if(this.joueur.getSoldePoints() > nouvelleDexterite){

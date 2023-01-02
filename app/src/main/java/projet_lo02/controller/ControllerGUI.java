@@ -3,7 +3,6 @@ package projet_lo02.controller;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.swing.JButton;
 
@@ -44,6 +43,7 @@ public class ControllerGUI {
 
         this.gui.getBoutonOk().addActionListener(new EcouteurOk(this.gui.getJoueur().getEquipe()));
         this.gui.getBoutonValidation().addActionListener(new EcouteurValidation());
+        this.gui.getBoutonRandom().addActionListener(new EcouteurRandomiser());
 
     }
 
@@ -68,13 +68,13 @@ public class ControllerGUI {
             gui.getInitiative().setText(Integer.toString(etu.getInitiative()));
             try{
                 gui.getChoixZone().select(etu.getZone().toString());
-            } catch(NullPointerException exception){}
+            } catch(NullPointerException exception){gui.getChoixZone().select(0);}
             try{
                 gui.getChoixStrategie().select(etu.getNomStrategie());
-            } catch(NullPointerException exception){}
+            } catch(NullPointerException exception){gui.getChoixStrategie().select(0);}
             try{
                 gui.getChoixReserviste().select(etu.getStringReserviste());
-            } catch(NullPointerException exception){}
+            } catch(NullPointerException exception){gui.getChoixStrategie().select(0);}
         }
 
     }
@@ -145,6 +145,16 @@ public class ControllerGUI {
             return true;
         }
 
+    }
+
+    final class EcouteurRandomiser implements ActionListener {
+
+        public EcouteurRandomiser(){}
+
+        public void actionPerformed(ActionEvent e){
+            gui.getJoueur().randomizeEquipe();
+            gui.getSoldePoints().setText(Integer.toString(gui.getJoueur().getSoldePoints()));
+        }
     }
 
 }

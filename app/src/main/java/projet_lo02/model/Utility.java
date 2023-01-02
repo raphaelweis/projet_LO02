@@ -35,6 +35,12 @@ public final class Utility {
         }
     }
 
+    public static int getRandomInt(int min, int max){
+        int range = max - min + 1;
+        Random rnd = new Random();
+        return rnd.nextInt(range) + min;
+    }
+
     public static int getPartieEntiere(double n){
         double partieDecimale = n % 1;
         return (int)(n - partieDecimale);

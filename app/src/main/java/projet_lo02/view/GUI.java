@@ -58,6 +58,7 @@ public class GUI extends JFrame {
 	private JLabel soldePoints;
     private JButton boutonOk;
     private JButton boutonValidation;
+    private JButton boutonRandom;
 
 	// le joueur
 	private Joueur joueur;
@@ -317,6 +318,7 @@ public class GUI extends JFrame {
         choixReserviste.add("NON");
         contentPane.add(choixReserviste);
 
+        // Boutons
 		boutonOk = new JButton("OK");
 		boutonOk.setFont(new Font("Arial", Font.PLAIN, 15));
         boutonOk.setFocusable(false);
@@ -329,6 +331,13 @@ public class GUI extends JFrame {
 		boutonValidation.setBounds(450, 325, 180, 40);
 		contentPane.add(boutonValidation);
 
+        boutonRandom = new JButton("Randomiser la configuration");
+        boutonRandom.setFont(new Font("Arial", Font.PLAIN, 10));
+        boutonRandom.setFocusable(false);
+        boutonRandom.setBounds(360, 13, 270, 15);
+        contentPane.add(boutonRandom);
+
+
 		// ++++++++++++++++++++++++++++++++++++++++++ Habillage ++++++++++++++++++++++++++++++++++++++++++++
 		// panneau configuration
 		JPanel panel = new JPanel();
@@ -338,7 +347,11 @@ public class GUI extends JFrame {
 
     }
 
-    //getters
+    public JButton getBoutonRandom() {
+		return boutonRandom;
+	}
+
+	//getters
 	public JPanel getContentPane() {
 		return contentPane;
 	}

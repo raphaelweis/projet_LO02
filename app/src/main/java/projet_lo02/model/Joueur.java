@@ -142,6 +142,55 @@ public class Joueur {
         }
     }
 
+    public void randomizeEquipe(){
+        HashMap<Integer, Etudiant> localEquipe = this.getEquipe();
+        List<Integer> unmodifiableLocalKeySet;
+        List<Integer> localKeySet;
+        Etudiant randomEtu;
+        int randomNumber;
+        Integer randomKey;
+        unmodifiableLocalKeySet = Arrays.asList(localEquipe.keySet().toArray(new Integer[0]));
+        localKeySet = new ArrayList<>(unmodifiableLocalKeySet);
+        for(int i = 0; i < localKeySet.size() + 1; i++){
+            randomKey = Utility.getRandomInt(1, localKeySet.size());
+            randomEtu = localEquipe.get(randomKey);
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumForce(), randomEtu.getMaximumForce());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setForce(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumDexterite(), randomEtu.getMaximumDexterite());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setDexterite(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumResistance(), randomEtu.getMaximumResistance());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setResistance(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumConstitution(), randomEtu.getMaximumConstitution());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setConstitution(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumInitiative(), randomEtu.getMaximumInitiative());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setInitiative(randomNumber);
+            }
+            localKeySet.remove(randomKey);
+        }
+        unmodifiableLocalKeySet = Arrays.asList(localEquipe.keySet().toArray(new Integer[0]));
+        localKeySet = new ArrayList<>(unmodifiableLocalKeySet);
+        for(int i = 0; i < localKeySet.size() + 1; i++){
+            for(int j = 0; j < 5; j++){
+                try{
+                    randomKey = Utility.getRandomInt(1, localKeySet.size());
+                    randomEtu = localEquipe.get(randomKey);
+                    randomEtu.setZone(this.partieEnCours.getListZones().get(j));
+                    localKeySet.remove(randomKey);
+                } catch(NullPointerException e){}
+            }
+        }
+            
+    }
+
     public int getNbReserviste(){
         int nbreserviste = 0;
 
