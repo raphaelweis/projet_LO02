@@ -182,7 +182,7 @@ public class GUI extends JFrame {
 				joueur.setPseudo(pseudoJoueur.getText());
 			}
 		});
-		pseudoJoueur.setFont(new Font("Arial", Font.PLAIN, 15));
+		pseudoJoueur.setFont(new Font("Arial", Font.PLAIN, 12));
 		pseudoJoueur.setBounds(108, 13, 75, 15);
 		contentPane.add(pseudoJoueur);
 

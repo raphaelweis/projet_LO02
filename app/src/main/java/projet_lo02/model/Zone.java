@@ -197,6 +197,15 @@ public class Zone {
         return sb.toString();
     }
 
+    public ArrayList<Etudiant> listEtudiantsJoueur(Joueur j){
+        if(j.equals(partie.getJoueur1())){
+            System.out.println("j = joueur1");
+            return this.listEquipe1;
+        } else{
+            return this.listEquipe2;
+        }
+    }
+
 
     //GETTERS ET SETTERS
     public int getLengthEquipe1() {

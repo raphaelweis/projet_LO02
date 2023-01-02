@@ -143,10 +143,12 @@ public class Joueur {
     }
 
     public void randomizeEquipe(){
+        Utility.clearTerminal();
         HashMap<Integer, Etudiant> localEquipe = this.getEquipe();
         List<Integer> unmodifiableLocalKeySet;
         List<Integer> localKeySet;
         Etudiant randomEtu;
+        Etudiant nextEtu;
         int randomNumber;
         Integer randomKey;
         unmodifiableLocalKeySet = Arrays.asList(localEquipe.keySet().toArray(new Integer[0]));
@@ -176,19 +178,27 @@ public class Joueur {
             }
             localKeySet.remove(randomKey);
         }
-        unmodifiableLocalKeySet = Arrays.asList(localEquipe.keySet().toArray(new Integer[0]));
-        localKeySet = new ArrayList<>(unmodifiableLocalKeySet);
-        for(int i = 0; i < localKeySet.size() + 1; i++){
-            for(int j = 0; j < 5; j++){
-                try{
-                    randomKey = Utility.getRandomInt(1, localKeySet.size());
-                    randomEtu = localEquipe.get(randomKey);
-                    randomEtu.setZone(this.partieEnCours.getListZones().get(j));
-                    localKeySet.remove(randomKey);
-                } catch(NullPointerException e){}
-            }
+
+        for(int key : localEquipe.keySet()){
+            randomNumber = Utility.getRandomInt(0, 4);
+            nextEtu = localEquipe.get(key);
+            nextEtu.setZone(this.partieEnCours.getListZones().get(randomNumber));
         }
-            
+        Etudiant etu;
+
+        // pour s'assurer qu'il y a au moins un étudiant par zone
+        etu = localEquipe.get(1);
+        etu.setZone(this.partieEnCours.getListZones().get(0));
+        etu = localEquipe.get(2);
+        etu.setZone(this.partieEnCours.getListZones().get(1));
+        etu = localEquipe.get(3);
+        etu.setZone(this.partieEnCours.getListZones().get(2));
+        etu = localEquipe.get(4);
+        etu.setZone(this.partieEnCours.getListZones().get(3));
+        etu = localEquipe.get(5);
+        etu.setZone(this.partieEnCours.getListZones().get(4));
+        
+        Utility.clearTerminal();
     }
 
     public int getNbReserviste(){

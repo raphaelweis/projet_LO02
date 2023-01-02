@@ -564,6 +564,8 @@ public class Etudiant {
 
     public void setZone(Zone zone) {
         this.zoneEtudiant = zone;
+        Zone objetZone = this.getJoueur().getPartie().getListZones().get(getJoueur().getPartie().getListZones().indexOf(zone));
+        objetZone.attribuerEtudiant(this);
     }
     
     public String getType(){

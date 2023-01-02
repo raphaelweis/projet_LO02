@@ -17,23 +17,28 @@ public class App {
             System.out.println("(G) : Via une interface graphique (GUI)");
             System.out.println("(Q) : Quitter le programme");
             String input = Utility.promptString();
-            Partie nouvellePartie = new Partie();
+            Partie partieEnCours = new Partie();
             switch(input){
                 case "C" :
                 case "c" :
-                    nouvellePartie.initialiserJoueurs();
-                    nouvellePartie.parametrageDesEquipes();
+                    partieEnCours.initialiserJoueurs();
+                    partieEnCours.parametrageDesEquipes();
                     break;
                 case "G" :
                 case "g" :
-                    GUI guiJoueur1 = new GUI(nouvellePartie.getJoueur1());
-                    new ControllerGUI(guiJoueur1, nouvellePartie);
+                    GUI guiJoueur1 = new GUI(partieEnCours.getJoueur1());
+                    new ControllerGUI(guiJoueur1, partieEnCours);
                     //wait for the first gui to be closed before opening the second one
                     while(guiJoueur1.getMainFrame().isVisible() == true){
                         Utility.sleep(1000);
                     }
-                    GUI guiJoueur2 = new GUI(nouvellePartie.getJoueur2());
-                    new ControllerGUI(guiJoueur2, nouvellePartie);
+                    GUI guiJoueur2 = new GUI(partieEnCours.getJoueur2());
+                    new ControllerGUI(guiJoueur2, partieEnCours);
+                    //wait for the second gui to be closed before exiting configuration phase
+                    while(guiJoueur2.getMainFrame().isVisible() == true){
+                        Utility.sleep(1000);
+                    }
+                    partieEnCours.initialiserCombats();
                     break;
                 default :
                     System.out.println("Erreur : valeur entrée non valide");

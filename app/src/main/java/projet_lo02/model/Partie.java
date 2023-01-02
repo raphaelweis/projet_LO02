@@ -122,8 +122,7 @@ public class Partie {
             if(Utility.isStringInt(input)){
                 int numericInput = Integer.parseInt(input);
                 if(numericInput >= 1 && numericInput <= this.listZones.size()){
-                    etudiantActuel.getValue().setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
-                    this.listZones.get(numericInput - 1).attribuerEtudiant(etudiantActuel.getValue()); //attribuer etudiant à la zone
+                    etudiantActuel.getValue().setZone(this.listZones.get(numericInput - 1));
                 } else {
                     System.out.println("Erreur : valeur entrée non valide");
                     Utility.sleep(2500);
@@ -278,7 +277,7 @@ public class Partie {
     }
 
     public void treveJoueur(Joueur joueur){
-        if(ReservistesPresents(joueur)) {
+        if(reservistesPresents(joueur)) {
             System.out.println("Réservistes du joueur " + joueur.getPseudo()+ " :");
             joueur.afficherReservisteEquipe();
             afficherRecapZones(joueur);
@@ -372,7 +371,7 @@ public class Partie {
 
 
     public void afficherRecapZones(Joueur joueur){
-        System.out.println("Souhaite-vous voir le nombre de crédits par zone (O/N)?");
+        System.out.println("Souhaitez-vous voir le nombre de crédits par zone (O/N)?");
         String input = Utility.promptString();
         if(input.equals("O") || input.equals("o")){
             Utility.jumpLines(1);
@@ -398,7 +397,7 @@ public class Partie {
         }
     }
 
-    public boolean ReservistesPresents(Joueur joueur){
+    public boolean reservistesPresents(Joueur joueur){
         Iterator<Map.Entry<Integer, Etudiant>> iteEquipe = joueur.equipe.entrySet().iterator();
         int reserviste = 0;
         while(iteEquipe.hasNext()){
