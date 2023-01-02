@@ -360,7 +360,10 @@ public class Partie {
             //afficher etudiants zone + demander lequel reste
 
             System.out.println("--------- Redéploiement du joueur " + joueur.getPseudo() + " ---------");
-            System.out.println(zone.getEquipe1());
+            Utility.jumpLines(1);
+            System.out.println("testtesttest");
+            zone.afficherListeEtudiants(joueur);
+            Utility.jumpLines(1);
             System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");
 
             String input = Utility.promptString();

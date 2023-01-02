@@ -218,6 +218,7 @@ public class Zone {
         }
         return sommeCredits;
     }
+
     public void annoncerGagnant(){
         //annonce gagnant
         if(this.nbMortsEquipe1 == this.lengthEquipe1){
@@ -258,13 +259,20 @@ public class Zone {
 
     public ArrayList<Etudiant> listEtudiantsJoueur(Joueur j){
         if(j.equals(partie.getJoueur1())){
-            System.out.println("j = joueur1");
             return this.listEquipe1;
         } else{
             return this.listEquipe2;
         }
     }
 
+    public void afficherListeEtudiants(Joueur joueur){
+        System.out.print(Etudiant.etudiantColumnHeaders());
+        Iterator<Etudiant> iteratorEtudiants = this.listEtudiantsJoueur(joueur).iterator();
+        while(iteratorEtudiants.hasNext()){
+            Etudiant etudiantActuel = iteratorEtudiants.next();
+            System.out.print(etudiantActuel.etudiantOneLiner());
+        }
+    }
 
     //GETTERS ET SETTERS
 
