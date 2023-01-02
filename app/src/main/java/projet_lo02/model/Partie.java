@@ -361,7 +361,6 @@ public class Partie {
 
             System.out.println("--------- Redéploiement du joueur " + joueur.getPseudo() + " ---------");
             Utility.jumpLines(1);
-            System.out.println("testtesttest");
             zone.afficherListeEtudiants(joueur);
             Utility.jumpLines(1);
             System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");
@@ -380,8 +379,12 @@ public class Partie {
             }
         } else {
             //afficher etudiants zone + demander lequel reste
-            System.out.println(zone.getEquipe2());
+            System.out.println("--------- Redéploiement du joueur " + joueur.getPseudo() + " ---------");
+            Utility.jumpLines(1);
+            zone.afficherListeEtudiants(joueur);
+            Utility.jumpLines(1);
             System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");
+
             String input = Utility.promptString();
 
             // placer tous les etudiants sauf celui qui reste
