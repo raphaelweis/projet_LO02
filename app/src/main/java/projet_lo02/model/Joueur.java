@@ -190,6 +190,65 @@ public class Joueur {
         }
     }
 
+    public void randomizeEquipe(){
+        Utility.clearTerminal();
+        HashMap<Integer, Etudiant> localEquipe = this.getEquipe();
+        List<Integer> unmodifiableLocalKeySet;
+        List<Integer> localKeySet;
+        Etudiant randomEtu;
+        Etudiant nextEtu;
+        int randomNumber;
+        Integer randomKey;
+        unmodifiableLocalKeySet = Arrays.asList(localEquipe.keySet().toArray(new Integer[0]));
+        localKeySet = new ArrayList<>(unmodifiableLocalKeySet);
+        for(int i = 0; i < localKeySet.size() + 1; i++){
+            randomKey = Utility.getRandomInt(1, localKeySet.size());
+            randomEtu = localEquipe.get(randomKey);
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumForce(), randomEtu.getMaximumForce());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setForce(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumDexterite(), randomEtu.getMaximumDexterite());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setDexterite(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumResistance(), randomEtu.getMaximumResistance());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setResistance(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumConstitution(), randomEtu.getMaximumConstitution());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setConstitution(randomNumber);
+            }
+            randomNumber = Utility.getRandomInt(randomEtu.getMinimumInitiative(), randomEtu.getMaximumInitiative());
+            if(randomNumber <= this.soldePoints){
+                randomEtu.setInitiative(randomNumber);
+            }
+            localKeySet.remove(randomKey);
+        }
+
+        for(int key : localEquipe.keySet()){
+            randomNumber = Utility.getRandomInt(0, 4);
+            nextEtu = localEquipe.get(key);
+            nextEtu.setZone(this.partieEnCours.getListZones().get(randomNumber));
+        }
+        Etudiant etu;
+
+        // pour s'assurer qu'il y a au moins un étudiant par zone
+        etu = localEquipe.get(1);
+        etu.setZone(this.partieEnCours.getListZones().get(0));
+        etu = localEquipe.get(2);
+        etu.setZone(this.partieEnCours.getListZones().get(1));
+        etu = localEquipe.get(3);
+        etu.setZone(this.partieEnCours.getListZones().get(2));
+        etu = localEquipe.get(4);
+        etu.setZone(this.partieEnCours.getListZones().get(3));
+        etu = localEquipe.get(5);
+        etu.setZone(this.partieEnCours.getListZones().get(4));
+        
+        Utility.clearTerminal();
+    }
+
     /**
      * Méthode pour calculer le nb de réservistes de l'équipe du joueur
      * @return nb de réservistes

@@ -234,7 +234,36 @@ public class Zone {
         }
     }
 
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        switch(this.getNomZone()){
+            case "ADMINISTRATION" :
+                sb.append("Administration");
+                break;
+            case "BDE" :
+                sb.append("BDE");
+                break;
+            case "BIBLIOTHEQUE" :
+                sb.append("Bibliothèque");
+                break;
+            case "HALLE_INDUSTRIELLE" :
+                sb.append("Halle industrielle");
+                break;
+            case "HALLE_SPORTIVE" :
+                sb.append("Halle sportive");
+                break;
+        }
+        return sb.toString();
+    }
 
+    public ArrayList<Etudiant> listEtudiantsJoueur(Joueur j){
+        if(j.equals(partie.getJoueur1())){
+            System.out.println("j = joueur1");
+            return this.listEquipe1;
+        } else{
+            return this.listEquipe2;
+        }
+    }
 
 
     //GETTERS ET SETTERS

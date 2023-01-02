@@ -28,6 +28,7 @@ public class Partie {
      * Liste des zones non controlées
      */
     private List<Zone> listZonesNonControlees = new ArrayList<Zone>();
+    //private  boolean zoneControlee;
 
     /**
      * Constructeur de la partie
@@ -162,8 +163,7 @@ public class Partie {
             if(Utility.isStringInt(input)){
                 int numericInput = Integer.parseInt(input);
                 if(numericInput >= 1 && numericInput <= this.listZones.size()){
-                    etudiantActuel.getValue().setZone(this.listZones.get(numericInput - 1));//attribuer la zone à l'étudiant
-                    this.listZones.get(numericInput - 1).attribuerEtudiant(etudiantActuel.getValue()); //attribuer etudiant à la zone
+                    etudiantActuel.getValue().setZone(this.listZones.get(numericInput - 1));
                 } else {
                     System.out.println("Erreur : valeur entrée non valide");
                     Utility.sleep(2500);
@@ -337,7 +337,6 @@ public class Partie {
      * @param  joueur joueur pour lequel on fait la trêve
      */
     public void treveJoueur(Joueur joueur){
-        //si il y a des réservistes
         if(ReservistesPresents(joueur)) {
             System.out.println("Réservistes du joueur " + joueur.getPseudo()+ " :");
             joueur.afficherReservisteEquipe();
@@ -446,7 +445,7 @@ public class Partie {
      * @param  joueur joueur pour lequel on fait le récap
      */
     public void afficherRecapZones(Joueur joueur){
-        System.out.println("Souhaite-vous voir le nombre de crédits par zone (O/N)?");
+        System.out.println("Souhaitez-vous voir le nombre de crédits par zone (O/N)?");
         String input = Utility.promptString();
         if(input.equals("O") || input.equals("o")){
             Utility.jumpLines(1);
@@ -476,10 +475,6 @@ public class Partie {
         }
     }
 
-    /**
-     * Méthode pour savoir si il reste des réservistes dans l'équipe
-     * @param  joueur joueur pour lequel on checke
-     */
     public boolean ReservistesPresents(Joueur joueur){
         Iterator<Map.Entry<Integer, Etudiant>> iteEquipe = joueur.equipe.entrySet().iterator();
         int reserviste = 0;

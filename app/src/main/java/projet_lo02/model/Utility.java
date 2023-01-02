@@ -54,6 +54,12 @@ public final class Utility {
         }
     }
 
+    public static int getRandomInt(int min, int max){
+        int range = max - min + 1;
+        Random rnd = new Random();
+        return rnd.nextInt(range) + min;
+    }
+
     /**
      * Obtenir la partie entière d'un réel
      * @param n un réel

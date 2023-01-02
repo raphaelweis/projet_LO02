@@ -702,6 +702,14 @@ public class Etudiant {
         return this.reserviste;
     }
 
+    public String getStringReserviste() {
+        if(this.reserviste == true){
+            return "OUI";
+        } else{
+            return "NON"; 
+        }
+    }
+
     /**
      * Setter statut de réserviste
      * @param nouveauStatut statut de réserviste de l'étudiant
@@ -718,6 +726,18 @@ public class Etudiant {
             this.reserviste = false;
         }
     }
+
+    public void setReserviste(int nouveauStatut){
+        switch(nouveauStatut){
+            case 0 :
+                this.reserviste = true;
+                break;
+            case 1 : 
+                this.reserviste = false;
+                break;
+        }   
+    }
+
 
     /**
      * Getter zone étudiant
@@ -741,6 +761,8 @@ public class Etudiant {
      */
     public void setZone(Zone zone) {
         this.zoneEtudiant = zone;
+        Zone objetZone = this.getJoueur().getPartie().getListZones().get(getJoueur().getPartie().getListZones().indexOf(zone));
+        objetZone.attribuerEtudiant(this);
     }
 
     /**
