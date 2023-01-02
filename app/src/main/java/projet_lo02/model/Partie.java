@@ -312,14 +312,6 @@ public class Partie {
                 }
             }
         }
-
-        //annonce gagnant zone
-        if(joueur1.getNombreZonesControlees() >= 3){
-            System.out.println("Joueur 1 a gagné la partie");
-        } else {
-            System.out.println("Joueur 2 a gagné la partie");
-        }
-
     }
 
     /**
