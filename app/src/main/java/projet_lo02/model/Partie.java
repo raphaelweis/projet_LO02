@@ -361,7 +361,6 @@ public class Partie {
 
             System.out.println("--------- Redéploiement du joueur " + joueur.getPseudo() + " ---------");
             Utility.jumpLines(1);
-            System.out.println("testtesttest");
             zone.afficherListeEtudiants(joueur);
             Utility.jumpLines(1);
             System.out.println("Quel étudiant souhaitez-vous laisser dans la zone (donner son id) ?");

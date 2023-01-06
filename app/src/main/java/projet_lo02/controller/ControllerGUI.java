@@ -134,7 +134,7 @@ public class ControllerGUI {
 
         public void actionPerformed(ActionEvent e){
             HashMap<Integer, Etudiant> equipe = gui.getJoueur().getEquipe();
-            if(checkZones(equipe) == true && gui.getPseudoJoueur().getText() != null){
+            if(checkZones(equipe) == true && gui.getPseudoJoueur().getText() != ""){
                 gui.getMainFrame().dispose();
             }
         }
