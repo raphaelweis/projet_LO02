@@ -39,7 +39,7 @@ public class Attaque implements Strategie {
         }
 
         //calcul des dégats et perte crédits
-        int coefficientDegat = Math.max(0, Math.min(100, 10 * actionneur.getForce() - 5 * cible.getResistance()));
+        int coefficientDegat = Math.max(0, Math.min(100, 10 * actionneur.getForce() - 5 * cible.getResistance())) / 100;
         int perteCreditsNette = Utility.getPartieEntiere(y * (1 + coefficientDegat) * degatDeReference);
 
         //mettre à jour crédits si attaque réussie

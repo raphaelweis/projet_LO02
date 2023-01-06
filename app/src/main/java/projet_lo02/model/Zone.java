@@ -120,13 +120,15 @@ public class Zone {
     public Etudiant etudiantLePlusFaibleAdverse(Etudiant etudiant){
         //chercher dans la zone de l'etu, le joueur le + faible de l'equipe adverse
         //si etudiant est du joueur 1, on prend le dernier etudiant du joueur 2 de la zone
-        if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
-            int index = etudiant.getZone().getEquipe2().size() - 1;
-            return etudiant.getZone().getEquipe2().get(index);
-        } else {
-            int index = etudiant.getZone().getEquipe1().size() - 1;
-            return etudiant.getZone().getEquipe1().get(index);
-        }
+        try{
+            if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
+                int index = etudiant.getZone().getEquipe2().size() - 1;
+                return etudiant.getZone().getEquipe2().get(index);
+            } else {
+                int index = etudiant.getZone().getEquipe1().size() - 1;
+                return etudiant.getZone().getEquipe1().get(index);
+            }
+        } catch(IndexOutOfBoundsException e){return new Etudiant();}
     }
 
     /**
@@ -136,13 +138,15 @@ public class Zone {
     public Etudiant etudiantLePlusFaibleAllie(Etudiant etudiant){
         //chercher dans la zone de l'etu, le joueur le + faible de l'equipe adverse
         //si etudiant est du joueur 1, on prend le dernier etudiant du joueur 2 de la zone
-        if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
-            int index = etudiant.getZone().getEquipe1().size() - 1;
-            return etudiant.getZone().getEquipe1().get(index);
-        } else {
-            int index = etudiant.getZone().getEquipe2().size() - 1;
-            return etudiant.getZone().getEquipe2().get(index);
-        }
+        try{
+            if(etudiant.getJoueur().equals(etudiant.getJoueur().getPartie().getJoueur1())){
+                int index = etudiant.getZone().getEquipe1().size() - 1;
+                return etudiant.getZone().getEquipe1().get(index);
+            } else {
+                int index = etudiant.getZone().getEquipe2().size() - 1;
+                return etudiant.getZone().getEquipe2().get(index);
+            }
+        } catch(IndexOutOfBoundsException e){return new Etudiant();}
     }
 
     /**

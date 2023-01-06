@@ -7,6 +7,8 @@ import projet_lo02.controller.ControllerGUI;
 
 public class App {
 
+    private static int mode;
+
     public static void main(String[] args) {
         while(true){
             Utility.clearTerminal();
@@ -21,28 +23,62 @@ public class App {
             switch(input){
                 case "C" :
                 case "c" :
-                    partieEnCours.initialiserJoueurs();
-                    partieEnCours.parametrageDesEquipes();
+                    mode = 0;
                     break;
                 case "G" :
                 case "g" :
-                    GUI guiJoueur1 = new GUI(partieEnCours.getJoueur1());
-                    new ControllerGUI(guiJoueur1, partieEnCours);
-                    //wait for the first gui to be closed before opening the second one
-                    while(guiJoueur1.getMainFrame().isVisible() == true){
-                        Utility.sleep(1000);
-                    }
-                    GUI guiJoueur2 = new GUI(partieEnCours.getJoueur2());
-                    new ControllerGUI(guiJoueur2, partieEnCours);
-                    //wait for the second gui to be closed before exiting configuration phase
-                    while(guiJoueur2.getMainFrame().isVisible() == true){
-                        Utility.sleep(1000);
-                    }
-                    partieEnCours.initialiserCombats();
+                    mode = 1;
                     break;
                 default :
                     System.out.println("Erreur : valeur entrée non valide");
                     Utility.sleep(2500);
+            }
+            if(mode == 0){
+                partieEnCours.initialiserJoueurs();
+                partieEnCours.parametrageDesEquipes();
+            } else{
+                GUI guiJoueur1 = new GUI(partieEnCours.getJoueur1());
+                new ControllerGUI(guiJoueur1, partieEnCours);
+                //wait for the first gui to be closed before opening the second one
+                while(guiJoueur1.getMainFrame().isVisible() == true){
+                    Utility.sleep(1000);
+                }
+                GUI guiJoueur2 = new GUI(partieEnCours.getJoueur2());
+                new ControllerGUI(guiJoueur2, partieEnCours);
+                //wait for the second gui to be closed before exiting configuration phase
+                while(guiJoueur2.getMainFrame().isVisible() == true){
+                    Utility.sleep(1000);
+                }
+                partieEnCours.initialiserCombats();
+                boolean exit = false;
+                while(exit == false){
+                    Utility.clearTerminal();
+                    Utility.jumpLines(1);
+                    if(partieEnCours.getJoueur1().getNombreZonesControlees() >= 3){
+                        System.out.println(partieEnCours.getJoueur1().getPseudo() + " a gagné la partie !");
+                    } else {
+                        System.out.println(partieEnCours.getJoueur1().getPseudo() + " a gagné la partie !");
+                    }
+                    Utility.jumpLines(1);
+                    System.out.println("Voulez-vous recommencer une partie ? (O) : oui || (N) : non");
+                    String input2 = Utility.promptString();
+                    switch(input2){
+                        case "O" :
+                        case "o" :
+                        case "Y" :
+                        case "y" :
+                            exit = true;
+                            break;
+                        case "N" :
+                        case "n" :
+                            System.out.println("Fin du programme...");
+                            System.exit(0);
+                        default :
+                            System.out.println("Erreur : valeur entrée non valide");
+                            Utility.sleep(2500);
+                            break;
+                    }
+                }
             }
         }
     }
