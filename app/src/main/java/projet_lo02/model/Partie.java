@@ -39,6 +39,9 @@ public class Partie {
             this.initialiserZones();
     }
 
+    /**
+     * Méthode pour ajouter des joueurs à la partie
+     */
     public void initialiserJoueurs(){
             Utility.clearTerminal();
             System.out.println("Initialisation : Création des joueurs");
@@ -473,6 +476,11 @@ public class Partie {
         }
     }
 
+    /**
+     * Méthode pour savoir si il y a des réservistes dans l'équipe
+     * @param joueur joueur pour lequel on souhaite connaitre ses réservistes
+     * @return vrai si il y en a, faux sinon
+     */
     public boolean ReservistesPresents(Joueur joueur){
         Iterator<Map.Entry<Integer, Etudiant>> iteEquipe = joueur.equipe.entrySet().iterator();
         int reserviste = 0;

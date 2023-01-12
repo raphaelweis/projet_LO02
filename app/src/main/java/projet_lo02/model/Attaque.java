@@ -13,7 +13,7 @@ public class Attaque implements Strategie {
     private final int degatDeReference = 10;
 
     /**
-     * Méthode pour obtenir nom stratégie
+     * Méthode pour obtenir le nom de la stratégie
      * @return string pour le nom
      */
     public String getNomStrategie(){

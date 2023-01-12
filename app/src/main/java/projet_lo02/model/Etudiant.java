@@ -88,7 +88,7 @@ public class Etudiant {
     }
 
     /**
-     * Constructeur Etudiant
+     * 2e Constructeur Etudiant sans argument
      */
     public Etudiant(){
         this.type = "Etudiant";

@@ -223,6 +223,9 @@ public class Zone {
         return sommeCredits;
     }
 
+    /**
+     * Méthode pour annoncer le gagnat de la zone
+     */
     public void annoncerGagnant(){
         //annonce gagnant
         if(this.nbMortsEquipe1 == this.lengthEquipe1){
@@ -239,6 +242,10 @@ public class Zone {
         }
     }
 
+    /**
+     * toString de la zone
+     * @return un affichage plus agréable de la zone
+     */
     public String toString(){
         StringBuffer sb = new StringBuffer();
         switch(this.getNomZone()){
@@ -261,6 +268,11 @@ public class Zone {
         return sb.toString();
     }
 
+    /**
+     * Méthode pour récupérer la liste d'étudiant en fonction du joueur
+     * @param j le joueur que l'on veut prendre
+     * @return la liste d'étudiant du joueur
+     */
     public ArrayList<Etudiant> listEtudiantsJoueur(Joueur j){
         if(j.equals(partie.getJoueur1())){
             return this.listEquipe1;
@@ -268,7 +280,10 @@ public class Zone {
             return this.listEquipe2;
         }
     }
-
+    /**
+     * Méthode pour afficher la liste d'étudiant en fonction du joueur
+     * @param joueur le joueur que l'on veut afficher
+     */
     public void afficherListeEtudiants(Joueur joueur){
         System.out.print(Etudiant.etudiantColumnHeaders());
         Iterator<Etudiant> iteratorEtudiants = this.listEtudiantsJoueur(joueur).iterator();
