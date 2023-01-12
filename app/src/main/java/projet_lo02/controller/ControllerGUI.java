@@ -81,6 +81,9 @@ public class ControllerGUI {
          */
         private int key;
 
+        /**
+         * Constructeur Listener Etudiants
+         */
         public EcouteurEtudiants(HashMap<Integer, Etudiant> equipe, int key){
             this.equipe = equipe;
             this.key = key;
@@ -112,9 +115,14 @@ public class ControllerGUI {
      * Classe ecouteurs ok
      */
     final class EcouteurOk implements ActionListener {
-        
+        /**
+         * Liste d'étudiant
+         */
         private HashMap<Integer, Etudiant> equipe;
 
+        /**
+         * Constructeur ecouteur ok
+         */
         public EcouteurOk(HashMap<Integer, Etudiant> equipe){
             this.equipe = equipe;
         }
@@ -164,7 +172,10 @@ public class ControllerGUI {
      * Classe écouteurs validation
      */
     final class EcouteurValidation implements ActionListener {
-        
+
+        /**
+         * Constructeur écouteurs validation
+         */
         public EcouteurValidation(){}
 
         public void actionPerformed(ActionEvent e){
