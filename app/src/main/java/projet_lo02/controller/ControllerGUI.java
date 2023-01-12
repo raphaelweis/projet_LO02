@@ -13,12 +13,31 @@ import projet_lo02.model.Etudiant;
 import projet_lo02.model.Partie;
 import projet_lo02.view.GUI;
 
+/**
+ * Classe du Controleur
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class ControllerGUI {
 
+    /**
+     * Reference sur Gui
+     */
     private GUI gui;
+
+    /**
+     * REference sur Partie
+     */
     private Partie partie;
+
+    /**
+     * clé d'étudiant
+     */
     private int keyEtudiantSelectionne;
 
+    /**
+     * Constructeur Controleur
+     */
     public ControllerGUI(GUI gui, Partie partie){
         this.gui = gui;
         this.partie = partie;
@@ -47,9 +66,19 @@ public class ControllerGUI {
 
     }
 
+    /**
+     * Classe Listener Etudiants
+     */
 	final class EcouteurEtudiants implements ActionListener {
 
+        /**
+         * Liste d'étudiant
+         */
         private HashMap<Integer, Etudiant> equipe;
+
+        /**
+         * Clé
+         */
         private int key;
 
         public EcouteurEtudiants(HashMap<Integer, Etudiant> equipe, int key){
@@ -79,6 +108,9 @@ public class ControllerGUI {
 
     }
 
+    /**
+     * Classe ecouteurs ok
+     */
     final class EcouteurOk implements ActionListener {
         
         private HashMap<Integer, Etudiant> equipe;
@@ -128,6 +160,9 @@ public class ControllerGUI {
 
     }
 
+    /**
+     * Classe écouteurs validation
+     */
     final class EcouteurValidation implements ActionListener {
         
         public EcouteurValidation(){}
@@ -152,6 +187,9 @@ public class ControllerGUI {
 
     }
 
+    /**
+     * Classe ecouteur randomisation
+     */
     final class EcouteurRandomiser implements ActionListener {
 
         public EcouteurRandomiser(){}

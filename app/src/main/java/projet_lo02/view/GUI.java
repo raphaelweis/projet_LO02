@@ -21,43 +21,157 @@ import java.util.ArrayList;
 
 import projet_lo02.model.Joueur;
 
+/**
+ * Classe GUI pour l'interface graphique
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class GUI extends JFrame {
 	// les composants de la vue
+
+	/**
+	 * bouton jframe
+	 */
     private JFrame mainFrame;
+	/**
+	 * panneau
+	 */
 	private JPanel contentPane;
+	/**
+	 * conteneur maitre gobi
+	 */
     private JPanel panelMaitreGobi;
+	/**
+	 * bouton maitre gobi
+	 */
     private JButton boutonMaitreGobi;
+	/**
+	 * label maitre gobi
+	 */
     private JLabel labelMaitreGobi;
+	/**
+	 * conteneur Elite
+	 */
     private JPanel panelElite;
+	/**
+	 * boutons Etudiant Elite
+	 */
     private ArrayList<JButton> boutonsElite;
+	/**
+	 * label Elite
+	 */
     private JLabel labelElite;
+	/**
+	 * panneau Etudiant
+	 */
     private JPanel panelEtudiant;
+	/**
+	 * conteneur Etudiant
+	 */
     private ArrayList<JButton> boutonsEtudiant;
+	/**
+	 * label Etudiant
+	 */
     private JLabel labelEtudiant;
+	/**
+	 * label Joueur
+	 */
     private JLabel labelJoueur;
+	/**
+	 * Champ pour renter nom joueur
+	 */
 	private JTextField pseudoJoueur;
+	/**
+	 * label pour les programmes
+	 */
     private JLabel labelProgramme;
+	/**
+	 * liste choix programmes
+	 */
 	private Choice programme;
+	/**
+	 * champ pour config du personnage
+	 */
 	private JTextField configPersonnage;
+	/**
+	 * label force
+	 */
     private JLabel labelForce;
+	/**
+	 * champ de texte force
+	 */
 	private JTextField force;
+	/**
+	 * label dexterite
+	 */
     private JLabel labelDexterite;
+	/**
+	 * champ de texte dexterite
+	 */
 	private JTextField dexterite;
+	/**
+	 * label resistance
+	 */
     private JLabel labelResistance;
+	/**
+	 * champ de texte resistance
+	 */
 	private JTextField resistance;
+	/**
+	 * label constitution
+	 */
     private JLabel labelConstitution;
+	/**
+	 * champ de texte constitution
+	 */
 	private JTextField constitution;
+	/**
+	 * label initiative
+	 */
     private JLabel labelInitiative;
+	/**
+	 * champ de texte initiative
+	 */
 	private JTextField initiative;
+	/**
+	 * label zone
+	 */
     private JLabel labelZone;
+	/**
+	 * Liste de zones
+	 */
 	private Choice choixZone;
+	/**
+	 * label strategie
+	 */
     private JLabel labelStrategie;
+	/**
+	 * Choix stratégie
+	 */
 	private Choice choixStrategie;
+	/**
+	 * label reserviste
+	 */
     private JLabel labelReserviste;
+	/**
+	 * Choix statut réserviste
+	 */
 	private Choice choixReserviste;
+	/**
+	 * label solde de points
+	 */
 	private JLabel soldePoints;
+	/**
+	 * bouton ok pour valider l'etudiant
+	 */
     private JButton boutonOk;
+	/**
+	 * bouton pour valider le paramétrage d'equipe
+	 */
     private JButton boutonValidation;
+	/**
+	 * bouton pour vrandomiser le paramétrage
+	 */
     private JButton boutonRandom;
 
 	// le joueur
@@ -68,6 +182,9 @@ public class GUI extends JFrame {
 		this.initFenetre();
 	}
 
+	/**
+	 * Initialisaiton de la fenêtre
+	 */
 	public void initFenetre() {
 		// ++++++++++++++++++++++++++++++++++++++ Panneau principal +++++++++++++++++++++++++++++++++++++++++++
         mainFrame = new JFrame();
@@ -347,15 +464,24 @@ public class GUI extends JFrame {
 
     }
 
+	/**
+	 * Getter du bouton random
+	 */
     public JButton getBoutonRandom() {
 		return boutonRandom;
 	}
 
 	//getters
+	/**
+	 * Getter panneau
+	 */
 	public JPanel getContentPane() {
 		return contentPane;
 	}
 
+	/**
+	 * Getter du champ config perso
+	 */
 	public JTextField getConfigPersonnage() {
 		return configPersonnage;
 	}

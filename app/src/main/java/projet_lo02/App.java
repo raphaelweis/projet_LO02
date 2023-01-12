@@ -5,10 +5,18 @@ import projet_lo02.model.Partie;
 import projet_lo02.view.GUI;
 import projet_lo02.controller.ControllerGUI;
 
+/**
+ * Classe App
+ * @author Julian Marques
+ * @author Raphaël Weis
+ */
 public class App {
 
     private static int mode;
 
+    /**
+     * Méthode main du jeu qui lance la partie
+     */
     public static void main(String[] args) {
         while(true){
             Utility.clearTerminal();
